@@ -13,6 +13,7 @@ module Pact
 
       def verify
         app = Pact::ProviderVerifier::App.new(options)
+        app.verify_pacts
       end
 
       default_task :verify

@@ -36,16 +36,33 @@ module Pact
         proxy_pact_helper = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
         ENV['provider_states_url'] = @options.provider_states_url
         ENV['provider_states_setup_url'] = @options.provider_states_setup_url
+        provider_base_url = @options.provider_base_url
 
-        pacts.each do |pact_url|
-            Pact::ProxyVerificationTask.new :"#{pact_url}" do | task |
-                ENV['pact_consumer'] = get_pact_consumer_name(pact_url)
-                task.pact_url pact_url, :pact_helper => proxy_pact_helper
-                task.provider_base_url @options.provider_base_url
+        require 'pact/provider/rspec'
+        require 'rack/reverse_proxy'
+
+        Pact.service_provider "Running Provider Application" do
+          app do
+            Rack::ReverseProxy.new do
+              reverse_proxy '/', provider_base_url
             end
-            task_name = "pact:verify:#{pact_url}"
-            Rake::Task[task_name].invoke
-            Rake::Task[task_name].reenable
+          end
+        end
+
+        require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
+
+        exit_statuses = pacts.collect do |pact_url|
+            options = {
+              :pact_helper => proxy_pact_helper,
+              :pact_uri => pact_url,
+              :backtrace => false
+            }
+            require 'pact/cli/run_pact_verification'
+            Cli::RunPactVerification.call(options)
+        end
+
+        Pact::Provider::Proxy::TaskHelper.handle_verification_failure do
+          exit_statuses.count{ | status | status != 0 }
         end
       end
     end
