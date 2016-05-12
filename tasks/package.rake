@@ -79,6 +79,7 @@ def create_package(version, target, os_type = :unix)
 
   if os_type == :unix
     sh "cp packaging/wrapper.sh #{package_dir}/bin/pact-provider-verifier"
+    sh "chmod +x #{package_dir}/bin/pact-provider-verifier"
   else
     sh "cp packaging/wrapper.bat #{package_dir}/bin/pact-provider-verifier.bat"
   end
