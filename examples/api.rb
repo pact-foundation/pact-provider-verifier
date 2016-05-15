@@ -15,7 +15,10 @@ end
 
 get '/provider-states' do
   content_type :json
-  { :me => ["There is a greeting"] }.to_json
+  {
+    :me => ["There is a greeting"],
+    :anotherclient => ["There is a greeting"]
+  }.to_json
 end
 
 post '/provider-state' do

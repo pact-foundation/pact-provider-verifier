@@ -1,6 +1,6 @@
 {
   "consumer": {
-    "name": "me"
+    "name": "anotherclient"
   },
   "provider": {
     "name": "they"

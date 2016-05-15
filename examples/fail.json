@@ -22,6 +22,21 @@
       }
     },
     {
+      "description": "Greeting fail",
+      "request": {
+        "method": "GET",
+        "path": "/fail"
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+        },
+        "body": {
+          "greeting": "Oh yes!"
+        }
+      }
+    },
+    {
       "description": "Provider state success",
       "provider_state": "There is a greeting",
       "request": {

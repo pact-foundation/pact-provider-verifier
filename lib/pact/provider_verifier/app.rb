@@ -1,5 +1,8 @@
 require 'pact/provider/proxy/tasks'
 require 'pact/provider/proxy'
+require 'pact/provider/rspec'
+require 'rack/reverse_proxy'
+require 'pact/cli/run_pact_verification'
 require 'net/https'
 require 'faraday_middleware'
 require 'json'
@@ -13,8 +16,6 @@ module Pact
 
     class App
       def initialize options = {}
-        require 'pp'
-        pp options
         @options = options
       end
 
@@ -38,9 +39,6 @@ module Pact
         ENV['provider_states_setup_url'] = @options.provider_states_setup_url
         provider_base_url = @options.provider_base_url
 
-        require 'pact/provider/rspec'
-        require 'rack/reverse_proxy'
-
         Pact.service_provider "Running Provider Application" do
           app do
             Rack::ReverseProxy.new do
@@ -52,18 +50,23 @@ module Pact
         require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
 
         exit_statuses = pacts.collect do |pact_url|
+          ENV['pact_consumer'] = get_pact_consumer_name(pact_url)
+
+          begin
             options = {
               :pact_helper => proxy_pact_helper,
               :pact_uri => pact_url,
               :backtrace => false
             }
-            require 'pact/cli/run_pact_verification'
             Cli::RunPactVerification.call(options)
+          rescue SystemExit => e
+            puts ""
+            e.status
+          end
         end
 
-        Pact::Provider::Proxy::TaskHelper.handle_verification_failure do
-          exit_statuses.count{ | status | status != 0 }
-        end
+        # Return non-zero exit code if failures - increment for each Pact
+        exit_statuses.count{ | status | status != 0 }
       end
     end
   end
