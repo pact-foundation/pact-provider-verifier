@@ -42,7 +42,7 @@ cd examples
 1. Create an API and a corresponding Docker image for it
 1. Publish Pacts to the Pact broker (or create local ones)
 1. Run the CLI tool for your OS, passing the appropriate flags:
-   * `--pact_urls` - a comma delimited list of pact file urls
+   * `--pact_urls` - a comma delimited list of local Pact file urls or Pact Broker URLs.
    * `--provider_base_url` - the base url of the pact provider (i.e. your API)
 1.
 
@@ -63,13 +63,21 @@ Execute pact provider verification against a provider which implements the follo
 
 		consumer=web&state=customer%20is%20logged%20in
 
-The following environment variables required:
+The following flags are required:
 
-* `pact_urls` - a comma delimited list of pact file urls
-* `provider_base_url` - the base url of the pact provider
-* `provider_states_url` - the full url of the endpoint which returns provider states by consumer
-* `provider_states_setup_url` - the full url of the endpoint which sets the active pact consumer and provider state
+* `--pact-urls` - a comma delimited list of pact file urls
+* `--provider-base-url` - the base url of the pact provider
+* `--provider-states-url` - the full url of the endpoint which returns provider states by consumer
+* `--provider-states-setup-url` - the full url of the endpoint which sets the active pact consumer and provider state
 
+### Using the Pact Broker with Basic authentication
+
+The following flags are required to use basic authentication with a Pact Broker:
+
+* `--broker-user` - the Username for Pact Broker basic authentication.
+* `--broker-password` - the Password for Pact Broker basic authentication.
+
+NOTE: the `http://user:password@host` format  for basic HTTP auth is not supported.
 
 ## Contributing
 

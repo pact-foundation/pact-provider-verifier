@@ -37,6 +37,8 @@ module Pact
         proxy_pact_helper = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
         ENV['provider_states_url'] = @options.provider_states_url
         ENV['provider_states_setup_url'] = @options.provider_states_setup_url
+        ENV['PACT_BROKER_USERNAME'] = @options.broker_username if @options.broker_username
+        ENV['PACT_BROKER_PASSWORD'] = @options.broker_password if @options.broker_password
         provider_base_url = @options.provider_base_url
 
         Pact.service_provider "Running Provider Application" do
@@ -56,7 +58,9 @@ module Pact
             options = {
               :pact_helper => proxy_pact_helper,
               :pact_uri => pact_url,
-              :backtrace => false
+              :backtrace => false,
+              :pact_broker_username => @options.broker_username,
+              :pact_broker_password => @options.broker_password
             }
             Cli::RunPactVerification.call(options)
           rescue SystemExit => e
@@ -84,6 +88,9 @@ end
 def get_json_from_server(path)
   url = URI.parse(path)
   conn = Faraday.new("http://#{url.host}:#{url.port}") do |c|
+    if ENV['PACT_BROKER_USERNAME'] && ENV['PACT_BROKER_PASSWORD']
+      c.use Faraday::Request::BasicAuthentication, ENV['PACT_BROKER_USERNAME'], ENV['PACT_BROKER_PASSWORD']
+    end
     c.use FaradayMiddleware::ParseJson
     c.use Faraday::Adapter::NetHttp
   end

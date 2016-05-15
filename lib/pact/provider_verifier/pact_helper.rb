@@ -10,6 +10,9 @@ if ENV['provider_states_url']
       puts "Setting up provider state '#{provider_state}' for consumer '#{ENV['pact_consumer']}' using provider state server at #{ENV['provider_states_setup_url']}"
 
       conn = Faraday.new(:url => ENV['provider_states_setup_url']) do |faraday|
+        if ENV['PACT_BROKER_USERNAME'] && ENV['PACT_BROKER_PASSWORD']
+          faraday.use Faraday::Request::BasicAuthentication, ENV['PACT_BROKER_USERNAME'], ENV['PACT_BROKER_PASSWORD']
+        end
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
       conn.post do |req|
