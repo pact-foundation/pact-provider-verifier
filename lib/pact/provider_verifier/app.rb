@@ -66,7 +66,7 @@ module Pact
         end
 
         # Return non-zero exit code if failures - increment for each Pact
-        exit_statuses.count{ | status | status != 0 }
+        exit exit_statuses.count{ | status | status != 0 }
       end
     end
   end
