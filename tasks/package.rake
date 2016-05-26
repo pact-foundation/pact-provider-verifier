@@ -136,8 +136,7 @@ def create_package(version, target, os_type = :unix)
   sh "find #{package_dir}/lib/vendor/ruby -name '*.java' | xargs rm -f"
   sh "find #{package_dir}/lib/vendor/ruby -name '*.class' | xargs rm -f"
 
-  # Encoding and Ruby Docs
-  sh "rm -rf #{package_dir}/lib/ruby/lib/ruby/*/*/enc/trans"
+  # Ruby Docs
   sh "rm -rf #{package_dir}/lib/ruby/lib/ruby/*/rdoc*"
 
   if !ENV['DIR_ONLY']
