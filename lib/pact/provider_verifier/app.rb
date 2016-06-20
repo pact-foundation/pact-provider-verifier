@@ -87,7 +87,7 @@ end
 
 def get_json_from_server(path)
   url = URI.parse(path)
-  conn = Faraday.new("http://#{url.host}:#{url.port}") do |c|
+  conn = Faraday.new("#{url.scheme}://#{url.host}:#{url.port}") do |c|
     if ENV['PACT_BROKER_USERNAME'] && ENV['PACT_BROKER_PASSWORD']
       c.use Faraday::Request::BasicAuthentication, ENV['PACT_BROKER_USERNAME'], ENV['PACT_BROKER_PASSWORD']
     end
