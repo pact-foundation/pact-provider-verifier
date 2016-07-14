@@ -24,7 +24,7 @@ gem install pact-provider-verifier
 pact-provider-verifier <args>
 ```
 
-Run `pact-mock-service help` for command line options.
+Run `pact-provider-verifier help` for command line options.
 
 ## Examples
 
