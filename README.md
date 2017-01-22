@@ -1,6 +1,6 @@
 # Pact Provider Verification
 
-This setup simplifies Pact Provider [verification](https://github.com/realestate-com-au/pact#2-tell-your-provider-that-it-needs-to-honour-the-pact-file-you-made-earlier)
+This setup simplifies Pact Provider [verification](https://docs.pact.io/documentation/verifying_pacts.html)
 process in any language, wrapping the Ruby implementation into a cross-platform,
 binary-like CLI tool.
 
@@ -8,7 +8,7 @@ binary-like CLI tool.
 
 * Verify Pacts against Pacts published to an http endpoint, such as a [Pact Broker](https://github.com/bethesque/pact_broker)
 * Verify local `*.json` Pacts on the file system
-* Works with Pact [provider states](https://github.com/realestate-com-au/pact/wiki/Provider-states) should you need them
+* Works with Pact [provider states](https://docs.pact.io/documentation/provider_states.html) should you need them
 
 ## Installation
 
@@ -28,10 +28,11 @@ Run `pact-provider-verifier help` for command line options.
 
 ## Examples
 
-See the [examples](examples) directory for a real working API example:
+See the [example](examples) for a demonstration with a [Sinatra](http://www.sinatrarb.com/) API:
 
 ```
 cd examples
+bundle install
 ./test.sh
 ```
 
@@ -50,12 +51,16 @@ cd examples
 
 Execute pact provider verification against a provider which implements the following:
 
-* an http get endpoint which returns pact provider_states by consumer
+* an http get endpoint which returns the available [Provider States](https://docs.pact.io/documentation/provider_states.html) by consumer
 
 		{
-			"myConsumer": [
-				"customer is logged in",
-				"customer has a million dollars"
+			"SomeUI": [
+				"customer A is logged in",
+				"customer A has a million dollars"
+			],
+			"BackendAPI": [
+				"customer A is logged in",
+				"there are no customers"
 			]
 		}
 
