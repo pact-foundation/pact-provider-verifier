@@ -25,8 +25,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'pact-provider-proxy', '2.1.0'
   gem.add_runtime_dependency 'faraday', '~> 0.9', '>= 0.9.0'
   gem.add_runtime_dependency 'faraday_middleware', '~> 0.10.0'
-  gem.add_runtime_dependency 'pact-mock_service',  '0.8.2'
-  gem.add_runtime_dependency 'pact-support',  '0.5.7'
+  gem.add_runtime_dependency 'pact-mock_service', '~> 0.8'
+  gem.add_runtime_dependency 'pact-support', '~> 0.6'
   gem.add_runtime_dependency 'json',  '1.8.3'
   gem.add_runtime_dependency 'rack',  '1.6.4'
 
