@@ -39,6 +39,7 @@ module Pact
         ENV['provider_states_setup_url'] = @options.provider_states_setup_url
         ENV['PACT_BROKER_USERNAME'] = @options.broker_username if @options.broker_username
         ENV['PACT_BROKER_PASSWORD'] = @options.broker_password if @options.broker_password
+        ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
         provider_base_url = @options.provider_base_url
 
         Pact.service_provider "Running Provider Application" do

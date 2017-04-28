@@ -12,6 +12,7 @@ module Pact
       method_option :provider_states_setup_url, aliases: "-c", desc: "Base URL to setup the provider states at", :required => false
       method_option :broker_username, aliases: "-n", desc: "Pact Broker username", :required => false
       method_option :broker_password, aliases: "-p", desc: "Pact Broker password", :required => false
+      method_option :verbose, aliases: "-v", desc: "Verbose output", :required => false
 
       def verify
         app = Pact::ProviderVerifier::App.new(options)
