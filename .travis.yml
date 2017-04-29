@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+- 2.2.0
+script:
+- bundle exec rake package
+deploy:
+  provider: releases
+  api_key:
+    secure: AumB4WoeD8s03xt0Sb3QFTNnJOr+NJ1K6O0QLmeJnN/NNDTrItcChXJoTcPpEY51AQ8cO3ECtqjVtSNVsXdJyigJXGke5zAoJ/qA+hDTXSjI6YqWHqE+u515eNZiosfDxOih1Avqi8Vu4SB7/2vsvkqI69Zkw7unaorkzhuWrJxYHPdRCCdBOGF/WB9cGEeNtaB2zSVK7Giy+jqT9z74g6jIYJMkgmx8WVjBYqVhMLgOlet0DNWLcfZOtf3JINd5Slznhbnbli4u2Yf0ok1n3SxMwzwoVpZ+oQ5tFcRb3aRlg06fB7xOhwjd+V/5BKmLzPYaKPPq5MR4yk9+XHlnuvTyFnz0qs11Q8jRDc6FpJu8oUdlt1p5OAMU2MkOpQNdqB3SCmf4UNrGEyT9gTQFPGXQCngs+lrN0cP1QN17UXRO21PQZoyYh0QxP8IiAWc0n+cMBFZDnmzbuSMj+mTh3hWl1VvthCOG49XFHYBbEuU0J2FOi9UjP2oUz/aV0NUWTcNARf3eztDY8d60XI60kssEtIKB2XiH+ArDiGlTu6UTy8OGeLmv6xpJJv/CzjFlIrOBqNRy1mkiDpSlRypyihPqpfb5wukG8rDZfZjtfJXJGG/jH7r4CQS0ayvhN6McfqT+RJ3admYdD56k1mFHTVBPkQhnj1L6VR5e7XOQAO0=
+  file: pkg/*
+  file_glob: true
+  skip_cleanup: true
+  on:
+    repo: pact-foundation/pact-provider-verifier
+    tags: true
