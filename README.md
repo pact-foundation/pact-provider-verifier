@@ -4,6 +4,8 @@ This setup simplifies Pact Provider [verification](https://docs.pact.io/document
 process in any language, wrapping the Ruby implementation into a cross-platform,
 binary-like CLI tool.
 
+[![Build Status](https://travis-ci.org/pact-foundation/pact-provider-verifier.svg?branch=master)](https://travis-ci.org/pact-foundation/pact-provider-verifier)
+
 **Features**:
 
 * Verify Pacts against Pacts published to an http endpoint, such as a [Pact Broker](https://github.com/bethesque/pact_broker)
