@@ -42,12 +42,21 @@ module Pact
         ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
         provider_base_url = @options.provider_base_url
 
+        provider_application_version = @options.provider_app_version
+        publish_results  = @options.publish_verification_results
+
         Pact.service_provider "Running Provider Application" do
           app do
             Rack::ReverseProxy.new do
               reverse_proxy '/', provider_base_url
             end
           end
+
+          if provider_application_version
+            app_version provider_application_version
+          end
+
+          publish_verification_results publish_results
         end
 
         require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
