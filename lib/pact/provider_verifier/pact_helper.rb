@@ -7,10 +7,10 @@ require_relative './app'
 if ENV['provider_states_url']
   module ProviderStateServerClient
     def set_up_state provider_state
-      if ENV['VERBOSE_LOGGING'] 
+      if ENV['VERBOSE_LOGGING']
         puts "Setting up provider state '#{provider_state}' for consumer '#{ENV['pact_consumer']}' using provider state server at #{ENV['provider_states_setup_url']}"
       end
-      
+
       conn = Faraday.new(:url => ENV['provider_states_setup_url']) do |faraday|
         if ENV['PACT_BROKER_USERNAME'] && ENV['PACT_BROKER_PASSWORD']
           faraday.use Faraday::Request::BasicAuthentication, ENV['PACT_BROKER_USERNAME'], ENV['PACT_BROKER_PASSWORD']
