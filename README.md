@@ -8,7 +8,7 @@ binary-like CLI tool.
 
 **Features**:
 
-* Verify Pacts against Pacts published to an http endpoint, such as a [Pact Broker](https://github.com/bethesque/pact_broker)
+* Verify Pacts against Pacts published to an http endpoint, such as a [Pact Broker](https://github.com/pact-foundation/pact_broker)
 * Verify local `*.json` Pacts on the file system
 * Works with Pact [provider states](https://docs.pact.io/documentation/provider_states.html) should you need them
 
