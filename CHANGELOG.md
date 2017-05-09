@@ -2,8 +2,10 @@ Do this to generate your change history
 
   git log --pretty=format:'  * %h - %s (%an, %ad)' vX.Y.Z..HEAD
 
-### 1.0.0 (9 May 2017)
+### 1.0.1 (9 May 2017)
 * 94597a0 - Updated pact gem to allow use of https for publishing verifications (Beth Skurrie, Tue May 9 14:27:19 2017 +1000)
+
+### 1.0.0 (9 May 2017)
 
 ### 0.0.4 (15 May 2016)
 
