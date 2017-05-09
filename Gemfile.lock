@@ -25,7 +25,7 @@ GEM
     find_a_port (1.0.1)
     json (1.8.6)
     multipart-post (2.0.0)
-    pact (1.11.0)
+    pact (1.11.1)
       json (> 1.8.5)
       pact-mock_service (~> 1.2)
       pact-support (~> 0.6)
