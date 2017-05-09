@@ -28,3 +28,5 @@ log
 .idea
 reports
 build
+Gemfile.lock
+
