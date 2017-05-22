@@ -12,19 +12,16 @@
 
 4. Commit
 
-    $ git commit -m "Releasing version x.y.z"
+    $ git commit -m "Releasing version X.Y.Z"
 
-3. Release:
+5. Tag
 
-      $ bundle exec rake release
+    $ git tag -a vX.Y.Z -m "Releasing version X.Y.Z" && git push origin --tags
 
-4. Create standalone package
+6. Wait until travis has run and uploaded the build artifacts to https://github.com/pact-foundation/pact-provider-verifier/releases/tag/vX.Y.Z
 
-    # change to ruby 2.2 using your ruby manager
-    bundle exec rake package
+7. Set the title to `pact-provider-verifier-X.Y.Z`
 
-5. Draft a new [release](https://github.com/pact-foundation/pact-provider-verifier/releases/new) with name `pact-provider-verifier-x.y.z`
+8. Open RELEASE.template and update the versions and copy this text into the release notes section.
 
-6. Open RELEASE.template and update the versions and copy this text into the release notes section.
-
-6. Upload `.tar.gz` and `.zip` artifacts from `./pkg`
+9. Save
