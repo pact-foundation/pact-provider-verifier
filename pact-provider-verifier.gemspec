@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.license       = 'MIT'
 
-  gem.add_runtime_dependency 'rspec', '~> 3.0'
+  gem.add_runtime_dependency 'rspec', '~> 3.5'
   gem.add_runtime_dependency 'pact', '~>1.11'
   gem.add_runtime_dependency 'pact-provider-proxy', '2.1.0'
   gem.add_runtime_dependency 'faraday', '~> 0.9', '>= 0.9.0'
