@@ -2,6 +2,9 @@ Do this to generate your change history
 
   git log --pretty=format:'  * %h - %s (%an, %ad)' vX.Y.Z..HEAD
 
+### 1.0.2 (23 May 2017)
+* 33f0811 - Upgrade rspec version to ~>3.5 to fix #11 (Beth Skurrie, Tue May 23 09:01:07 2017 +1000)
+
 ### 1.0.1 (9 May 2017)
 * 94597a0 - Updated pact gem to allow use of https for publishing verifications (Beth Skurrie, Tue May 9 14:27:19 2017 +1000)
 
