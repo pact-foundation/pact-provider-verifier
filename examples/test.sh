@@ -18,5 +18,3 @@ Process.kill 'TERM', pipe.pid
 
 puts "Test exit status: #{res}"
 puts
-puts
-exit code.exitstatus
