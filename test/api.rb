@@ -5,6 +5,11 @@ require 'json'
 
 state_data = ""
 
+def get_provider_state request
+  JSON.parse(request.body.read)["state"]
+end
+
+
 get '/' do
   json :greeting => 'Hello'
 end
@@ -13,18 +18,12 @@ get '/fail' do
   json :greeting => 'Oh noes!'
 end
 
-get '/provider-states' do
-  content_type :json
-  {
-    :me => ["There is a greeting"],
-    :anotherclient => ["There is a greeting"]
-  }.to_json
-end
-
 post '/provider-state' do
-  logger.info "Provider state request: #{params}"
-  state_data = "State data!"
-  json :greeting => "State set"
+
+  if get_provider_state(request) == "There is a greeting"
+    state_data = "State data!"
+  end
+
   status 201
 end
 
