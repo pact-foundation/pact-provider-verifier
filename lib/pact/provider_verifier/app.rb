@@ -33,6 +33,7 @@ module Pact
       end
 
       def verify_pacts
+        print_deprecation_note
         pacts = @options.pact_urls.split(',')
         proxy_pact_helper = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
         ENV['provider_states_setup_url'] = @options.provider_states_setup_url
@@ -78,6 +79,12 @@ module Pact
 
         # Return non-zero exit code if failures - increment for each Pact
         exit exit_statuses.count{ | status | status != 0 }
+      end
+
+      def print_deprecation_note
+        if @options.provider_states_url
+          $stderr.puts "The --provider-states-url option is deprecated and the URL endpoint can be removed from the application"
+        end
       end
     end
   end
