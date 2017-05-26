@@ -53,7 +53,7 @@ bundle install
 
 Execute pact provider verification against a provider which implements the following:
 
-* an http get endpoint which returns the available [Provider States](https://docs.pact.io/documentation/provider_states.html) by consumer
+* an http get endpoint (`--provider-states-url`) which returns the available [Provider States](https://docs.pact.io/documentation/provider_states.html), grouped by consumer and returning an HTTP `200`:
 
 		{
 			"SomeUI": [
@@ -66,7 +66,7 @@ Execute pact provider verification against a provider which implements the follo
 			]
 		}
 
-* an http post endpoint which sets the active pact consumer and provider state
+* an http post endpoint (`--provider-states-setup-url`) which sets the active pact consumer and provider state accepting two parameters: `consumer` and `state` and returns an HTTP `200` eg.
 
 		consumer=web&state=customer%20is%20logged%20in
 
