@@ -88,7 +88,7 @@ end
 
 def get_json(path)
   case path
-  when URI::regexp
+  when URI::regexp(%w(http https))
     return get_json_from_server(path)
   else
     return get_json_from_local_file(path)
