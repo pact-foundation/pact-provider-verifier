@@ -2,14 +2,18 @@ require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/json'
 require 'json'
+require 'logger'
+require 'fileutils'
 
+FileUtils.mkdir_p "log"
 $state_data = ""
 
 class Provider < Sinatra::Base
 
   def initialize
     super
-    @logger = Logger.new("./log/test.log")
+
+    @logger = Logger.new("log/test.log")
 
     @logger.formatter = proc do |severity, datetime, progname, msg|
        "#{msg}\n"
