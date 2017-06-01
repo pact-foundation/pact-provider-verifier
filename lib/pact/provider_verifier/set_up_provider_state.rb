@@ -11,6 +11,9 @@ module Pact
         end
 
         conn = Faraday.new(:url => provider_states_setup_url) do |faraday|
+          if ENV['PACT_BROKER_USERNAME'] && ENV['PACT_BROKER_PASSWORD']
+            faraday.use Faraday::Request::BasicAuthentication, ENV['PACT_BROKER_USERNAME'], ENV['PACT_BROKER_PASSWORD']
+          end
           faraday.adapter  Faraday.default_adapter
         end
         response = conn.post do |req|
@@ -19,9 +22,9 @@ module Pact
         end
 
         # Not sure about this?
-        # if response.status >= 300
-        #   raise SetUpProviderStateError.new("Error setting up provider state '#{provider_state}' for consumer '#{consumer}' at #{provider_states_setup_url}. response status=#{response.status} response.body=#{response.body}")
-        # end
+        if response.status >= 300
+          raise SetUpProviderStateError.new("Error setting up provider state '#{provider_state}' for consumer '#{consumer}' at #{provider_states_setup_url}. response status=#{response.status} response.body=#{response.body}")
+        end
 
       end
 
