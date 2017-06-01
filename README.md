@@ -53,20 +53,7 @@ bundle install
 
 Execute pact provider verification against a provider which implements the following:
 
-* an http get endpoint (`--provider-states-url`) which returns the available [Provider States](https://docs.pact.io/documentation/provider_states.html), grouped by consumer and returning an HTTP `200`:
-
-		{
-			"SomeUI": [
-				"customer A is logged in",
-				"customer A has a million dollars"
-			],
-			"BackendAPI": [
-				"customer A is logged in",
-				"there are no customers"
-			]
-		}
-
-* an http post endpoint (`--provider-states-setup-url`) which sets the active pact consumer and provider state accepting two parameters: `consumer` and `state` and returns an HTTP `200` eg.
+* an http POST endpoint (`--provider-states-setup-url`) which sets the active pact consumer and provider state accepting two parameters: `consumer` and `state` and returns an HTTP `200` eg.
 
 		consumer=web&state=customer%20is%20logged%20in
 
@@ -74,7 +61,6 @@ The following flags are required:
 
 * `--pact-urls` - a comma delimited list of pact file urls
 * `--provider-base-url` - the base url of the pact provider
-* `--provider-states-url` - the full url of the endpoint which returns provider states by consumer
 * `--provider-states-setup-url` - the full url of the endpoint which sets the active pact consumer and provider state
 
 ### Using the Pact Broker with Basic authentication
@@ -84,7 +70,7 @@ The following flags are required to use basic authentication with a Pact Broker:
 * `--broker-user` - the Username for Pact Broker basic authentication.
 * `--broker-password` - the Password for Pact Broker basic authentication.
 
-NOTE: the `http://user:password@host` format  for basic HTTP auth is not supported.
+NOTE: the `http://user:password@host` format for basic HTTP auth is not supported.
 
 ## Contributing
 

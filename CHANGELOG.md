@@ -2,6 +2,12 @@ Do this to generate your change history
 
   git log --pretty=format:'  * %h - %s (%an, %ad)' vX.Y.Z..HEAD
 
+### 1.1.0 (01 June 2017)
+* 7106832 - chore(docs): update docs for provider states URL (Matt Fellows, Fri May 26 22:45:09 2017 +1000)
+* 8f787e6 - Add deprecation warning for --provider-states-url (Beth Skurrie, Fri May 26 20:51:48 2017 +1000)
+* 982ba7c - Remove need for provider-states-url by dynamically calling the set up code during test execution (Beth Skurrie, Fri May 26 16:30:14 2017 +1000)
+* f055375 - Turn silent mode on for zip task in rake package (Beth Skurrie, Tue May 23 09:34:51 2017 +1000)
+
 ### 1.0.2 (23 May 2017)
 * 33f0811 - Upgrade rspec version to ~>3.5 to fix #11 (Beth Skurrie, Tue May 23 09:01:07 2017 +1000)
 
