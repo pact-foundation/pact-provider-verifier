@@ -29,4 +29,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rack',  '1.6.4'
 
   gem.add_runtime_dependency 'rake', '~> 10.4', '>= 10.4.2'
+  gem.add_development_dependency 'sinatra'
+  gem.add_development_dependency 'sinatra-contrib'
 end

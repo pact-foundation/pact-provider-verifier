@@ -3,6 +3,7 @@ rvm:
 - 2.2.0
 script:
 - bundle install
+- bundle exec rake spec
 - bundle exec rake package
 deploy:
 - provider: rubygems
