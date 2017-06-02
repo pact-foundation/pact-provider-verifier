@@ -38,7 +38,7 @@
     },
     {
       "description": "Provider state success",
-      "provider_state": "There is a greeting",
+      "providerStates": "There is a greeting",
       "request": {
         "method": "GET",
         "path": "/somestate"
