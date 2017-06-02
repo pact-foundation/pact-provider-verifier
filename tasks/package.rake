@@ -3,7 +3,7 @@ require 'bundler/setup'
 require 'pact/provider_verifier/version'
 
 PACKAGE_NAME = "pact-provider-verifier"
-VERSION = "#{Pact::ProviderVerifier::VERSION}-1"
+VERSION = "#{Pact::ProviderVerifier::VERSION}-2"
 TRAVELING_RUBY_VERSION = "20150715-2.2.2"
 
 desc "Package pact-provider-verifier for OSX, Linux x86 and Linux x86_64"
