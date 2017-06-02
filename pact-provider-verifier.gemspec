@@ -31,4 +31,5 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rake', '~> 10.4', '>= 10.4.2'
   gem.add_development_dependency 'sinatra'
   gem.add_development_dependency 'sinatra-contrib'
+  gem.add_development_dependency 'octokit'
 end
