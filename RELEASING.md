@@ -19,4 +19,4 @@
 
 5. Tag
 
-    $ git tag -a vX.Y.Z -m "Releasing version X.Y.Z" && git push origin --tags
+    $ bundle exec rake tag_for_release
