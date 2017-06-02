@@ -1,6 +1,13 @@
 RELEASE_NOTES_TEMPLATE_PATH = "packaging/RELEASE_NOTES.md.template"
 RELEASE_NOTES_PATH = "build/RELEASE_NOTES.md"
 
+desc 'Tag for release'
+task :tag_for_release do | t, args |
+  command = "git tag -a v#{VERSION} -m \"Releasing version #{VERSION}\" && git push origin --tags"
+  puts command
+  puts `#{command}`
+end
+
 desc 'Generate release notes'
 task :generate_release_notes, [:tag] do | t, args |
   require 'fileutils'
