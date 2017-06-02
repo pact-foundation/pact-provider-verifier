@@ -2,6 +2,12 @@ Do this to generate your change history
 
   git log --pretty=format:'  * %h - %s (%an, %ad)' vX.Y.Z..HEAD
 
+### 1.1.2 (02 June 2017)
+* da958c0 - Only set up state if a provider-states-setup-url is provided. Add tests for SetUpProviderState. (Beth Skurrie, Fri Jun 2 14:31:27 2017 +1000)
+* 36ef2eb - Remove .java, .class, .gitignore and .travis.yml files from package (Beth Skurrie, Fri Jun 2 10:32:55 2017 +1000)
+* 7902674 - Add rake tasks to generate and upload release notes. (Beth Skurrie, Fri Jun 2 10:12:17 2017 +1000)
+* 01e811e - Add integration specs for command (Beth Skurrie, Fri Jun 2 05:51:30 2017 +1000)
+
 ### 1.1.0 (01 June 2017)
 * 7106832 - chore(docs): update docs for provider states URL (Matt Fellows, Fri May 26 22:45:09 2017 +1000)
 * 8f787e6 - Add deprecation warning for --provider-states-url (Beth Skurrie, Fri May 26 20:51:48 2017 +1000)

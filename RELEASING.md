@@ -11,7 +11,7 @@
 
 3. Add files to git
 
-    $ git add CHANGELOG.md lib/pact/provider_verifier/version.rb
+    $ git add CHANGELOG.md lib/pact/provider_verifier/version.rb tasks/package.rake
 
 4. Commit
 
