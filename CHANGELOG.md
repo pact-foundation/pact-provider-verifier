@@ -2,6 +2,9 @@ Do this to generate your change history
 
   git log --pretty=format:'  * %h - %s (%an, %ad)' vX.Y.Z..HEAD
 
+### 1.1.3 (02 June 2017)
+* 066fa60 - Add states list to state setup JSON body, to prepare for v3 pact spec which allows multiple provider states (Beth Skurrie, Fri Jun 2 15:01:28 2017 +1000)
+
 ### 1.1.2 (02 June 2017)
 * da958c0 - Only set up state if a provider-states-setup-url is provided. Add tests for SetUpProviderState. (Beth Skurrie, Fri Jun 2 14:31:27 2017 +1000)
 * 36ef2eb - Remove .java, .class, .gitignore and .travis.yml files from package (Beth Skurrie, Fri Jun 2 10:32:55 2017 +1000)
