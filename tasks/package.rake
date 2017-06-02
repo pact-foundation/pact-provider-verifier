@@ -3,7 +3,7 @@ require 'bundler/setup'
 require 'pact/provider_verifier/version'
 
 PACKAGE_NAME = "pact-provider-verifier"
-VERSION = "#{Pact::ProviderVerifier::VERSION}-1"
+VERSION = "#{Pact::ProviderVerifier::VERSION}-2"
 TRAVELING_RUBY_VERSION = "20150715-2.2.2"
 RELEASE_NOTES_TEMPLATE_PATH = "RELEASE.template"
 RELEASE_NOTES_PATH = "build/RELEASE_NOTES.md"

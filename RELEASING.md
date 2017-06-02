@@ -1,6 +1,9 @@
 # Releasing
 
-1. Increment the version according to semantic versioning rules in `lib/pact/provider_verifier/version.rb`
+1. Set the version numbers.
+
+    1. Increment the version according to semantic versioning rules in `lib/pact/provider_verifier/version.rb`.
+    1. Set the package number (eg. "-1") in `tasks/package.rake`. This is required because the same gem version may be packaged multiple times.
 
 2. Update the `CHANGELOG.md` using:
 
@@ -17,11 +20,3 @@
 5. Tag
 
     $ git tag -a vX.Y.Z -m "Releasing version X.Y.Z" && git push origin --tags
-
-6. Wait until travis has run and uploaded the build artifacts to https://github.com/pact-foundation/pact-provider-verifier/releases/tag/vX.Y.Z
-
-7. Set the title to `pact-provider-verifier-X.Y.Z`
-
-8. Open RELEASE.template and update the versions and copy this text into the release notes section.
-
-9. Save
