@@ -27,18 +27,11 @@ module Pact
         "#{@name} #{super.to_s}"
       end
 
-      def get_pact_consumer_name pact_url
-        json = get_json(pact_url)
-        json['consumer']['name']
-      end
-
       def verify_pacts
         print_deprecation_note
         pacts = @options.pact_urls.split(',')
         proxy_pact_helper = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
         ENV['provider_states_setup_url'] = @options.provider_states_setup_url
-        ENV['PACT_BROKER_USERNAME'] = @options.broker_username if @options.broker_username
-        ENV['PACT_BROKER_PASSWORD'] = @options.broker_password if @options.broker_password
         ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
         provider_base_url = @options.provider_base_url
 
