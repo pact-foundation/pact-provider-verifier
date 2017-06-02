@@ -118,10 +118,11 @@ def create_package(version, target, os_type = :unix)
   sh "find #{package_dir}/lib/vendor/ruby -name '*.md' | xargs rm -f"
 
   # # Remove misc unnecessary files"
-  # sh "rm -rf #{package_dir}/lib/vendor/ruby/*/gems/*/.gitignore"
-  # sh "rm -rf #{package_dir}/lib/vendor/ruby/*/gems/*/.travis.yml"
+  sh "rm -rf #{package_dir}/lib/vendor/ruby/*/gems/*/.gitignore"
+  sh "rm -rf #{package_dir}/lib/vendor/ruby/*/gems/*/.travis.yml"
   #
   # # Remove leftover native extension sources and compilation objects"
+  # Something in here is required for windows :(
   # sh "rm -f #{package_dir}/lib/vendor/ruby/*/gems/*/ext/Makefile"
   # sh "rm -f #{package_dir}/lib/vendor/ruby/*/gems/*/ext/*/Makefile"
   # sh "rm -f #{package_dir}/lib/vendor/ruby/*/gems/*/ext/*/tmp"
@@ -135,11 +136,11 @@ def create_package(version, target, os_type = :unix)
   # sh "find #{package_dir}/lib/vendor/ruby/*/gems -name '*.bundle' | xargs rm -f"
   #
   # # Remove Java files. They're only used for JRuby support"
-  # sh "find #{package_dir}/lib/vendor/ruby -name '*.java' | xargs rm -f"
-  # sh "find #{package_dir}/lib/vendor/ruby -name '*.class' | xargs rm -f"
+  sh "find #{package_dir}/lib/vendor/ruby -name '*.java' | xargs rm -f"
+  sh "find #{package_dir}/lib/vendor/ruby -name '*.class' | xargs rm -f"
   #
   # # Ruby Docs
-  # sh "rm -rf #{package_dir}/lib/ruby/lib/ruby/*/rdoc*"
+  sh "rm -rf #{package_dir}/lib/ruby/lib/ruby/*/rdoc*"
 
   if !ENV['DIR_ONLY']
     sh "mkdir -p pkg"
