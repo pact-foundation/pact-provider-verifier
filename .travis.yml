@@ -1,10 +1,10 @@
 language: ruby
 rvm:
-- 2.2.0
+  - 2.2.0
 script:
-- bundle install
-- bundle exec rake spec
-- bundle exec rake package
+  - bundle install
+  - bundle exec rake spec
+  - bundle exec rake package
 deploy:
 - provider: rubygems
   api_key:
@@ -23,7 +23,6 @@ deploy:
     repo: pact-foundation/pact-provider-verifier
     tags: true
 after_deploy:
-  script:
   - bundle exec rake generate_release_notes[$TRAVIS_TAG]
   - bundle exec rake upload_release_notes[$TRAVIS_REPO_SLUG,$TRAVIS_TAG]
 env:
