@@ -31,7 +31,7 @@ module Pact
         print_deprecation_note
         pacts = @options.pact_urls.split(',')
         proxy_pact_helper = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
-        ENV['provider_states_setup_url'] = @options.provider_states_setup_url
+        ENV['PROVIDER_STATES_SETUP_URL'] = @options.provider_states_setup_url
         ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
         provider_base_url = @options.provider_base_url
 
