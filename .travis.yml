@@ -1,4 +1,7 @@
 language: ruby
+env:
+  global:
+    secure: hHS/M9SzgIxGPfTXWxGBkIqsUNY01k1BnH1LChM3vE+549SexzrMJzj8IEywVdru7QvLrTpZlX86F4C939CRzM0rZ7gqxNb0BVgOfON8C9VmgnWWMpyCJYUzH8WsrjigXgU58dk7Szitqt2trP2mgnxq3fm+LLB9+MH6JsoXzpzgPODdcMjpWFyi438i+zSLtTyVQHAzIV4KHYcP951gg3pl3Tr7WSm/hbKVm5GFzej3pj0/C59Tw6qaSZojdcQXG4k/k98oy3Bzea95t4Ka9rh3EQRN8tAkl8av8W0itDvC2eqYdr9caTFoFhM4h3/onnF0/21bi40h4v7SlxFfpA4TxGvH6TWWABuRDTCpnuoGoL1IWO3sm9nWggPKhpADKVsXhg9pC9kM1PxHsoE6BW3XPS7sFcbOzHb1RGjhlPOHgCQKwegTCASEOBdWoDMluGLhB6pe4Vo/gxU7B1cG8Ep6dm7koxGYqrgED7UAmoDbQLLM42/fb8XY43CU121olhycXkq29I0Q3yl8jeAmt/DLI/TnbLVlKMZ2P4G+jmcSA+lcXxG72qZZhLqvWxW0fuGnZNEf1SzFM4RnXFRXV2r3/EHzXTNOla6Op1XrH8P8Qti860F91/Yna6HpyozvfSw0Xy8ivzdjSRlwQRXlIUwm3owxKRPd30/SLjV9z5s=
 rvm:
   - 2.2.0
 script:
@@ -30,6 +33,3 @@ jobs:
       script:
         - bundle exec rake generate_release_notes[$TRAVIS_TAG]
         - bundle exec rake upload_release_notes[$TRAVIS_REPO_SLUG,$TRAVIS_TAG]
-      env:
-        global:
-          secure: hHS/M9SzgIxGPfTXWxGBkIqsUNY01k1BnH1LChM3vE+549SexzrMJzj8IEywVdru7QvLrTpZlX86F4C939CRzM0rZ7gqxNb0BVgOfON8C9VmgnWWMpyCJYUzH8WsrjigXgU58dk7Szitqt2trP2mgnxq3fm+LLB9+MH6JsoXzpzgPODdcMjpWFyi438i+zSLtTyVQHAzIV4KHYcP951gg3pl3Tr7WSm/hbKVm5GFzej3pj0/C59Tw6qaSZojdcQXG4k/k98oy3Bzea95t4Ka9rh3EQRN8tAkl8av8W0itDvC2eqYdr9caTFoFhM4h3/onnF0/21bi40h4v7SlxFfpA4TxGvH6TWWABuRDTCpnuoGoL1IWO3sm9nWggPKhpADKVsXhg9pC9kM1PxHsoE6BW3XPS7sFcbOzHb1RGjhlPOHgCQKwegTCASEOBdWoDMluGLhB6pe4Vo/gxU7B1cG8Ep6dm7koxGYqrgED7UAmoDbQLLM42/fb8XY43CU121olhycXkq29I0Q3yl8jeAmt/DLI/TnbLVlKMZ2P4G+jmcSA+lcXxG72qZZhLqvWxW0fuGnZNEf1SzFM4RnXFRXV2r3/EHzXTNOla6Op1XrH8P8Qti860F91/Yna6HpyozvfSw0Xy8ivzdjSRlwQRXlIUwm3owxKRPd30/SLjV9z5s=
