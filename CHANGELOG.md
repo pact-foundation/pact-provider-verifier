@@ -2,6 +2,9 @@ Do this to generate your change history
 
   git log --pretty=format:'  * %h - %s (%an, %ad)' vX.Y.Z..HEAD
 
+### 1.1.4 (28 July 2017)
+* 41ddcbd - chore(gems): Update gems (Beth Skurrie, Fri Jul 28 16:24:45 2017 +1000)
+
 ### 1.1.3 (02 June 2017)
 * 066fa60 - Add states list to state setup JSON body, to prepare for v3 pact spec which allows multiple provider states (Beth Skurrie, Fri Jun 2 15:01:28 2017 +1000)
 
