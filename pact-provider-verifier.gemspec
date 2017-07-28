@@ -22,13 +22,13 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'rspec', '~> 3.5'
   gem.add_runtime_dependency 'pact', '~>1.13'
-  gem.add_runtime_dependency 'pact-provider-proxy', '2.1.0'
+  gem.add_runtime_dependency 'pact-provider-proxy', '~>2.1'
   gem.add_runtime_dependency 'faraday', '~> 0.9', '>= 0.9.0'
-  gem.add_runtime_dependency 'faraday_middleware', '~> 0.10.0'
+  gem.add_runtime_dependency 'faraday_middleware', '~> 0.10'
   gem.add_runtime_dependency 'json',  '~>1.8'
-  gem.add_runtime_dependency 'rack',  '1.6.4'
-
+  gem.add_runtime_dependency 'rack', '~> 2.0'
   gem.add_runtime_dependency 'rake', '~> 10.4', '>= 10.4.2'
+
   gem.add_development_dependency 'sinatra'
   gem.add_development_dependency 'sinatra-contrib'
   gem.add_development_dependency 'octokit', '~> 4.7'
