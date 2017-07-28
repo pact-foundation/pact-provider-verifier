@@ -16,6 +16,7 @@
 4. Commit
 
     $ git commit -m "Releasing version X.Y.Z"
+    $ git push
 
 5. Tag
 
