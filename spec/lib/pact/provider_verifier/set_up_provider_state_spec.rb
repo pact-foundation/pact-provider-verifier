@@ -33,7 +33,7 @@ module Pact
             subject
 
             expect(WebMock).to have_requested(:post, provider_states_setup_url).
-              with(body: {consumer: consumer, state: provider_state, states: [provider_state]}, headers: {'Autorization' => "Basic dGVzdGU6dGVzdGU=", 'Content-Type' => "application/json"})
+              with(body: {consumer: consumer, state: provider_state, states: [provider_state]}, headers: {'Authorization' => "Basic dGVzdGU6dGVzdGU=", 'Content-Type' => "application/json"})
           end
         end
 
