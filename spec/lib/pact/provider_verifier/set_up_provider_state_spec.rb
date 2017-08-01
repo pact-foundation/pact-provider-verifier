@@ -26,7 +26,7 @@ module Pact
       end
 
       context "sending a provider header" do
-        let(:options) {{:header_provider => "Authorization:Basic dGVzdGU6dGVzdGU="}}
+        let(:options) {{:provider_header => "Authorization:Basic dGVzdGU6dGVzdGU="}}
 
           it "makes a HTTP request with a provider header" do
             
