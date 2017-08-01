@@ -34,6 +34,7 @@ module Pact
         ENV['PROVIDER_STATES_SETUP_URL'] = @options.provider_states_setup_url
         ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
         provider_base_url = @options.provider_base_url
+        provider_header = @options.provider_header
 
         provider_application_version = @options.provider_app_version
         publish_results  = @options.publish_verification_results

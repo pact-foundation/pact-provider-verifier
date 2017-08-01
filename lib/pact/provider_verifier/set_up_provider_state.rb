@@ -35,6 +35,11 @@ module Pact
       def post_to_provider_state
         connection = Faraday.new(:url => provider_states_setup_url)
         connection.post do |req|
+          if (@options.has_key?(:provider_header)) 
+            header = @options[:provider_header].split(":")
+            req.headers[header[0]] = header[1]
+          end 
+
           req.headers["Content-Type"] = "application/json"
           req.body = {consumer: consumer, state: provider_state, states: [provider_state] }.to_json
         end

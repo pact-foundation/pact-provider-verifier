@@ -25,6 +25,19 @@ module Pact
           with(body: {consumer: consumer, state: provider_state, states: [provider_state]}, headers: {'Content-Type' => "application/json"})
       end
 
+      context "sending a provider header" do
+        let(:options) {{:header_provider => "Authorization:Basic dGVzdGU6dGVzdGU="}}
+
+          it "makes a HTTP request with a provider header" do
+            
+            subject
+
+            expect(WebMock).to have_requested(:post, provider_states_setup_url).
+              with(body: {consumer: consumer, state: provider_state, states: [provider_state]}, headers: {'Autorization' => "Basic dGVzdGU6dGVzdGU=", 'Content-Type' => "application/json"})
+          end
+        end
+
+
       context "when an error is returned from the request to the setup URL" do
         before do
           stub_request(:post, provider_states_setup_url).to_return(status: 500, body: "Some error")
