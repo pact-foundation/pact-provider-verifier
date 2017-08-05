@@ -33,5 +33,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'sinatra-contrib'
   gem.add_development_dependency 'octokit', '~> 4.7'
   gem.add_development_dependency 'webmock', '~>3.0'
+  gem.add_development_dependency 'conventional-changelog', '~>1.2'
 
 end

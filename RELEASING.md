@@ -7,7 +7,8 @@
 
 2. Update the `CHANGELOG.md` using:
 
-    $ git log --pretty=format:'  * %h - %s (%an, %ad)'
+    # Not tested yet!
+    $ bundle exec generate_changelog
 
 3. Add files to git
 
@@ -15,8 +16,7 @@
 
 4. Commit
 
-    $ git commit -m "Releasing version X.Y.Z"
-    $ git push
+    $ git commit -m "chore: release $(bundle exec ruby -e "require 'rake'; load 'tasks/package.rake'; puts VERSION")" && git push
 
 5. Tag
 

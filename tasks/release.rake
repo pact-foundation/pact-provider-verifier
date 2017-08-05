@@ -8,6 +8,13 @@ task :tag_for_release do | t, args |
   puts `#{command}`
 end
 
+desc 'Generate change log'
+task :generate_changelog do
+  require 'conventional_changelog'
+  version = Gem::Specification.load(Dir.glob('*.gemspec').first).version.to_s
+  ConventionalChangelog::Generator.new.generate! version: "v#{version}"
+end
+
 desc 'Generate release notes'
 task :generate_release_notes, [:tag] do | t, args |
   require 'fileutils'
