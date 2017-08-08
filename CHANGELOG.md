@@ -1,4 +1,12 @@
-<a name="1.3.0-1"></a>
+<a name="v1.3.1"></a>
+### v1.3.1 (2017-08-08)
+
+#### Bug Fixes
+
+* **windows**
+  * Add retries for flakiness demonstrated on windows builds for pact-go	 ([198efef](/../../commit/198efef))
+
+<a name="v1.3.0-1"></a>
 # v1.3.0 (2017-08-08)
 
 #### Features
