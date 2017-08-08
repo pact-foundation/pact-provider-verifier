@@ -1,3 +1,11 @@
+<a name="1.3.0-1"></a>
+# v1.3.0 (2017-08-08)
+
+#### Features
+
+* **custom provider header**
+  * Allow a --custom-provider-header to be specified   ([e3ea6fa](/../../commit/e3ea6fa))
+
 <a name="1.2.0"></a>
 # 1.2.0 (2017-08-05)
 
