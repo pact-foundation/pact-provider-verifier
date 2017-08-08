@@ -89,7 +89,7 @@ module Pact
 
       def print_deprecation_note
         if @options.provider_states_url
-          $stderr.puts "The --provider-states-url option is deprecated and the URL endpoint can be removed from the application"
+          $stderr.puts "WARN: The --provider-states-url option is deprecated and the URL endpoint can be removed from the application"
         end
       end
     end
