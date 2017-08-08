@@ -49,6 +49,12 @@ bundle install
    * `--provider_base_url` - the base url of the pact provider (i.e. your API)
 1.
 
+### Setting a custom Authentication header
+
+If you need to set a valid Authentication header for your replayed requests and provider state setup calls, specify `--custom-provider-header "Authentication: Type VALUE"` in the command line options.
+
+Modification of the request headers is sometimes necessary, but be aware that any modification of the request before it is replayed lessens your confidence that the consumer and provider will work correctly in real life, so do it with caution.
+
 ### API with Provider States
 
 Execute pact provider verification against a provider which implements the following:
