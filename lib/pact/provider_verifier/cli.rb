@@ -14,6 +14,7 @@ module Pact
       method_option :broker_username, aliases: "-n", desc: "Pact Broker username", :required => false
       method_option :broker_password, aliases: "-p", desc: "Pact Broker password", :required => false
       method_option :verbose, aliases: "-v", desc: "Verbose output", :required => false
+      method_option :custom_provider_header, desc: "Header to add to provider state set up and pact requests. eg 'Authorization: Basic cGFjdDpwYWN0'", :required => false
       method_option :provider_states_url, aliases: "-s", desc: "DEPRECATED", :required => false
 
       def verify

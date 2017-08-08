@@ -36,6 +36,7 @@ module Pact
         connection = Faraday.new(:url => provider_states_setup_url)
         connection.post do |req|
           req.headers["Content-Type"] = "application/json"
+          add_custom_provider_header req
           req.body = {consumer: consumer, state: provider_state, states: [provider_state] }.to_json
         end
       end
@@ -46,6 +47,24 @@ module Pact
 
       def verbose?
         ENV['VERBOSE_LOGGING']
+      end
+
+      def provider_header_set?
+        ENV.fetch('CUSTOM_PROVIDER_HEADER', '') != ''
+      end
+
+      def provider_header_name
+        ENV['CUSTOM_PROVIDER_HEADER'].split(":", 2)[0]
+      end
+
+      def provider_header_value
+        ENV['CUSTOM_PROVIDER_HEADER'].split(":", 2)[1]
+      end
+
+      def add_custom_provider_header request
+        if provider_header_set?
+          request[provider_header_name] = provider_header_value
+        end
       end
 
       def check_for_error response
