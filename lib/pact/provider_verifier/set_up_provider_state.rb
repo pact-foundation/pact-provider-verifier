@@ -33,7 +33,23 @@ module Pact
       attr_reader :provider_state, :consumer
 
       def post_to_provider_state
-        connection = Faraday.new(:url => provider_states_setup_url)
+        verbose = verbose?
+        connection = Faraday.new(:url => provider_states_setup_url) do | faraday |
+          # Have encountered flakiness on windows build for pact-go
+          # Using retries as a hacky solution to try and get around this
+          # until/if we can work out what the underlying cause is.
+          # https://github.com/pact-foundation/pact-go/issues/42
+          # eg. https://ci.appveyor.com/project/mefellows/pact-go/build/25#L1202
+
+          faraday.request :retry, max: 2, interval: 0.05,
+            interval_randomness: 0.5, backoff_factor: 2,
+            methods:[:post],
+            exceptions: [Faraday::ConnectionFailed]
+
+          faraday.response :logger if verbose
+          faraday.adapter Faraday.default_adapter
+        end
+
         connection.post do |req|
           req.headers["Content-Type"] = "application/json"
           add_custom_provider_header req
