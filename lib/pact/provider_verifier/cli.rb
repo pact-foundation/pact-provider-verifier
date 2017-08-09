@@ -18,8 +18,7 @@ module Pact
       method_option :provider_states_url, aliases: "-s", desc: "DEPRECATED", :required => false
 
       def verify
-        app = Pact::ProviderVerifier::App.new(options)
-        app.verify_pacts
+        Pact::ProviderVerifier::App.call(options)
       end
 
       default_task :verify

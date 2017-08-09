@@ -8,43 +8,49 @@ require 'json'
 module Pact
   module ProviderVerifier
 
-    def self.new *args
-      App.new(*args)
-    end
-
     class App
+
+      PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
+
       def initialize options = {}
         @options = options
       end
 
-      def call env
-        @app.call env
+      def self.call options
+        new(options).call
       end
 
-      def to_s
-        "#{@name} #{super.to_s}"
+      def call
+        setup
+
+        exit_statuses = pact_urls.collect do |pact_url|
+          verify_pact pact_url
+        end
+
+        # Return non-zero exit code if failures - increment for each Pact
+        exit exit_statuses.count{ | status | status != 0 }
       end
 
-      def verify_pacts
+      def setup
         print_deprecation_note
-        pacts = @options.pact_urls.split(',')
-        proxy_pact_helper = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
+        set_environment_variables
+        configure_service_provider
+        require_pact_project_pact_helper # Beth: not sure if this is needed, hangover from pact-provider-proxy?
+      end
+
+      def set_environment_variables
         ENV['PROVIDER_STATES_SETUP_URL'] = @options.provider_states_setup_url
         ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
         ENV['CUSTOM_PROVIDER_HEADER'] = @options.custom_provider_header if @options.custom_provider_header
-        provider_base_url = @options.provider_base_url
+      end
+
+      def configure_service_provider
+        # Have to declare these locally as the class scope gets lost within the block
+        rack_reverse_proxy = configure_reverse_proxy
+        rack_reverse_proxy = configure_custom_header_middlware(rack_reverse_proxy)
 
         provider_application_version = @options.provider_app_version
         publish_results  = @options.publish_verification_results
-
-        rack_reverse_proxy = Rack::ReverseProxy.new do
-          reverse_proxy_options verify_mode: OpenSSL::SSL::VERIFY_NONE
-          reverse_proxy '/', provider_base_url
-        end
-
-        if @options.custom_provider_header
-          rack_reverse_proxy = Pact::ProviderVerifier::AddHeaderMiddlware.new(rack_reverse_proxy, parse_header)
-        end
 
         Pact.service_provider "Running Provider Application" do
           app do
@@ -57,27 +63,46 @@ module Pact
 
           publish_verification_results publish_results
         end
+      end
 
-        require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
-
-        exit_statuses = pacts.collect do |pact_url|
-          begin
-            options = {
-              :pact_helper => proxy_pact_helper,
-              :pact_uri => pact_url,
-              :backtrace => false,
-              :pact_broker_username => @options.broker_username,
-              :pact_broker_password => @options.broker_password
-            }
-            Cli::RunPactVerification.call(options)
-          rescue SystemExit => e
-            puts ""
-            e.status
-          end
+      def configure_reverse_proxy
+        provider_base_url = @options.provider_base_url
+        Rack::ReverseProxy.new do
+          reverse_proxy_options verify_mode: OpenSSL::SSL::VERIFY_NONE
+          reverse_proxy '/', provider_base_url
         end
+      end
 
-        # Return non-zero exit code if failures - increment for each Pact
-        exit exit_statuses.count{ | status | status != 0 }
+      def configure_custom_header_middlware rack_reverse_proxy
+        if @options.custom_provider_header
+          Pact::ProviderVerifier::AddHeaderMiddlware.new(rack_reverse_proxy, parse_header)
+        else
+          rack_reverse_proxy
+        end
+      end
+
+      def pact_urls
+        @options.pact_urls.split(',')
+      end
+
+      def verify_pact pact_url
+        begin
+          options = {
+            :pact_helper => PROXY_PACT_HELPER,
+            :pact_uri => pact_url,
+            :backtrace => false,
+            :pact_broker_username => @options.broker_username,
+            :pact_broker_password => @options.broker_password
+          }
+          Cli::RunPactVerification.call(options)
+        rescue SystemExit => e
+          puts ""
+          e.status
+        end
+      end
+
+      def require_pact_project_pact_helper
+        require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
       end
 
       def parse_header
