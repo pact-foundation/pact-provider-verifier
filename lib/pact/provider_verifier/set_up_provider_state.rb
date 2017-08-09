@@ -34,7 +34,13 @@ module Pact
 
       def post_to_provider_state
         verbose = verbose?
-        connection = Faraday.new(:url => provider_states_setup_url) do | faraday |
+        options = {url: provider_states_setup_url}
+
+        if provider_states_setup_url.start_with?("https:")
+          options[:ssl] = {verify: false}
+        end
+
+        connection = Faraday.new(options) do | faraday |
           # Have encountered flakiness on windows build for pact-go
           # Using retries as a hacky solution to try and get around this
           # until/if we can work out what the underlying cause is.

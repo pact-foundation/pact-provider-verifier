@@ -1,12 +1,9 @@
-require 'pact/provider/proxy/tasks'
-require 'pact/provider/proxy'
+require 'pact/provider_verifier/add_header_middlware'
 require 'pact/provider/rspec'
-require 'rack/reverse_proxy'
 require 'pact/cli/run_pact_verification'
-require 'net/https'
+require 'rack/reverse_proxy'
 require 'faraday_middleware'
 require 'json'
-require 'pact/provider_verifier/add_header_middlware'
 
 module Pact
   module ProviderVerifier
@@ -41,6 +38,7 @@ module Pact
         publish_results  = @options.publish_verification_results
 
         rack_reverse_proxy = Rack::ReverseProxy.new do
+          reverse_proxy_options verify_mode: OpenSSL::SSL::VERIFY_NONE
           reverse_proxy '/', provider_base_url
         end
 
