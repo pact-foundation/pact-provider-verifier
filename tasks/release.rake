@@ -4,8 +4,7 @@ RELEASE_NOTES_PATH = "build/RELEASE_NOTES.md"
 desc 'Generate change log'
 task :generate_changelog do
   require 'conventional_changelog'
-  version = Gem::Specification.load(Dir.glob('*.gemspec').first).version.to_s
-  ConventionalChangelog::Generator.new.generate! version: "v#{version}"
+  ConventionalChangelog::Generator.new.generate! version: "v#{VERSION}"
 end
 
 desc 'Tag for release'
