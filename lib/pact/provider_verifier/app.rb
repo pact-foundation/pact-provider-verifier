@@ -94,6 +94,9 @@ module Pact
             :pact_broker_username => @options.broker_username,
             :pact_broker_password => @options.broker_password
           }
+          options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
+          options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
+
           Cli::RunPactVerification.call(options)
         rescue SystemExit => e
           puts ""
