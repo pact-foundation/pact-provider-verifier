@@ -15,6 +15,6 @@ describe "verifying a provider that uses a self signed certificate" do
   end
 
   after(:all) do
-    Process.kill('INT', @ssl_server_pid)
+    Process.kill('KILL', @ssl_server_pid)
   end
 end
