@@ -1,3 +1,15 @@
+<a name="v1.4.0"></a>
+### v1.4.0 (2017-08-11)
+
+#### Features
+
+* **run single interaction**
+  * allow env vars to be set to run a single interaction   ([3e39517](/../../commit/3e39517))
+
+#### Bug Fixes
+
+* Turn off SSL verification for provider states setup call.  ([744add2](/../../commit/744add2))
+
 <a name="v1.3.1"></a>
 ### v1.3.1 (2017-08-08)
 
