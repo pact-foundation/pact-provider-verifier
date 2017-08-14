@@ -34,6 +34,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'octokit', '~> 4.7'
   gem.add_development_dependency 'webmock', '~>3.0'
   gem.add_development_dependency 'conventional-changelog', '~>1.2'
-  gem.add_development_dependency 'pry-byebug'
+  gem.add_development_dependency 'pry-byebug', '~>3.4'
+  gem.add_development_dependency 'find_a_port', '~>1.0'
 
 end
