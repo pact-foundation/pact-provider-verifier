@@ -1,0 +1,29 @@
+{
+  "consumer": {
+    "name": "foo"
+  },
+  "provider": {
+    "name": "bar"
+  },
+  "interactions": [
+    {
+      "description": "any request",
+      "request": {
+        "method": "GET",
+        "path": "/"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "Host": "localhost:4569"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}

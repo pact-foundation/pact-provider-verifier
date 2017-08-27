@@ -68,7 +68,11 @@ module Pact
       def configure_reverse_proxy
         provider_base_url = @options.provider_base_url
         Rack::ReverseProxy.new do
-          reverse_proxy_options verify_mode: OpenSSL::SSL::VERIFY_NONE
+          reverse_proxy_options(
+            verify_mode: OpenSSL::SSL::VERIFY_NONE,
+            preserve_host: true,
+            x_forwarded_headers: false
+          )
           reverse_proxy '/', provider_base_url
         end
       end
