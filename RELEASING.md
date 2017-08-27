@@ -7,8 +7,7 @@
 
 2. Update the `CHANGELOG.md` using:
 
-    # Not tested yet!
-    $ bundle exec generate_changelog
+    $ bundle exec rake generate_changelog
 
 3. Add files to git
 

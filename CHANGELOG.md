@@ -1,3 +1,10 @@
+<a name="v1.4.1-1"></a>
+### v1.4.1-1 (2017-08-27)
+
+#### Bug Fixes
+
+* ensure Host header is correctly set	 ([9048744](/../../commit/9048744))
+
 <a name="v1.4.0-1"></a>
 ### v1.4.0-1 (2017-08-11)
 
