@@ -5,8 +5,10 @@
 # when starting up, despite the fact that the port is dynamically assigned.
 # The hanging process causes the build to fail, even if everything else has passed.
 
-ps -ef | grep rspec | grep -v grep
-ruby_processes=$(ps -ef | grep rspec | grep -v grep | awk '{ print $2 }')
+set -ex
+
+ps -ef | grep ruby | grep -v grep
+ruby_processes=$(ps -ef | grep ruby | grep -v grep | awk '{ print $2 }')
 for pid in ${ruby_processes}; do
   kill -9 ${pid}
 done
