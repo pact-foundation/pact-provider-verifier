@@ -7,8 +7,8 @@
 
 set -ex
 
-ps -ef | grep ruby | grep -v grep
-ruby_processes=$(ps -ef | grep ruby | grep -v grep | awk '{ print $2 }')
+ps -ef | grep ruby | grep rvm | grep -v grep
+ruby_processes=$(ps -ef | grep ruby | grep rvm | grep -v grep | awk '{ print $2 }')
 for pid in ${ruby_processes}; do
   kill -9 ${pid}
 done
