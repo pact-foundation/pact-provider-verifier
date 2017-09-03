@@ -19,6 +19,7 @@ describe "pact-provider-verifier with basic auth" do
   end
 
   after(:all) do
+    puts "bethtest killing #{@pid.pid}"
     Process.kill 'KILL', @pipe.pid
   end
 end
