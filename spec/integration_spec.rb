@@ -74,7 +74,6 @@ describe "pact-provider-verifier" do
 
 
   after(:all) do
-    puts "bethtest killing #{@pipe.pid}"
     Process.kill 'KILL', @pipe.pid
   end
 end

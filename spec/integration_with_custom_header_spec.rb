@@ -1,8 +1,6 @@
 describe "pact-provider-verifier with basic auth" do
   before(:all) do
-    ENV['USE_BASIC_AUTH'] = 'true'
-    @pipe = IO.popen("bundle exec rackup -p 4570 spec/support/config.ru")
-    ENV.delete('USE_BASIC_AUTH')
+    @pipe = IO.popen({'USE_BASIC_AUTH' => 'true'}, %w{bundle exec rackup -p 4570 spec/support/config.ru})
     sleep 2
   end
 
@@ -21,7 +19,6 @@ describe "pact-provider-verifier with basic auth" do
   end
 
   after(:all) do
-    puts "bethtest killing #{@pipe.pid}"
     Process.kill 'KILL', @pipe.pid
   end
 end
