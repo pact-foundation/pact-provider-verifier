@@ -1,6 +1,8 @@
 describe "pact-provider-verifier with basic auth" do
   before(:all) do
-    @pipe = IO.popen("USE_BASIC_AUTH=true bundle exec rackup -p 4570 spec/support/config.ru")
+    ENV['USE_BASIC_AUTH'] = 'true'
+    @pipe = IO.popen("bundle exec rackup -p 4570 spec/support/config.ru")
+    ENV.delete('USE_BASIC_AUTH')
     sleep 2
   end
 
