@@ -1,3 +1,11 @@
+<a name="v1.6.0-1"></a>
+### v1.6.0-1 (2017-10-01)
+
+#### Features
+
+* **cli**
+  * allow multiple --custom-provider-header to be specified	 ([6a8573a](/../../commit/6a8573a))
+
 <a name="v1.5.0-1"></a>
 ### v1.5.0-1 (2017-10-01)
 
