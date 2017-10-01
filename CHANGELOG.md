@@ -1,3 +1,11 @@
+<a name="v1.5.0-1"></a>
+### v1.5.0-1 (2017-10-01)
+
+#### Features
+
+* **cli**
+  * specify pact urls as the arguments to pact-provider-verifier instead of using --pact-urls option	 ([df78617](/../../commit/df78617))
+
 <a name="v1.4.1-1"></a>
 ### v1.4.1-1 (2017-08-27)
 
