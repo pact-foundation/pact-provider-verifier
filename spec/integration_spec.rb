@@ -6,7 +6,7 @@ describe "pact-provider-verifier" do
 
   context "when the verification passes" do
 
-    subject { `bundle exec bin/pact-provider-verifier -a 1.0.100 --provider-base-url http://localhost:4567 --pact-urls ./test/me-they.json --provider_states_setup_url http://localhost:4567/provider-state -v` }
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state -v` }
 
     it "exits with a 0 exit code" do
       subject
@@ -20,7 +20,7 @@ describe "pact-provider-verifier" do
 
   context "with two passing interactions" do
 
-    subject { `bundle exec bin/pact-provider-verifier -a 1.0.100 --provider-base-url http://localhost:4567 --pact-urls ./test/me-they.json,./test/another-they.json --provider_states_setup_url http://localhost:4567/provider-state -v` }
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json ./test/another-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state -v` }
     it "exits with a 0 exit code" do
       expect($?).to eq 0
     end
@@ -32,7 +32,7 @@ describe "pact-provider-verifier" do
 
   context "when the verification fails" do
 
-    subject { `bundle exec bin/pact-provider-verifier -a 1.0.100 --provider-base-url http://localhost:4567 --pact-urls ./test/fail.json --provider_states_setup_url http://localhost:4567/provider-state -v` }
+    subject { `bundle exec bin/pact-provider-verifier ./test/fail.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state -v` }
 
     it "exits with a non 0 exit code" do
       subject
@@ -46,7 +46,7 @@ describe "pact-provider-verifier" do
 
   context "when there is an error setting up the state" do
 
-    subject { `bundle exec bin/pact-provider-verifier -a 1.0.100 --provider-base-url http://localhost:4567 --pact-urls ./test/me-they.json --provider_states_setup_url http://localhost:4567/wrong -v` }
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/wrong -v` }
 
     it "exits with a non 0 exit code" do
       subject
@@ -60,7 +60,7 @@ describe "pact-provider-verifier" do
 
   context "running verification with filtered interactions" do
 
-    subject { `PACT_DESCRIPTION="Provider state success" PACT_PROVIDER_STATE="There is a greeting" bundle exec bin/pact-provider-verifier -a 1.0.100 --provider-base-url http://localhost:4567 --pact-urls ./test/me-they.json --provider_states_setup_url http://localhost:4567/provider-state -v` }
+    subject { `PACT_DESCRIPTION="Provider state success" PACT_PROVIDER_STATE="There is a greeting" bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state -v` }
 
     it "exits with a 0 exit code" do
       subject

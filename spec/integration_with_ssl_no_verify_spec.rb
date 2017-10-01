@@ -10,7 +10,7 @@ describe "verifying a provider that uses a self signed certificate" do
         run_provider_with_self_signed_cert @port
       end
       sleep 2
-      subject = `bundle exec bin/pact-provider-verifier -a 1.0.0 --provider-base-url https://localhost:#{@port} --pact-urls ./test/me-they.json --provider_states_setup_url https://localhost:#{@port}/provider-state -v`
+      subject = `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.0 --provider-base-url https://localhost:#{@port} --provider_states_setup_url https://localhost:#{@port}/provider-state -v`
       expect(subject).to include "2 interactions, 0 failures"
     ensure
       Process.kill('KILL', @ssl_server_pid)

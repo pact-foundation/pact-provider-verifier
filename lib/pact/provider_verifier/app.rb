@@ -12,12 +12,13 @@ module Pact
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
 
-      def initialize options = {}
+      def initialize pact_urls, options = {}
+        @pact_urls = pact_urls
         @options = options
       end
 
-      def self.call options
-        new(options).call
+      def self.call pact_urls, options
+        new(pact_urls, options).call
       end
 
       def call
@@ -31,6 +32,10 @@ module Pact
         exit exit_statuses.count{ | status | status != 0 }
       end
 
+      private
+
+      attr_reader :pact_urls, :options
+
       def setup
         print_deprecation_note
         set_environment_variables
@@ -39,9 +44,9 @@ module Pact
       end
 
       def set_environment_variables
-        ENV['PROVIDER_STATES_SETUP_URL'] = @options.provider_states_setup_url
-        ENV['VERBOSE_LOGGING'] = @options.verbose if @options.verbose
-        ENV['CUSTOM_PROVIDER_HEADER'] = @options.custom_provider_header if @options.custom_provider_header
+        ENV['PROVIDER_STATES_SETUP_URL'] = options.provider_states_setup_url
+        ENV['VERBOSE_LOGGING'] = options.verbose if options.verbose
+        ENV['CUSTOM_PROVIDER_HEADER'] = options.custom_provider_header if options.custom_provider_header
       end
 
       def configure_service_provider
@@ -49,8 +54,8 @@ module Pact
         rack_reverse_proxy = configure_reverse_proxy
         rack_reverse_proxy = configure_custom_header_middlware(rack_reverse_proxy)
 
-        provider_application_version = @options.provider_app_version
-        publish_results  = @options.publish_verification_results
+        provider_application_version = options.provider_app_version
+        publish_results  = options.publish_verification_results
 
         Pact.service_provider "Running Provider Application" do
           app do
@@ -66,7 +71,7 @@ module Pact
       end
 
       def configure_reverse_proxy
-        provider_base_url = @options.provider_base_url
+        provider_base_url = options.provider_base_url
         Rack::ReverseProxy.new do
           reverse_proxy_options(
             verify_mode: OpenSSL::SSL::VERIFY_NONE,
@@ -78,32 +83,27 @@ module Pact
       end
 
       def configure_custom_header_middlware rack_reverse_proxy
-        if @options.custom_provider_header
+        if options.custom_provider_header
           Pact::ProviderVerifier::AddHeaderMiddlware.new(rack_reverse_proxy, parse_header)
         else
           rack_reverse_proxy
         end
       end
 
-      def pact_urls
-        @options.pact_urls.split(',')
-      end
-
       def verify_pact pact_url
         begin
-          options = {
+          verify_options = {
             :pact_helper => PROXY_PACT_HELPER,
             :pact_uri => pact_url,
             :backtrace => false,
-            :pact_broker_username => @options.broker_username,
-            :pact_broker_password => @options.broker_password
+            :pact_broker_username => options.broker_username,
+            :pact_broker_password => options.broker_password
           }
-          options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
-          options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
+          verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
+          verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
 
-          Cli::RunPactVerification.call(options)
+          Cli::RunPactVerification.call(verify_options)
         rescue SystemExit => e
-          puts ""
           e.status
         end
       end
@@ -113,12 +113,12 @@ module Pact
       end
 
       def parse_header
-        header_name, header_value = @options.custom_provider_header.split(":", 2).collect(&:strip)
+        header_name, header_value = options.custom_provider_header.split(":", 2).collect(&:strip)
         {header_name => header_value}
       end
 
       def print_deprecation_note
-        if @options.provider_states_url
+        if options.provider_states_url
           $stderr.puts "WARN: The --provider-states-url option is deprecated and the URL endpoint can be removed from the application"
         end
       end

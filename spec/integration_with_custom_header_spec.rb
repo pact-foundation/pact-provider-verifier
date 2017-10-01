@@ -6,7 +6,7 @@ describe "pact-provider-verifier with basic auth" do
 
   context "with --custom-provider-header specified" do
 
-    subject { `bundle exec bin/pact-provider-verifier --custom-provider-header "Authorization: Basic cGFjdDpwYWN0" -a 1.0.100 --provider-base-url http://localhost:4570 --pact-urls ./test/me-they.json --provider_states_setup_url http://localhost:4570/provider-state -v` }
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json --custom-provider-header "Authorization: Basic cGFjdDpwYWN0" -a 1.0.100 --provider-base-url http://localhost:4570 --provider_states_setup_url http://localhost:4570/provider-state -v` }
 
     it "exits with a 0 exit code" do
       subject
