@@ -71,21 +71,16 @@ module Pact
         ENV['VERBOSE_LOGGING']
       end
 
-      def provider_header_set?
-        ENV.fetch('CUSTOM_PROVIDER_HEADER', '') != ''
-      end
-
-      def provider_header_name
-        ENV['CUSTOM_PROVIDER_HEADER'].split(":", 2)[0]
-      end
-
-      def provider_header_value
-        ENV['CUSTOM_PROVIDER_HEADER'].split(":", 2)[1]
+      def custom_provider_headers
+        ENV.fetch('CUSTOM_PROVIDER_HEADER', '').split("\n").each_with_object({}) do | header, headers_hash |
+          header_name, header_value = header.split(":", 2).collect(&:strip)
+          headers_hash[header_name] = header_value
+        end
       end
 
       def add_custom_provider_header request
-        if provider_header_set?
-          request[provider_header_name] = provider_header_value
+        custom_provider_headers.each do | header_name, header_value |
+          request[header_name] = header_value
         end
       end
 

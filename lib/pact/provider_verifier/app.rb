@@ -46,7 +46,7 @@ module Pact
       def set_environment_variables
         ENV['PROVIDER_STATES_SETUP_URL'] = options.provider_states_setup_url
         ENV['VERBOSE_LOGGING'] = options.verbose if options.verbose
-        ENV['CUSTOM_PROVIDER_HEADER'] = options.custom_provider_header if options.custom_provider_header
+        ENV['CUSTOM_PROVIDER_HEADER'] = custom_provider_headers_for_env_var if custom_provider_headers_for_env_var
       end
 
       def configure_service_provider
@@ -112,9 +112,17 @@ module Pact
         require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
       end
 
+      def custom_provider_headers_for_env_var
+        if options.custom_provider_header && options.custom_provider_header.any?
+          options.custom_provider_header.join("\n")
+        end
+      end
+
       def parse_header
-        header_name, header_value = options.custom_provider_header.split(":", 2).collect(&:strip)
-        {header_name => header_value}
+        options.custom_provider_header.each_with_object({}) do | custom_provider_header, header_hash |
+          header_name, header_value = custom_provider_header.split(":", 2).collect(&:strip)
+          header_hash[header_name] = header_value
+        end
       end
 
       def print_deprecation_note
