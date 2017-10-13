@@ -14,6 +14,10 @@ binary-like CLI tool.
 
 ## Installation
 
+### Docker
+
+Take a look at https://github.com/DiUS/pact-provider-verifier-docker.
+
 ### Native Installation
 
 Download the appropriate [release](https://github.com/pact-foundation/pact-provider-verifier/releases)
