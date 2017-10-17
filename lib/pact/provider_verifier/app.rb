@@ -95,7 +95,7 @@ module Pact
           verify_options = {
             :pact_helper => PROXY_PACT_HELPER,
             :pact_uri => pact_url,
-            :backtrace => false,
+            :backtrace => ENV['BACKTRACE'] == 'true',
             :pact_broker_username => options.broker_username,
             :pact_broker_password => options.broker_password
           }
