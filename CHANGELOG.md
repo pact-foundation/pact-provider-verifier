@@ -1,3 +1,10 @@
+<a name="v1.7.0-1"></a>
+### v1.7.0-1 (2017-10-18)
+
+#### Features
+
+* allow backtrace toggle to be configured via an environment variable	 ([298d791](/../../commit/298d791))
+
 <a name="v1.6.0-1"></a>
 ### v1.6.0-1 (2017-10-01)
 
