@@ -16,7 +16,8 @@ module Pact
         method_option :broker_password, aliases: "-p", desc: "Pact Broker basic auth password", :required => false
         method_option :custom_provider_header, type: :array, banner: 'CUSTOM_PROVIDER_HEADER', desc: "Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.", :required => false
         method_option :verbose, aliases: "-v", desc: "Verbose output", :required => false
-        method_option :provider_states_url, aliases: "-s", desc: "DEPRECATED", :required => false
+        method_option :provider_states_url, aliases: "-s", :required => false, hide: true
+        method_option :format, banner: "FORMATTER", aliases: "-f", desc: "RSpec formatter. Defaults to custom Pact formatter. [j]son may also be used."
         method_option :pact_urls, aliases: "-u", desc: "DEPRECATED. Please provide as space separated arguments.", :required => false
 
         def verify(*pact_urls)

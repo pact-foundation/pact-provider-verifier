@@ -1,3 +1,5 @@
+require 'json'
+
 describe "pact-provider-verifier" do
   before(:all) do
     @pipe = IO.popen("bundle exec rackup -p 4567 spec/support/config.ru")
@@ -69,6 +71,20 @@ describe "pact-provider-verifier" do
 
     it "the output contains a message indicating that the interactions have been filtered" do
       expect(subject).to match /Filtering interactions by.*Provider state success.*There is a greeting/
+    end
+  end
+
+  context "running verification with filtered interactions" do
+
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state --format j` }
+
+    it "exits with a 0 exit code" do
+      subject
+      expect($?).to eq 0
+    end
+
+    it "the output can be parsed to json" do
+      expect(JSON.parse(subject)['examples'].size).to be > 1
     end
   end
 

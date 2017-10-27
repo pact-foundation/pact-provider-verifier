@@ -36,7 +36,7 @@ module Pact
 
         context "when the specified header already exists" do
           it "notifies the user" do
-            expect($stdout).to receive(:puts).with(/INFO: Replacing header 'Foo-Bar: wiffle' with 'Foo-Bar: foo'/)
+            expect($stderr).to receive(:puts).with(/INFO: Replacing header 'Foo-Bar: wiffle' with 'Foo-Bar: foo'/)
             middlware.call({'HTTP_FOO_BAR' => 'wiffle' })
           end
         end

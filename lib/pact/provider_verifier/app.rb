@@ -93,11 +93,12 @@ module Pact
       def verify_pact pact_url
         begin
           verify_options = {
-            :pact_helper => PROXY_PACT_HELPER,
-            :pact_uri => pact_url,
-            :backtrace => ENV['BACKTRACE'] == 'true',
-            :pact_broker_username => options.broker_username,
-            :pact_broker_password => options.broker_password
+            pact_helper: PROXY_PACT_HELPER,
+            pact_uri: pact_url,
+            backtrace: ENV['BACKTRACE'] == 'true',
+            pact_broker_username: options.broker_username,
+            pact_broker_password: options.broker_password,
+            format: options.format
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']

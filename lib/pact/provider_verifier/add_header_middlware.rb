@@ -25,7 +25,8 @@ module Pact
         if existing_value.nil?
           $stderr.puts "WARN: Adding header '#{header_name}: #{new_value}' to replayed request. This header did not exist in the pact, and hence this test cannot confirm that the request will work in real life."
         else
-          $stdout.puts "INFO: Replacing header '#{header_name}: #{existing_value}' with '#{header_name}: #{new_value}'"
+          # Don't mess up the json formatter by using stdout here
+          $stderr.puts "INFO: Replacing header '#{header_name}: #{existing_value}' with '#{header_name}: #{new_value}'"
         end
       end
     end
