@@ -1,3 +1,11 @@
+<a name="v1.8.0-1"></a>
+### v1.8.0-1 (2017-10-27)
+
+#### Features
+
+* **cli**
+  * allow --format json to be used to output spec results in json format to stdout	 ([aa7359a](/../../commit/aa7359a))
+
 <a name="v1.7.0-1"></a>
 ### v1.7.0-1 (2017-10-18)
 
