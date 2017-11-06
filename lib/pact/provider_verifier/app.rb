@@ -1,4 +1,5 @@
 require 'pact/provider_verifier/add_header_middlware'
+require 'pact/provider_verifier/custom_middleware'
 require 'pact/provider/rspec'
 require 'pact/message'
 require 'pact/cli/run_pact_verification'
@@ -54,7 +55,9 @@ module Pact
       def configure_service_provider
         # Have to declare these locally as the class scope gets lost within the block
         rack_reverse_proxy = configure_reverse_proxy
-        rack_reverse_proxy = configure_custom_header_middleware(rack_reverse_proxy)
+        rack_reverse_proxy = configure_custom_header_middlware(rack_reverse_proxy)
+        rack_reverse_proxy = configure_custom_middlware(rack_reverse_proxy)
+        puts "RACK ReverseProxy #{rack_reverse_proxy}"
 
         provider_application_version = options.provider_app_version
         publish_results  = options.publish_verification_results
@@ -92,7 +95,38 @@ module Pact
         end
       end
 
-      def verify_pact config
+      def configure_custom_middlware app
+        app_with_middlware = app
+        if options.custom_middleware && options.custom_middleware.any?
+          require_custom_middlware
+          custom_middlware_descendents.tap { |it| puts it }.each do | clazz |
+            puts "WRAPPING CLASS #{clazz}"
+            app_with_middlware = clazz.new(app_with_middlware)
+          end
+        end
+        app_with_middlware
+      end
+
+      def require_custom_middlware
+        options.custom_middleware.each do |file|
+          $stdout.puts "DEBUG: Requiring custom middleware file #{file}" if options.verbose
+          begin
+            require file
+          rescue LoadError => e
+            $stderr.puts "ERROR: #{e.class} - #{e.message}. Please specify an absolute path."
+            exit(1)
+          end
+        end
+      end
+
+      def custom_middlware_descendents
+        descendants = []
+        ObjectSpace.each_object(CustomMiddleware.singleton_class) do |k|
+          descendants.unshift k unless k == CustomMiddleware
+        end
+        descendants
+      end
+
         begin
           verify_options = {
             pact_helper: PROXY_PACT_HELPER,

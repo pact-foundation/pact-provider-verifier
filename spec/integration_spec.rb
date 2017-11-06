@@ -95,7 +95,7 @@ describe "pact-provider-verifier" do
     subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state --format j` }
 
     it "exits with a 0 exit code" do
-      subject
+      puts subject
       expect($?).to eq 0
     end
 
