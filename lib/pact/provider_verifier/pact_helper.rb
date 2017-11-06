@@ -11,3 +11,14 @@ Pact.configure do | config |
   config.provider_state_set_up = Pact::ProviderVerifier::SetUpProviderState
   config.provider_state_tear_down = -> (*args){ }
 end
+
+if ENV['MONKEYPATCH']
+  ENV['MONKEYPATCH'].split("\n").each do | file |
+    $stdout.puts "DEBUG: Requiring monkeypatch file #{file}" if ENV['VERBOSE_LOGGING']
+    begin
+      require file
+    rescue LoadError => e
+      $stderr.puts "ERROR: #{e.class} - #{e.message}. Ensure you have specified the absolute path."
+    end
+  end
+end

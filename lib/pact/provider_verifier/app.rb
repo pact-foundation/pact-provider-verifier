@@ -47,6 +47,7 @@ module Pact
         ENV['PROVIDER_STATES_SETUP_URL'] = options.provider_states_setup_url
         ENV['VERBOSE_LOGGING'] = options.verbose if options.verbose
         ENV['CUSTOM_PROVIDER_HEADER'] = custom_provider_headers_for_env_var if custom_provider_headers_for_env_var
+        ENV['MONKEYPATCH'] = options.monkeypatch.join("\n") if options.monkeypatch && options.monkeypatch.any?
       end
 
       def configure_service_provider
