@@ -1,3 +1,13 @@
+<a name="v1.9.0-1"></a>
+### v1.9.0-1 (2017-11-07)
+
+
+#### Features
+
+* **monkeypatch**
+  * allow a ruby file to be loaded in order to perform at monkeypatch	 ([96bb549](/../../commit/96bb549))
+
+
 <a name="v1.8.0-1"></a>
 ### v1.8.0-1 (2017-10-27)
 
