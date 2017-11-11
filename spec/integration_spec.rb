@@ -74,7 +74,7 @@ describe "pact-provider-verifier" do
     end
   end
 
-  context "running verification with filtered interactions" do
+  context "running verification with json output" do
 
     subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state --format j` }
 
@@ -88,6 +88,19 @@ describe "pact-provider-verifier" do
     end
   end
 
+  context "running verification with junit output" do
+
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state --format RspecJunitFormatter` }
+
+    it "exits with a 0 exit code" do
+      subject
+      expect($?).to eq 0
+    end
+
+    it "the output is xml" do
+      expect(subject).to start_with '<?xml'
+    end
+  end
 
   after(:all) do
     Process.kill 'KILL', @pipe.pid
