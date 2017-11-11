@@ -1,3 +1,12 @@
+<a name="v1.10.0-1"></a>
+### v1.10.0-1 (2017-11-11)
+
+
+#### Features
+
+* add support for --format RspecJunitFormatter	 ([2ba6439](/../../commit/2ba6439))
+
+
 <a name="v1.9.0-1"></a>
 ### v1.9.0-1 (2017-11-07)
 
