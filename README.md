@@ -11,6 +11,7 @@ binary-like CLI tool.
 * Verify Pacts against Pacts published to an http endpoint, such as a [Pact Broker](https://github.com/pact-foundation/pact_broker)
 * Verify local `*.json` Pacts on the file system
 * Works with Pact [provider states](https://docs.pact.io/documentation/provider_states.html) should you need them
+* Publishes the verification results back to the pact broker if the pact was retrieved from a broker.
 
 ## Installation
 
@@ -31,6 +32,27 @@ pact-provider-verifier <args>
 ```
 
 Run `pact-provider-verifier help` for command line options.
+
+## Usage
+
+```
+Usage:
+  pact-provider-verifier PACT_URL ... -h, --provider-base-url=PROVIDER_BASE_URL
+
+Options:
+  -h, --provider-base-url=PROVIDER_BASE_URL                          # Provider host URL
+  -c, [--provider-states-setup-url=PROVIDER_STATES_SETUP_URL]        # Base URL to setup the provider states at
+  -a, [--provider-app-version=PROVIDER_APP_VERSION]                  # Provider application version, required when publishing verification results
+  -r, [--publish-verification-results=PUBLISH_VERIFICATION_RESULTS]  # Publish verification results to the broker
+  -n, [--broker-username=BROKER_USERNAME]                            # Pact Broker basic auth username
+  -p, [--broker-password=BROKER_PASSWORD]                            # Pact Broker basic auth password
+      [--custom-provider-header=CUSTOM_PROVIDER_HEADER]              # Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.
+  -v, [--verbose=VERBOSE]                                            # Verbose output
+  -f, [--format=FORMATTER]                                           # RSpec formatter. Defaults to custom Pact formatter. json and RspecJunitFormatter may also be used.
+  -u, [--pact-urls=PACT_URLS]                                        # DEPRECATED. Please provide as space separated arguments.
+
+Verify pact(s) against a provider. Supports local and networked (http-based) files.
+```
 
 ## Examples
 
