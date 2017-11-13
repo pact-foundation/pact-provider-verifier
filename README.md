@@ -48,10 +48,16 @@ bundle install
 
 1. Create an API and a corresponding Docker image for it
 1. Publish Pacts to the Pact broker (or create local ones)
-1. Run the CLI tool for your OS, passing the appropriate flags:
-   * `--pact_urls` - a comma delimited list of local Pact file urls or Pact Broker URLs.
-   * `--provider_base_url` - the base url of the pact provider (i.e. your API)
-1.
+1. Run the CLI tool for your OS, passing the appropriate arguments:
+   * a space delimited list of local Pact file URLs or Pact Broker URLs.
+   * `--provider-base-url` - the base url of the provider (i.e. your API)
+
+eg.
+
+```
+pact-provider-verifier foo-bar.json --provider-base-url http://localhost:9292
+
+```
 
 ### Setting a custom Authentication header
 
@@ -61,17 +67,22 @@ Modification of the request headers is sometimes necessary, but be aware that an
 
 ### API with Provider States
 
-Execute pact provider verification against a provider which implements the following:
+Read the [Provider States section on docs.pact.io](https://docs.pact.io/documentation/provider_states.html) for an introduction to provider states.
 
-* an http POST endpoint (`--provider-states-setup-url`) which sets the active pact consumer and provider state accepting two parameters: `consumer` and `state` and returns an HTTP `200` eg.
+To allow the correct data to be set up before each interaction is replayed, you will need to create an HTTP endpoint (which may or may not actually be in the same application as your provider) that accepts a JSON document that looks like:
 
-		consumer=web&state=customer%20is%20logged%20in
+```json
+{
+  "consumer": "CONSUMER_NAME",
+  "state": "PROVIDER_STATE"
+}
+```
 
-The following flags are required:
+The endpoint should set up the given provider state for the given consumer synchronously, and return an error if the provider state is not recognised. Namespacing your provider states within each consumer will avoid clashes if more than one consumer defines the same provider state with different data.
 
-* `--pact-urls` - a comma delimited list of pact file urls
-* `--provider-base-url` - the base url of the pact provider
-* `--provider-states-setup-url` - the full url of the endpoint which sets the active pact consumer and provider state
+The following flag is then required when running the CLI:
+
+* `--provider-states-setup-url` - the full url of the endpoint which sets the active consumer and provider state.
 
 ### Using the Pact Broker with Basic authentication
 
