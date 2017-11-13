@@ -21,7 +21,7 @@ Take a look at https://github.com/DiUS/pact-provider-verifier-docker.
 
 ### Native Installation
 
-Download the appropriate [release](https://github.com/pact-foundation/pact-provider-verifier/releases)
+Download the appropriate [release](https://github.com/pact-foundation/pact-ruby-standalone/releases)
 for your OS and put somewhere on your `PATH`.
 
 ### With Ruby on Mac OSX and Linux
