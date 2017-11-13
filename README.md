@@ -78,7 +78,6 @@ eg.
 
 ```
 pact-provider-verifier foo-bar.json --provider-base-url http://localhost:9292
-
 ```
 
 ### Setting a custom Authentication header
