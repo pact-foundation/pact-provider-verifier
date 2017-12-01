@@ -101,11 +101,11 @@ To allow the correct data to be set up before each interaction is replayed, you 
 
 The endpoint should set up the given provider state for the given consumer synchronously, and return an error if the provider state is not recognised. Namespacing your provider states within each consumer will avoid clashes if more than one consumer defines the same provider state with different data.
 
-Rather than tearing down the specific test data created after each interaction, you should clear all the existing data at the start of each set up call. This is a more reliable method of ensuring that your test data does not leak from one test to another.
-
-The following flag is then required when running the CLI:
+The following flag is required when running the CLI:
 
 * `--provider-states-setup-url` - the full url of the endpoint which sets the active consumer and provider state.
+
+Rather than tearing down the specific test data created after each interaction, you should clear all the existing data at the start of each set up call. This is a more reliable method of ensuring that your test data does not leak from one test to another.
 
 ### Using the Pact Broker with Basic authentication
 
