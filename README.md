@@ -90,7 +90,7 @@ Modification of the request headers is sometimes necessary, but be aware that an
 
 Read the [Provider States section on docs.pact.io](https://docs.pact.io/documentation/provider_states.html) for an introduction to provider states.
 
-To allow the correct data to be set up before each interaction is replayed, you will need to create an HTTP endpoint (which may or may not actually be in the same application as your provider) that accepts a JSON document that looks like:
+To allow the correct data to be set up before each interaction is replayed, you will need to create a dev/test only HTTP endpoint that accepts a JSON document that looks like:
 
 ```json
 {
@@ -106,6 +106,8 @@ The following flag is required when running the CLI:
 * `--provider-states-setup-url` - the full url of the endpoint which sets the active consumer and provider state.
 
 Rather than tearing down the specific test data created after each interaction, you should clear all the existing data at the start of each set up call. This is a more reliable method of ensuring that your test data does not leak from one test to another.
+
+Note that the HTTP endpoint does not have to actually be within your application - it just has to have access to the same data store. So if you cannot add "test only" endpoints during your verification, consider making a separate app which shares credentials to your app's datastore. It is highly recommended that you run your verifications against a locally running provider, rather than a deployed one, as this will make it much easier to stub any downstream calls, debug issues, and it will make your tests run as fast as possible.
 
 ### Using the Pact Broker with Basic authentication
 
