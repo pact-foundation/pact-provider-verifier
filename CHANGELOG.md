@@ -1,3 +1,12 @@
+<a name="v1.11.0-1"></a>
+### v1.11.0-1 (2017-12-07)
+
+
+#### Features
+
+* maintain path portion of specified provider base URL	 ([b765b00](/../../commit/b765b00))
+
+
 <a name="v1.10.0-1"></a>
 ### v1.10.0-1 (2017-11-11)
 
