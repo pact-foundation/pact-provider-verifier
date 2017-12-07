@@ -79,7 +79,7 @@ module Pact
             preserve_host: true,
             x_forwarded_headers: false
           )
-          reverse_proxy '/', provider_base_url
+          reverse_proxy /(.*)/, "#{provider_base_url}$1"
         end
       end
 

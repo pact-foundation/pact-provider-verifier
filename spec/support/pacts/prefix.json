@@ -1,0 +1,26 @@
+{
+  "consumer": {
+    "name": "me"
+  },
+  "provider": {
+    "name": "they"
+  },
+  "interactions": [
+    {
+      "description": "Greeting",
+      "request": {
+        "method": "GET",
+        "path": "/foo"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "greeting": "Hello"
+        }
+      }
+    }]
+  ,
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}
