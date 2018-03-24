@@ -1,3 +1,12 @@
+<a name="v1.12.0-1"></a>
+### v1.12.0-1 (2018-03-24)
+
+
+#### Features
+
+* add message pact verification support - alpha release only	 ([69cd7e9](/../../commit/69cd7e9))
+
+
 <a name="v1.11.0-1"></a>
 ### v1.11.0-1 (2017-12-07)
 
