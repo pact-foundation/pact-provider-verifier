@@ -1,5 +1,6 @@
 require 'pact/provider_verifier/add_header_middlware'
 require 'pact/provider/rspec'
+require 'pact/message'
 require 'pact/cli/run_pact_verification'
 require 'rack/reverse_proxy'
 require 'faraday_middleware'
