@@ -1,3 +1,12 @@
+<a name="v1.13.0-1"></a>
+### v1.13.0-1 (2018-04-05)
+
+
+#### Bug Fixes
+
+* ensure v3 message matching rules are loaded correctly	 ([48f29a1](/../../commit/48f29a1))
+
+
 <a name="v1.12.0-1"></a>
 ### v1.12.0-1 (2018-03-24)
 
