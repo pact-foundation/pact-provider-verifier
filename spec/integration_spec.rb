@@ -1,4 +1,5 @@
 require 'json'
+require 'fileutils'
 
 describe "pact-provider-verifier" do
   before(:all) do
@@ -99,6 +100,19 @@ describe "pact-provider-verifier" do
 
     it "the output is xml" do
       expect(subject).to start_with '<?xml'
+    end
+  end
+
+  context "running verification with json output to a file" do
+    before do
+      FileUtils.rm_rf 'tmp/out.json'
+    end
+
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state --format json --out tmp/out.json` }
+
+    it "the json output is written to the file" do
+      subject
+      expect(JSON.parse(File.read('tmp/out.json'))).to be_a(Hash)
     end
   end
 

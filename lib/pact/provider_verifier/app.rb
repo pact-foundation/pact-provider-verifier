@@ -100,7 +100,8 @@ module Pact
             backtrace: ENV['BACKTRACE'] == 'true',
             pact_broker_username: options.broker_username,
             pact_broker_password: options.broker_password,
-            format: options.format
+            format: options.format,
+            out: options.out
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
