@@ -1,3 +1,12 @@
+<a name="v1.14.0-1"></a>
+### v1.14.0-1 (2018-04-16)
+
+
+#### Features
+
+* add --out option to CLI to allow test results to be written to a file	 ([8be3367](/../../commit/8be3367))
+
+
 <a name="v1.13.0-1"></a>
 ### v1.13.0-1 (2018-04-05)
 
