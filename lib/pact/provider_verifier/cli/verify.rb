@@ -18,9 +18,9 @@ module Pact
         method_option :monkeypatch, hide: true, type: :array, :required => false
         method_option :verbose, aliases: "-v", desc: "Verbose output", :required => false
         method_option :provider_states_url, aliases: "-s", :required => false, hide: true
-        method_option :format, banner: "FORMATTER", aliases: "-f", desc: "RSpec formatter. Defaults to custom Pact formatter. json and RspecJunitFormatter may also be used."
-        method_option :pact_urls, aliases: "-u", desc: "DEPRECATED. Please provide as space separated arguments.", :required => false
+        method_option :format, banner: "FORMATTER", aliases: "-f", desc: "RSpec formatter. Defaults to custom Pact formatter. Other options are json and RspecJunitFormatter (which outputs xml)."
         method_option :out, aliases: "-o", banner: "FILE", desc: "Write output to a file instead of $stdout."
+        method_option :pact_urls, aliases: "-u", hide: true, :required => false
 
         def verify(*pact_urls)
           print_deprecation_warnings
