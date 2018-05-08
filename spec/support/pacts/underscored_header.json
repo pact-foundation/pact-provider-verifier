@@ -1,0 +1,26 @@
+{
+  "consumer": {
+    "name": "Foo"
+  },
+  "provider": {
+    "name": "Bar"
+  },
+  "interactions": [
+    {
+      "description": "Greeting",
+      "request": {
+        "method": "GET",
+        "path": "/foo",
+        "headers": {
+          "access_token": "123"
+        }
+      },
+      "response": {
+        "status": 200
+      }
+    }]
+  ,
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}

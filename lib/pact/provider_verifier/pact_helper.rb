@@ -4,6 +4,7 @@ require 'json'
 require_relative './app'
 require_relative 'set_up_provider_state'
 require 'pact/provider/configuration'
+require 'pact/provider_verifier/underscored_headers_monkeypatch.rb'
 
 # Responsible for making the call to the provider state server to set up the state
 
