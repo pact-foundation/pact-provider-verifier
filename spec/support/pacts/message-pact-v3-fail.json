@@ -3,7 +3,7 @@
   "provider": {"name": "Bar"},
   "messages": [{
     "description": "a test message",
-    "content": {
+    "contents": {
       "text": "Hello world!!!"
     }
   }
