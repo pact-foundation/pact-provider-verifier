@@ -18,7 +18,7 @@ class MessageCreator
   def create message_descriptor
     message_creation_method = message_descriptor.description.downcase.gsub(' ', '_').to_sym
     message_content = @provider.send(message_creation_method)
-    { content: message_content }
+    { contents: message_content }
   end
 end
 
