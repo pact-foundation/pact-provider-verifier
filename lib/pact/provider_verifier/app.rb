@@ -40,7 +40,6 @@ module Pact
       def setup
         print_deprecation_note
         set_environment_variables
-        configure_service_provider
         require_pact_project_pact_helper # Beth: not sure if this is needed, hangover from pact-provider-proxy?
       end
 
@@ -106,10 +105,22 @@ module Pact
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
 
+          reset_pact_configuration
+          # Really, this should call the PactSpecRunner directly, rather than using the CLI class.
           Cli::RunPactVerification.call(verify_options)
         rescue SystemExit => e
           e.status
         end
+      end
+
+      def reset_pact_configuration
+        require 'pact/configuration'
+        require 'pact/consumer/world'
+        require 'pact/provider/world'
+        Pact.clear_configuration
+        Pact.clear_consumer_world
+        Pact.clear_provider_world
+        configure_service_provider
       end
 
       def require_pact_project_pact_helper
