@@ -1,3 +1,12 @@
+<a name="v1.14.4-1"></a>
+### v1.14.4-1 (2018-07-10)
+
+
+#### Bug Fixes
+
+* ensure all json results are sent to stdout when multiple pacts are verified	 ([7662df0](/../../commit/7662df0))
+
+
 <a name="v1.14.1-1"></a>
 ### v1.14.1-1 (2018-05-08)
 
