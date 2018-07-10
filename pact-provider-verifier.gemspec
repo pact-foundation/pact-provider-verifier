@@ -6,8 +6,8 @@ require 'pact/provider_verifier/version'
 Gem::Specification.new do |gem|
   gem.name          = "pact-provider-verifier"
   gem.version       = Pact::ProviderVerifier::VERSION
-  gem.authors       = ["Matt Fellows"]
-  gem.email         = ["m@onegeek.com.au"]
+  gem.authors       = ["Matt Fellows", "Beth Skurrie"]
+  gem.email         = ["m@onegeek.com.au", "beth@bethesque.com"]
   gem.summary       = %q{Provides a Pact verification service for use with Pact}
   gem.homepage      = "https://github.com/pact-foundation/pact-provider-verifier"
   gem.description   = %q{A cross-platform Pact verification tool to validate API Providers.
