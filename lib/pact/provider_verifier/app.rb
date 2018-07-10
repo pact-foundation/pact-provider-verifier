@@ -54,7 +54,7 @@ module Pact
       def configure_service_provider
         # Have to declare these locally as the class scope gets lost within the block
         rack_reverse_proxy = configure_reverse_proxy
-        rack_reverse_proxy = configure_custom_header_middlware(rack_reverse_proxy)
+        rack_reverse_proxy = configure_custom_header_middleware(rack_reverse_proxy)
 
         provider_application_version = options.provider_app_version
         publish_results  = options.publish_verification_results
@@ -84,7 +84,7 @@ module Pact
         end
       end
 
-      def configure_custom_header_middlware rack_reverse_proxy
+      def configure_custom_header_middleware rack_reverse_proxy
         if options.custom_provider_header
           Pact::ProviderVerifier::AddHeaderMiddlware.new(rack_reverse_proxy, parse_header)
         else
