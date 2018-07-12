@@ -1,3 +1,12 @@
+<a name="v1.15.0-1"></a>
+### v1.15.0-1 (2018-07-13)
+
+
+#### Features
+
+* print a new line between JSON documents when using --format json	 ([dc90d8e](/../../commit/dc90d8e))
+
+
 <a name="v1.14.4-1"></a>
 ### v1.14.4-1 (2018-07-10)
 
