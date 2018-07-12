@@ -51,14 +51,14 @@ describe "pact-provider-verifier" do
     subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json ./test/me-they.json --format json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state` }
 
     it "sends the results of both pacts to stdout" do
-      expect(subject).to include "}{"
+      expect(subject).to include "}\n{"
       expect(subject.scan(/\d examples, \d failure/).count).to eq 2
     end
 
     it "allows the results to be split and parsed to JSON" do
-      result_1, result_2 = subject.split("}{", 2)
-      JSON.parse(result_1 + "}")
-      JSON.parse("{" + result_2)
+      result_1, result_2 = subject.split("\n", 2)
+      JSON.parse(result_1)
+      JSON.parse(result_2)
     end
   end
 

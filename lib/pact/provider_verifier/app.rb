@@ -40,6 +40,7 @@ module Pact
       def setup
         print_deprecation_note
         set_environment_variables
+        require_rspec_monkeypatch_for_jsonl
         require_pact_project_pact_helper # Beth: not sure if this is needed, hangover from pact-provider-proxy?
       end
 
@@ -125,6 +126,12 @@ module Pact
 
       def require_pact_project_pact_helper
         require ENV['PACT_PROJECT_PACT_HELPER'] if ENV.fetch('PACT_PROJECT_PACT_HELPER','') != ''
+      end
+
+      def require_rspec_monkeypatch_for_jsonl
+        if options.format == 'json'
+          require 'pact/provider_verifier/rspec_json_formatter_monkeypatch'
+        end
       end
 
       def custom_provider_headers_for_env_var
