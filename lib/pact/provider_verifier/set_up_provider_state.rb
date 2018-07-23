@@ -92,7 +92,7 @@ module Pact
 
       def log_request
         if verbose?
-          $stdout.puts "DEBUG: Setting up provider state '#{provider_state}' for consumer '#{consumer}' using provider state server at #{provider_states_setup_url}"
+          $stdout.puts "DEBUG: Setting up provider state '#{provider_state}' for consumer '#{consumer}' using provider state set up URL #{provider_states_setup_url}"
         end
       end
 
