@@ -2,6 +2,7 @@ require 'pact/provider_verifier/add_header_middlware'
 require 'pact/provider/rspec'
 require 'pact/message'
 require 'pact/cli/run_pact_verification'
+require 'pact/provider_verifier/aggregate_pact_configs'
 require 'rack/reverse_proxy'
 require 'faraday_middleware'
 require 'json'
@@ -16,6 +17,7 @@ module Pact
       def initialize pact_urls, options = {}
         @pact_urls = pact_urls
         @options = options
+        @consumer_version_tags = options[:consumer_version_tag] || []
       end
 
       def self.call pact_urls, options
@@ -25,7 +27,7 @@ module Pact
       def call
         setup
 
-        exit_statuses = pact_urls.collect do |pact_url|
+        exit_statuses = all_pact_urls.collect do |pact_url|
           verify_pact pact_url
         end
 
@@ -35,7 +37,7 @@ module Pact
 
       private
 
-      attr_reader :pact_urls, :options
+      attr_reader :pact_urls, :options, :consumer_version_tags
 
       def setup
         print_deprecation_note
@@ -92,16 +94,17 @@ module Pact
         end
       end
 
-      def verify_pact pact_url
+      def verify_pact config
         begin
           verify_options = {
             pact_helper: PROXY_PACT_HELPER,
-            pact_uri: pact_url,
+            pact_uri: config.uri,
             backtrace: ENV['BACKTRACE'] == 'true',
             pact_broker_username: options.broker_username,
             pact_broker_password: options.broker_password,
             format: options.format,
-            out: options.out
+            out: options.out,
+            wip: config.wip
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
@@ -122,6 +125,11 @@ module Pact
         Pact.clear_consumer_world
         Pact.clear_provider_world
         configure_service_provider
+      end
+
+      def all_pact_urls
+        http_client_options = { username: options.broker_username, password: options.broker_password }
+        AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, options.pact_broker_base_url, http_client_options)
       end
 
       def require_pact_project_pact_helper

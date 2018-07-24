@@ -29,6 +29,10 @@ class Provider < Sinatra::Base
     @logger.info "#{response.status} #{response.body}"
   end
 
+  not_found do
+    status 404
+  end
+
   error do
     e = env['sinatra.error']
     @logger.error "#{e.class} #{e.message} #{e.backtrace.join("\n")}"
