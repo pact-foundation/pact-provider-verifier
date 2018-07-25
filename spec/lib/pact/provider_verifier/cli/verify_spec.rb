@@ -6,13 +6,16 @@ module Pact
     module CLI
       describe Verify do
         before do
-          allow(Pact::ProviderVerifier::App).to receive(:call)
+          allow(Pact::ProviderVerifier::App).to receive(:call).and_return(success)
           subject.options = OpenStruct.new(minimum_valid_options)
         end
 
+        let(:success) { true }
+        let(:wip) { 'wip' }
         let(:minimum_valid_options) do
           {
-            provider_base_url: 'http://base'
+            provider_base_url: 'http://base',
+            wip: wip
           }
         end
         let(:pact_urls) { ['pact1.json', 'pact2.json'] }
@@ -23,6 +26,19 @@ module Pact
           expect(Pact::ProviderVerifier::App).to receive(:call).with(
             pact_urls, OpenStruct.new(minimum_valid_options))
           invoke_verify
+        end
+
+        context "when --wip is not specified and App.call returns false" do
+          let(:success) { false }
+          let(:wip) { nil }
+
+          it "exits with an error code" do
+            begin
+              invoke_verify
+              fail "This line should not be executed"
+            rescue SystemExit
+            end
+          end
         end
 
         context "with a pact broker config" do

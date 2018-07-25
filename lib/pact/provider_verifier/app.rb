@@ -30,8 +30,7 @@ module Pact
           verify_pact pact_url
         end
 
-        # Return non-zero exit code if failures - increment for each Pact
-        exit exit_statuses.count{ | status | status != 0 }
+        exit_statuses.all?{ | status | status == 0 }
       end
 
       private

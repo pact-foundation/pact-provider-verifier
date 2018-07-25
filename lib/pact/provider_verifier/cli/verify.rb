@@ -26,12 +26,14 @@ module Pact
         method_option :provider_states_url, aliases: "-s", :required => false, hide: true
         method_option :format, banner: "FORMATTER", aliases: "-f", desc: "RSpec formatter. Defaults to custom Pact formatter. Other options are json and RspecJunitFormatter (which outputs xml)."
         method_option :out, aliases: "-o", banner: "FILE", desc: "Write output to a file instead of $stdout."
+        method_option :wip, type: :boolean, default: false, desc: "If WIP, process will always exit with exit code 0", hide: true
         method_option :pact_urls, aliases: "-u", hide: true, :required => false
 
         def verify(*pact_urls)
           validate_verify
           print_deprecation_warnings
-          Pact::ProviderVerifier::App.call(merged_urls(pact_urls), options)
+          success = Pact::ProviderVerifier::App.call(merged_urls(pact_urls), options)
+          exit_with_non_zero_status if !success && !options.wip
         end
 
         default_task :verify
@@ -58,6 +60,14 @@ module Pact
             if options.pact_broker_base_url && (options.provider.nil? || options.provider == "")
               raise InvalidArgumentsError, "No value provided for required option '--provider'"
             end
+          end
+
+          def exit_with_non_zero_status
+            exit 1
+          end
+
+          def exit_on_failure?
+            true
           end
         end
       end
