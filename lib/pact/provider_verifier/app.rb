@@ -9,7 +9,6 @@ require 'json'
 
 module Pact
   module ProviderVerifier
-
     class App
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
