@@ -27,23 +27,23 @@ module Pact
 
       def pacts_urls_from_broker
         if pact_broker_base_url && provider_name
-          net_wip_pact_uris.collect{ | uri| OpenStruct.new(uri: uri, wip: true) } +
-            non_wip_pact_uris.collect{ | uri| OpenStruct.new(uri: uri) }
+          net_pending_pact_uris.collect{ | uri| OpenStruct.new(uri: uri, pending: true) } +
+            non_pending_pact_uris.collect{ | uri| OpenStruct.new(uri: uri) }
         else
           []
         end
       end
 
-      def non_wip_pact_uris
-        @non_wip_pact_uris ||= Pact::PactBroker.fetch_pact_uris(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
+      def non_pending_pact_uris
+        @non_pending_pact_uris ||= Pact::PactBroker.fetch_pact_uris(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
       end
 
-      def wip_pact_uris
-        @wip_pact_uris ||= Pact::PactBroker.fetch_wip_pact_uris(provider_name, pact_broker_base_url, http_client_options)
+      def pending_pact_uris
+        @pending_pact_uris ||= Pact::PactBroker.fetch_pending_pact_uris(provider_name, pact_broker_base_url, http_client_options)
       end
 
-      def net_wip_pact_uris
-        wip_pact_uris - non_wip_pact_uris
+      def net_pending_pact_uris
+        pending_pact_uris - non_pending_pact_uris
       end
     end
   end

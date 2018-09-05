@@ -102,7 +102,7 @@ module Pact
             pact_broker_password: options.broker_password,
             format: options.format,
             out: options.out,
-            wip: config.wip
+            ignore_failures: config.pending
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']

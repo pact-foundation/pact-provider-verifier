@@ -12,15 +12,17 @@ module Pact
 
         let(:pact_uris) { ["http://pact-2"] }
 
-        let(:wip_pact_uris) { ["http://pact-2", "http://pact-3"] }
+        let(:pending_pact_uris) { ["http://pact-2", "http://pact-3"] }
+        let(:pact_broker_api) { class_double(Pact::PactBroker).as_stubbed_const }
 
         subject { AggregatePactConfigs.call(pact_urls, provider_name, consumer_version_tags, pact_broker_base_url, http_client_options) }
+
 
         context "with no broker config" do
           let(:pact_broker_base_url) { nil }
 
           it "does not make a call to a Pact Broker" do
-            expect(Pact::PactBroker).to_not receive(:fetch_pact_uris)
+            expect(pact_broker_api).to_not receive(:fetch_pact_uris)
             subject
           end
 
@@ -31,25 +33,25 @@ module Pact
 
         context "with broker config" do
           before do
-            allow(Pact::PactBroker).to receive(:fetch_pact_uris).and_return(pact_uris)
-            allow(Pact::PactBroker).to receive(:fetch_wip_pact_uris).and_return(wip_pact_uris)
+            allow(pact_broker_api).to receive(:fetch_pact_uris).and_return(pact_uris)
+            allow(pact_broker_api).to receive(:fetch_pending_pact_uris).and_return(pending_pact_uris)
           end
 
-          it "fetches the non wip pacts" do
-            expect(Pact::PactBroker).to receive(:fetch_pact_uris).with(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
+          it "fetches the non pending pacts" do
+            expect(pact_broker_api).to receive(:fetch_pact_uris).with(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
             subject
           end
 
-          it "fetches the wip pacts" do
-            expect(Pact::PactBroker).to receive(:fetch_wip_pact_uris).with(provider_name, pact_broker_base_url, http_client_options)
+          it "fetches the pending pacts" do
+            expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with(provider_name, pact_broker_base_url, http_client_options)
             subject
           end
 
-          it "returns the wip urls first, with the non-wip pact URLs removed" do
-            expect(subject.first).to eq OpenStruct.new(uri: "http://pact-3", wip: true)
+          it "returns the pending urls first, with the non-pending pact URLs removed" do
+            expect(subject.first).to eq OpenStruct.new(uri: "http://pact-3", pending: true)
           end
 
-          it "returns the wip urls next" do
+          it "returns the pending urls next" do
             expect(subject[1]).to eq OpenStruct.new(uri: "http://pact-2")
           end
 

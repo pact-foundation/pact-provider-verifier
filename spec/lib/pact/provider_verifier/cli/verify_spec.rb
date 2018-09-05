@@ -11,11 +11,11 @@ module Pact
         end
 
         let(:success) { true }
-        let(:wip) { 'wip' }
+        let(:ignore_failures) { 'ignore_failures' }
         let(:minimum_valid_options) do
           {
             provider_base_url: 'http://base',
-            wip: wip
+            ignore_failures: ignore_failures
           }
         end
         let(:pact_urls) { ['pact1.json', 'pact2.json'] }
@@ -28,9 +28,9 @@ module Pact
           invoke_verify
         end
 
-        context "when --wip is not specified and App.call returns false" do
+        context "when --ignore-failures is not specified and App.call returns false" do
           let(:success) { false }
-          let(:wip) { nil }
+          let(:ignore_failures) { nil }
 
           it "exits with an error code" do
             begin
