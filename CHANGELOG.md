@@ -1,3 +1,13 @@
+<a name="v1.16.0-1"></a>
+### v1.16.0-1 (2018-07-24)
+
+
+#### Features
+
+* allow pacts to be fetched from a Pact Broker by provider name, including WIP pacts.	 ([0b80528](/../../commit/0b80528))
+* correct debug message regarding provider state URL	 ([d134ba6](/../../commit/d134ba6))
+
+
 <a name="v1.15.0-1"></a>
 ### v1.15.0-1 (2018-07-13)
 
