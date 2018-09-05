@@ -1,3 +1,12 @@
+<a name="v1.17.0-1"></a>
+### v1.17.0-1 (2018-09-06)
+
+
+#### Features
+
+* rename wip in CLI to ignore-failures and wip pacts to pending pacts	 ([bf9ed81](/../../commit/bf9ed81))
+
+
 <a name="v1.16.1-1"></a>
 ### v1.16.1-1 (2018-09-05)
 
