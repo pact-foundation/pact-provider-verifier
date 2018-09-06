@@ -4,14 +4,18 @@ describe "pact-provider-verifier with basic auth" do
     sleep 2
   end
 
-  context "with --custom-provider-header specified" do
+  context "with --custom-middleware specified" do
 
-    subject { `bundle exec bin/pact-provider-verifier spec/support/pacts/needs-custom-auth.json --custom-middleware #{Dir.pwd}/spec/support/custom_middleware.rb -a 1.0.100 --provider-base-url http://localhost:4570 2>&1` }
+    subject { `bundle exec bin/pact-provider-verifier spec/support/pacts/needs-custom-auth.json --custom-middleware #{Dir.pwd}/spec/support/custom_middleware.rb -a 1.0.100 --provider-base-url http://localhost:4570 -v 2>&1` }
 
-    it "exits with a 0 exit code" do
+
+    it "can modify the request" do
       subject
-      puts subject
       expect($?).to eq 0
+    end
+
+    it "can access the provider state information" do
+      expect(subject).to include "The provider state name is 'custom authorization is required'"
     end
 
     it "the output contains a success message" do

@@ -1,4 +1,6 @@
 require 'pact/provider_verifier/add_header_middlware'
+require 'pact/provider_verifier/provider_states/add_provider_states_header'
+require 'pact/provider_verifier/provider_states/remove_provider_states_header_middleware'
 require 'pact/provider_verifier/custom_middleware'
 require 'pact/provider/rspec'
 require 'pact/message'
@@ -54,16 +56,17 @@ module Pact
 
       def configure_service_provider
         # Have to declare these locally as the class scope gets lost within the block
-        rack_reverse_proxy = configure_reverse_proxy
-        rack_reverse_proxy = configure_custom_header_middleware(rack_reverse_proxy)
-        rack_reverse_proxy = configure_custom_middlware(rack_reverse_proxy)
+        application = configure_reverse_proxy
+        application = configure_provider_states_header_removal_middleware(application)
+        application = configure_custom_middleware(application)
+        application = configure_custom_header_middleware(application)
 
         provider_application_version = options.provider_app_version
         publish_results  = options.publish_verification_results
 
         Pact.service_provider "Running Provider Application" do
           app do
-            rack_reverse_proxy
+            application
           end
 
           if provider_application_version
@@ -94,13 +97,17 @@ module Pact
         end
       end
 
-      def configure_custom_middlware app
+      def configure_custom_middleware app
         if options.custom_middleware && options.custom_middleware.any?
           require_custom_middlware
           apply_custom_middleware(app)
         else
           app
         end
+      end
+
+      def configure_provider_states_header_removal_middleware app
+        ProviderStates::RemoveProviderStatesHeaderMiddleware.new(app)
       end
 
       def require_custom_middlware
@@ -132,7 +139,8 @@ module Pact
             pact_broker_password: options.broker_password,
             format: options.format,
             out: options.out,
-            ignore_failures: config.pending
+            ignore_failures: config.pending,
+            request_customizer: ProviderStates::AddProviderStatesHeader
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
@@ -191,3 +199,5 @@ module Pact
     end
   end
 end
+
+
