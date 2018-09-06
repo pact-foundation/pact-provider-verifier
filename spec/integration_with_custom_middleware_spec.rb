@@ -6,7 +6,7 @@ describe "pact-provider-verifier with basic auth" do
 
   context "with --custom-provider-header specified" do
 
-    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json --custom-middleware #{Dir.pwd}/spec/support/custom_middlware.rb -a 1.0.100 --provider-base-url http://localhost:4570 --provider_states_setup_url http://localhost:4570/provider-state 2>&1` }
+    subject { `bundle exec bin/pact-provider-verifier spec/support/pacts/needs-custom-auth.json --custom-middleware #{Dir.pwd}/spec/support/custom_middleware.rb -a 1.0.100 --provider-base-url http://localhost:4570 2>&1` }
 
     it "exits with a 0 exit code" do
       subject
@@ -15,7 +15,7 @@ describe "pact-provider-verifier with basic auth" do
     end
 
     it "the output contains a success message" do
-      expect(subject).to include "2 interactions, 0 failures"
+      expect(subject).to include "0 failures"
     end
   end
 

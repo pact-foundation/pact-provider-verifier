@@ -55,9 +55,8 @@ module Pact
       def configure_service_provider
         # Have to declare these locally as the class scope gets lost within the block
         rack_reverse_proxy = configure_reverse_proxy
-        rack_reverse_proxy = configure_custom_header_middlware(rack_reverse_proxy)
+        rack_reverse_proxy = configure_custom_header_middleware(rack_reverse_proxy)
         rack_reverse_proxy = configure_custom_middlware(rack_reverse_proxy)
-        puts "RACK ReverseProxy #{rack_reverse_proxy}"
 
         provider_application_version = options.provider_app_version
         publish_results  = options.publish_verification_results
@@ -96,15 +95,12 @@ module Pact
       end
 
       def configure_custom_middlware app
-        app_with_middlware = app
         if options.custom_middleware && options.custom_middleware.any?
           require_custom_middlware
-          custom_middlware_descendents.tap { |it| puts it }.each do | clazz |
-            puts "WRAPPING CLASS #{clazz}"
-            app_with_middlware = clazz.new(app_with_middlware)
-          end
+          apply_custom_middleware(app)
+        else
+          app
         end
-        app_with_middlware
       end
 
       def require_custom_middlware
@@ -119,14 +115,14 @@ module Pact
         end
       end
 
-      def custom_middlware_descendents
-        descendants = []
-        ObjectSpace.each_object(CustomMiddleware.singleton_class) do |k|
-          descendants.unshift k unless k == CustomMiddleware
+      def apply_custom_middleware app
+        CustomMiddleware.descendants.inject(app) do | app, clazz |
+          Pact.configuration.output_stream.puts "INFO: Adding custom middleware #{clazz}"
+          clazz.new(app)
         end
-        descendants
       end
 
+      def verify_pact(config)
         begin
           verify_options = {
             pact_helper: PROXY_PACT_HELPER,
