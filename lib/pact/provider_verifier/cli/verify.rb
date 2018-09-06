@@ -17,7 +17,7 @@ module Pact
         method_option :broker_username, aliases: "-n", desc: "Pact Broker basic auth username", :required => false
         method_option :broker_password, aliases: "-p", desc: "Pact Broker basic auth password", :required => false
         method_option :provider, required: false
-        method_option :consumer_version_tag, type: :array, banner: "TAG", desc: "Retrieve the latest pacts with this consumer version tag. Used in conjuction with --provider. May be specified multiple times.", :required => false
+        method_option :consumer_version_tag, type: :array, banner: "TAG", desc: "Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.", :required => false
         method_option :provider_app_version, aliases: "-a", desc: "Provider application version, required when publishing verification results", :required => false
         method_option :publish_verification_results, aliases: "-r", desc: "Publish verification results to the broker", required: false
         method_option :custom_provider_header, type: :array, banner: 'CUSTOM_PROVIDER_HEADER', desc: "Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.", :required => false
