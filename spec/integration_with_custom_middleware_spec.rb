@@ -5,9 +5,7 @@ describe "pact-provider-verifier with basic auth" do
   end
 
   context "with --custom-middleware specified" do
-
     subject { `bundle exec bin/pact-provider-verifier spec/support/pacts/needs-custom-auth.json --custom-middleware #{Dir.pwd}/spec/support/custom_middleware.rb -a 1.0.100 --provider-base-url http://localhost:4570 -v 2>&1` }
-
 
     it "can modify the request" do
       subject
