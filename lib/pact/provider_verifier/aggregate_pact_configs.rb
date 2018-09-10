@@ -43,7 +43,11 @@ module Pact
       end
 
       def net_pending_pact_uris
-        pending_pact_uris - non_pending_pact_uris
+        if ENV['PACT_INCLUDE_PENDING'] == 'true'
+          pending_pact_uris - non_pending_pact_uris
+        else
+          []
+        end
       end
     end
   end
