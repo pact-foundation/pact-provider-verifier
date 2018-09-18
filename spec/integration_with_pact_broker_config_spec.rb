@@ -5,6 +5,8 @@ describe "pact-provider-verifier with pact broker config" do
     allow(pact_broker_api).to receive(:fetch_pact_uris).and_return(pact_uris)
     allow(pact_broker_api).to receive(:fetch_pending_pact_uris).and_return(pending_pact_uris)
     allow(Pact::Cli::RunPactVerification).to receive(:call)
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with('PACT_INCLUDE_PENDING').and_return('true')
   end
 
   let(:args) { %W{pact-provider-verifier --provider Foo --consumer-version-tag master --consumer-version-tag prod --pact-broker-base-url http://localhost:5738 --broker-username username --broker-password password --provider-base-url http://localhost:4567} }
