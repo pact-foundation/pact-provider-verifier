@@ -1,3 +1,18 @@
+<a name="v1.18.0-1"></a>
+### v1.18.0-1 (2018-09-11)
+
+
+#### Features
+
+* **pending pacts**
+  * allow pending pacts to be feature toggled	 ([5e8e15f](/../../commit/5e8e15f))
+
+* allow custom rack middleware to be specified	 ([ef857d4](/../../commit/ef857d4))
+
+* **custom-middleware**
+  * allow custom middleware to be configured via the command line	 ([217136d](/../../commit/217136d))
+
+
 <a name="v1.17.0-1"></a>
 ### v1.17.0-1 (2018-09-06)
 
