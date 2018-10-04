@@ -1,3 +1,13 @@
+<a name="v1.20.0-1"></a>
+### v1.20.0-1 (2018-10-04)
+
+
+#### Features
+
+* **pact specification v3**
+  * add support for multiple provider states and params	 ([556b957](/../../commit/556b957))
+
+
 <a name="v1.18.0-1"></a>
 ### v1.18.0-1 (2018-09-11)
 
