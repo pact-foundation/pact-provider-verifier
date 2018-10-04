@@ -9,7 +9,8 @@ module Pact
       let(:provider_states_setup_url) { 'http://foo' }
       let(:provider_state) { 'some state' }
       let(:consumer) { 'Foo' }
-      let(:options) { {} }
+      let(:options) { { params: params } }
+      let(:params) { { "foo" => "bar" }}
       subject { SetUpProviderState.call(provider_state, consumer, options) }
 
       before do
@@ -22,7 +23,7 @@ module Pact
       it "makes a HTTP request to the configured URL with a JSON body containing the consumer and provider state names" do
         subject
         expect(WebMock).to have_requested(:post, provider_states_setup_url).
-          with(body: {consumer: consumer, state: provider_state, states: [provider_state]}, headers: {'Content-Type' => "application/json"})
+          with(body: {consumer: consumer, state: provider_state, states: [provider_state], params: params}, headers: {'Content-Type' => "application/json"})
       end
 
       context "when an error is returned from the request to the setup URL" do

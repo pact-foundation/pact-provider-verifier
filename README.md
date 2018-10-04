@@ -127,7 +127,11 @@ Rather than tearing down the specific test data created after each interaction, 
 
 Note that the HTTP endpoint does not have to actually be within your application - it just has to have access to the same data store. So if you cannot add "test only" endpoints during your verification, consider making a separate app which shares credentials to your app's datastore. It is highly recommended that you run your verifications against a locally running provider, rather than a deployed one, as this will make it much easier to stub any downstream calls, debug issues, and it will make your tests run as fast as possible.
 
-Ignore the `states` array that you will see if you happen to print out the live provider state set up request body - that was an attempt to make the set up call forwards compatible with the v3 pact specification, which allows multiple provider states. Unfortunately, this forwards compatibilty attempt failed, because the v3 provider states support a map of params, not just a name, so it should have been `{ "state": { "name": "PROVIDER_STATE, "params": {...} } }`.
+Ignore the `states` array that you will see if you happen to print out the live provider state set up request body - that was an attempt to make the set up call forwards compatible with the v3 pact specification, which allows multiple provider states. Unfortunately, this forwards compatibilty attempt failed, because the v3 provider states support a map of params, not just a name, so it should have been `{ "state": { "name": "PROVIDER_STATE, "params": {...} } }`. See the next section for the actual v3 support.
+
+#### Pact specification v3 provider state support
+
+The v3 Pact specification adds support for multiple provider states, and provider state params. If you are verifying a pact with multiple provider states, then set up URL will be invoked once for each state. The `params` hash from the pact will also be passed through in the JSON document with the key name `params`.
 
 ### Using the Pact Broker with Basic authentication
 

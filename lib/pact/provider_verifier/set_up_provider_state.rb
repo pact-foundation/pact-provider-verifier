@@ -11,6 +11,7 @@ module Pact
         @provider_state = provider_state
         @consumer = consumer
         @options = options
+        @params = (options && options[:params]) || {}
       end
 
       def self.call provider_state, consumer, options
@@ -30,7 +31,7 @@ module Pact
 
       private
 
-      attr_reader :provider_state, :consumer
+      attr_reader :provider_state, :consumer, :params
 
       def post_to_provider_state
         verbose = verbose?
@@ -59,7 +60,12 @@ module Pact
         connection.post do |req|
           req.headers["Content-Type"] = "application/json"
           add_custom_provider_header req
-          req.body = {consumer: consumer, state: provider_state, states: [provider_state] }.to_json
+          req.body = {
+            consumer: consumer,
+            state: provider_state,
+            states: [provider_state],
+            params: params
+          }.to_json
         end
       end
 
