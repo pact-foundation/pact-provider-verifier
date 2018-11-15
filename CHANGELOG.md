@@ -1,3 +1,12 @@
+<a name="v1.21.0-1"></a>
+### v1.21.0-1 (2018-11-15)
+
+
+#### Features
+
+* pass verbose flag through to HAL client when fetching pacts	 ([d3acd1a](/../../commit/d3acd1a))
+
+
 <a name="v1.20.0-1"></a>
 ### v1.20.0-1 (2018-10-04)
 
