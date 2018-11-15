@@ -164,7 +164,7 @@ module Pact
       end
 
       def all_pact_urls
-        http_client_options = { username: options.broker_username, password: options.broker_password }
+        http_client_options = { username: options.broker_username, password: options.broker_password, verbose: options.verbose }
         AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, options.pact_broker_base_url, http_client_options)
       end
 

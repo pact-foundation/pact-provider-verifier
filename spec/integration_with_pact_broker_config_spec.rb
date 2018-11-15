@@ -23,12 +23,12 @@ describe "pact-provider-verifier with pact broker config" do
   end
 
   it "fetches the pact URIs from the broker" do
-    expect(pact_broker_api).to receive(:fetch_pact_uris).with("Foo", ["master", "prod"], "http://localhost:5738", { username: "username", password: "password" })
+    expect(pact_broker_api).to receive(:fetch_pact_uris).with("Foo", ["master", "prod"], "http://localhost:5738", { username: "username", password: "password", verbose: nil })
     subject
   end
 
   it "fetches the pending pacts URIs from the broker" do
-    expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with("Foo", "http://localhost:5738", { username: "username", password: "password" })
+    expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with("Foo", "http://localhost:5738", { username: "username", password: "password", verbose: nil })
     subject
   end
 
