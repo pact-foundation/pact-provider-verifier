@@ -16,6 +16,7 @@ module Pact
         method_option :pact_broker_base_url, desc: "Base URL of the Pact Broker from which to retrieve the pacts.", :required => false
         method_option :broker_username, aliases: "-n", desc: "Pact Broker basic auth username", :required => false
         method_option :broker_password, aliases: "-p", desc: "Pact Broker basic auth password", :required => false
+        method_option :broker_token, aliases: "-k", desc: "Pact Broker bearer token", :required => true
         method_option :provider, required: false
         method_option :consumer_version_tag, type: :array, banner: "TAG", desc: "Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.", :required => false
         method_option :provider_app_version, aliases: "-a", desc: "Provider application version, required when publishing verification results", :required => false

@@ -9,7 +9,7 @@ describe "pact-provider-verifier with pact broker config" do
     allow(ENV).to receive(:[]).with('PACT_INCLUDE_PENDING').and_return('true')
   end
 
-  let(:args) { %W{pact-provider-verifier --provider Foo --consumer-version-tag master --consumer-version-tag prod --pact-broker-base-url http://localhost:5738 --broker-username username --broker-password password --provider-base-url http://localhost:4567} }
+  let(:args) { %W{pact-provider-verifier --provider Foo --consumer-version-tag master --consumer-version-tag prod --pact-broker-base-url http://localhost:5738 --broker-username username --broker-password password --broker-token token --provider-base-url http://localhost:4567} }
   let(:pact_uris) { ["http://non-pending-pact"] }
   let(:pending_pact_uris) { ["http://pending-pact"] }
   let(:pact_broker_api) { class_double(Pact::PactBroker).as_stubbed_const }
@@ -23,12 +23,12 @@ describe "pact-provider-verifier with pact broker config" do
   end
 
   it "fetches the pact URIs from the broker" do
-    expect(pact_broker_api).to receive(:fetch_pact_uris).with("Foo", ["master", "prod"], "http://localhost:5738", { username: "username", password: "password", verbose: nil })
+    expect(pact_broker_api).to receive(:fetch_pact_uris).with("Foo", ["master", "prod"], "http://localhost:5738", { username: "username", password: "password", token: "token", verbose: nil })
     subject
   end
 
   it "fetches the pending pacts URIs from the broker" do
-    expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with("Foo", "http://localhost:5738", { username: "username", password: "password", verbose: nil })
+    expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with("Foo", "http://localhost:5738", { username: "username", password: "password", token: "token", verbose: nil })
     subject
   end
 
