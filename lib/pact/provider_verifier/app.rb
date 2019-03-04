@@ -137,6 +137,7 @@ module Pact
             backtrace: ENV['BACKTRACE'] == 'true',
             pact_broker_username: options.broker_username,
             pact_broker_password: options.broker_password,
+            pact_broker_token: options.broker_token,
             format: options.format,
             out: options.out,
             ignore_failures: config.pending,
@@ -164,7 +165,7 @@ module Pact
       end
 
       def all_pact_urls
-        http_client_options = { username: options.broker_username, password: options.broker_password, verbose: options.verbose }
+        http_client_options = { username: options.broker_username, password: options.broker_password, token: options.broker_token, verbose: options.verbose }
         AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, options.pact_broker_base_url, http_client_options)
       end
 
