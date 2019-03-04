@@ -1,3 +1,13 @@
+<a name="v1.22.0-1"></a>
+### v1.22.0-1 (2019-02-21)
+
+
+#### Features
+
+* add support for bearer token	 ([3a102c4](/../../commit/3a102c4))
+* add support for bearer token	 ([bc37817](/../../commit/bc37817))
+
+
 <a name="v1.21.0-1"></a>
 ### v1.21.0-1 (2018-11-15)
 
