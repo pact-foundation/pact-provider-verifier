@@ -1,3 +1,4 @@
+require 'pact/wait_until_server_available'
 require 'pact/provider_verifier/add_header_middlware'
 require 'pact/provider_verifier/provider_states/add_provider_states_header'
 require 'pact/provider_verifier/provider_states/remove_provider_states_header_middleware'
@@ -13,6 +14,7 @@ require 'json'
 module Pact
   module ProviderVerifier
     class App
+      include Pact::WaitUntilServerAvailable
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
 
@@ -29,7 +31,9 @@ module Pact
       def call
         setup
 
-        exit_statuses = all_pact_urls.collect do |pact_url|
+        pact_urls = all_pact_urls
+        wait_until_provider_available
+        exit_statuses = pact_urls.collect do |pact_url|
           verify_pact pact_url
         end
 
@@ -197,8 +201,20 @@ module Pact
           $stderr.puts "WARN: The --provider-states-url option is deprecated and the URL endpoint can be removed from the application"
         end
       end
+
+      def wait_until_provider_available
+        if options.wait && options.wait != 0
+          uri = URI(options.provider_base_url)
+          $stderr.puts "INFO: Waiting for up to #{options.wait} seconds for provider to become available at #{uri.host}:#{uri.port}..."
+          up = wait_until_server_available(uri.host, uri.port, options.wait)
+          if up
+            $stderr.puts "INFO: Provider available, proceeding with verifications"
+          else
+            $stderr.puts "INFO: Waiting for up to #{options.wait} seconds for provider to become available..."
+            $stderr.puts "WARN: Provider does not appear to be up on #{uri.host}:#{uri.port}... proceeding with verifications anyway"
+          end
+        end
+      end
     end
   end
 end
-
-
