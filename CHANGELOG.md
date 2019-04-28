@@ -1,3 +1,12 @@
+<a name="v1.23.0-1"></a>
+### v1.23.0-1 (2019-04-28)
+
+
+#### Features
+
+* allow a wait time to be specified to allow the provider to become available	 ([cec8d56](/../../commit/cec8d56))
+
+
 <a name="v1.22.0-1"></a>
 ### v1.22.0-1 (2019-02-21)
 
