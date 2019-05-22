@@ -1,3 +1,12 @@
+<a name="v1.23.1-1"></a>
+### v1.23.1-1 (2019-05-22)
+
+
+#### Bug Fixes
+
+* honour the --broker-token CLI param	 ([36bc88c](/../../commit/36bc88c))
+
+
 <a name="v1.23.0-1"></a>
 ### v1.23.0-1 (2019-04-28)
 
