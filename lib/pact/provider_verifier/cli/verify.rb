@@ -30,7 +30,7 @@ module Pact
         method_option :out, aliases: "-o", banner: "FILE", desc: "Write output to a file instead of $stdout."
         method_option :ignore_failures, type: :boolean, default: false, desc: "If specified, process will always exit with exit code 0", hide: true
         method_option :pact_urls, aliases: "-u", hide: true, :required => false
-        method_option :wait, banner: "SECONDS", required: false, type: :numeric, desc: "The number of seconds to wait for the provider to become available before running the verification", default: 0
+        method_option :wait, banner: "SECONDS", required: false, type: :numeric, desc: "The number of seconds to poll for the provider to become available before running the verification", default: 0
 
         def verify(*pact_urls)
           validate_verify

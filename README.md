@@ -55,7 +55,7 @@ Options:
   -v, [--verbose=VERBOSE]                                            # Verbose output
   -f, [--format=FORMATTER]                                           # RSpec formatter. Defaults to custom Pact formatter. Other options are json and RspecJunitFormatter (which outputs xml).
   -o, [--out=FILE]                                                   # Write output to a file instead of $stdout.
-  [--wait=SECONDS]                                                   # The number of seconds to wait for the provider to become available before running the verification
+  [--wait=SECONDS]                                                   # The number of seconds to poll for the provider to become available before running the verification
                                                                      # Default: 0
 Verify pact(s) against a provider. Supports local and networked (http-based) files.
 ```

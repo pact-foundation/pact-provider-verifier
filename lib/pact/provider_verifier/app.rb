@@ -205,12 +205,11 @@ module Pact
       def wait_until_provider_available
         if options.wait && options.wait != 0
           uri = URI(options.provider_base_url)
-          $stderr.puts "INFO: Waiting for up to #{options.wait} seconds for provider to become available at #{uri.host}:#{uri.port}..."
+          $stderr.puts "INFO: Polling for up to #{options.wait} seconds for provider to become available at #{uri.host}:#{uri.port}..."
           up = wait_until_server_available(uri.host, uri.port, options.wait)
           if up
             $stderr.puts "INFO: Provider available, proceeding with verifications"
           else
-            $stderr.puts "INFO: Waiting for up to #{options.wait} seconds for provider to become available..."
             $stderr.puts "WARN: Provider does not appear to be up on #{uri.host}:#{uri.port}... proceeding with verifications anyway"
           end
         end
