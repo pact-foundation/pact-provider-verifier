@@ -49,6 +49,7 @@ module Pact
         set_environment_variables
         require_rspec_monkeypatch_for_jsonl
         require_pact_project_pact_helper # Beth: not sure if this is needed, hangover from pact-provider-proxy?
+        set_broker_token_env_var
       end
 
       def set_environment_variables
@@ -212,6 +213,12 @@ module Pact
           else
             $stderr.puts "WARN: Provider does not appear to be up on #{uri.host}:#{uri.port}... proceeding with verifications anyway"
           end
+        end
+      end
+
+      def set_broker_token_env_var
+        if options.broker_token && !ENV['PACT_BROKER_TOKEN']
+          ENV['PACT_BROKER_TOKEN'] = options.broker_token
         end
       end
     end
