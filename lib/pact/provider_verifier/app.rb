@@ -66,6 +66,7 @@ module Pact
         application = configure_custom_middleware(application)
         application = configure_custom_header_middleware(application)
 
+        provider_version_tag = options.provider_version_tag || [] # array
         provider_application_version = options.provider_app_version
         publish_results  = options.publish_verification_results
 
@@ -76,6 +77,10 @@ module Pact
 
           if provider_application_version
             app_version provider_application_version
+          end
+
+          if provider_version_tag.any?
+            app_version_tags provider_version_tag
           end
 
           publish_verification_results publish_results
