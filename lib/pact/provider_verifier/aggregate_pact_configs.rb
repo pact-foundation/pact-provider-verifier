@@ -40,7 +40,7 @@ module Pact
       end
 
       def pacts_for_verification
-        @pacts_for_verification ||= Pact::PactBroker.fetch_pacts_for_verification(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
+        @pacts_for_verification ||= Pact::PactBroker.fetch_pact_uris_for_verification(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
       end
 
       def consumer_version_selectors

@@ -2,7 +2,7 @@ require 'pact/provider_verifier/cli/verify'
 
 describe "pact-provider-verifier with pact broker config" do
   before do
-    allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return(pact_uris)
+    allow(pact_broker_api).to receive(:fetch_pact_uris_for_verification).and_return(pact_uris)
     allow(pact_broker_api).to receive(:build_pact_uri) { | url | OpenStruct.new(uri: url) }
     allow(Pact::Cli::RunPactVerification).to receive(:call)
     allow(ENV).to receive(:[]).and_call_original
@@ -33,7 +33,7 @@ describe "pact-provider-verifier with pact broker config" do
   end
 
   it "fetches the pact URIs from the broker" do
-    expect(pact_broker_api).to receive(:fetch_pacts_for_verification).with(
+    expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(
       "Foo",
       [{ tag: "master", latest: true }, { tag: "prod", latest: true }],
       ["pmaster"],

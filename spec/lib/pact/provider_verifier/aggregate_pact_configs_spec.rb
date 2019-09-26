@@ -30,7 +30,7 @@ module Pact
           let(:pact_broker_base_url) { nil }
 
           it "does not make a call to a Pact Broker" do
-            expect(pact_broker_api).to_not receive(:fetch_pacts_for_verification)
+            expect(pact_broker_api).to_not receive(:fetch_pact_uris_for_verification)
             subject
           end
 
@@ -43,7 +43,7 @@ module Pact
           before do
             allow(ENV).to receive(:[]).and_call_original
             allow(ENV).to receive(:[]).with('PACT_BROKER_PACTS_FOR_VERIFICATION_ENABLED').and_return('true')
-            allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return(pact_uris)
+            allow(pact_broker_api).to receive(:fetch_pact_uris_for_verification).and_return(pact_uris)
           end
 
           let(:metadata) { { some: 'metadata'} }
@@ -54,7 +54,7 @@ module Pact
           end
 
           it "fetches the pacts for verification" do
-            expect(pact_broker_api).to receive(:fetch_pacts_for_verification).with(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
+            expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
             subject
           end
 
