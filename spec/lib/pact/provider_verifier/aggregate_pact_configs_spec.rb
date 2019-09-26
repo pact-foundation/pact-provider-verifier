@@ -8,15 +8,23 @@ module Pact
         let(:pact_urls) { ["http://pact-1"] }
         let(:provider_name) { "Foo" }
         let(:consumer_version_tags) { ["master", "prod"] }
+        let(:provider_version_tags) { ["dev"] }
         let(:pact_broker_base_url) { "http://broker" }
         let(:http_client_options) { { "foo" => "bar"} }
 
-        let(:pact_uris) { ["http://pact-2"] }
-
-        let(:pending_pact_uris) { ["http://pact-2", "http://pact-3"] }
+        let(:pact_uris) { [double('PactURI', uri: "http://pact-2")] }
+        let(:pending_pact_2) { double('PactURI', uri: "http://pact-2") }
+        let(:pending_pact_3) { double('PactURI', uri: "http://pact-3") }
+        let(:pending_pact_uris) { [pending_pact_2, pending_pact_3] }
         let(:pact_broker_api) { class_double(Pact::PactBroker).as_stubbed_const }
 
-        subject { AggregatePactConfigs.call(pact_urls, provider_name, consumer_version_tags, pact_broker_base_url, http_client_options) }
+        before do
+          # Trying to expose as little as possible of the class structure in the pact gem to pact-provider-verifier
+          # This whole thing is a mess really!
+          allow(pact_broker_api).to receive(:build_pact_uri) { | url | OpenStruct.new(uri: url) }
+        end
+
+        subject { AggregatePactConfigs.call(pact_urls, provider_name, consumer_version_tags, provider_version_tags, pact_broker_base_url, http_client_options) }
 
         context "with no broker config" do
           let(:pact_broker_base_url) { nil }
@@ -37,47 +45,43 @@ module Pact
             allow(pact_broker_api).to receive(:fetch_pending_pact_uris).and_return(pending_pact_uris)
           end
 
-          it "fetches the non pending pacts" do
+          it "fetches the pacts using the old Pact Broker API" do
             expect(pact_broker_api).to receive(:fetch_pact_uris).with(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
             subject
           end
 
-          context "when env var PACT_INCLUDE_PENDING is not 'true'" do
-            it "does not fetch the pending pacts" do
-              expect(pact_broker_api).to_not receive(:fetch_pending_pact_uris)
-              subject
-            end
-
-            it "returns the non pending urls first" do
-              expect(subject.first).to eq OpenStruct.new(uri: "http://pact-2")
-            end
-
-            it "returns the hardcoded urls last" do
-              expect(subject.last).to eq OpenStruct.new(uri: "http://pact-1")
-            end
-          end
-
-          context "when env var PACT_INCLUDE_PENDING is 'true'" do
+          context "when env var PACTS_FOR_VERIFICATION_ENABLED" do
             before do
               allow(ENV).to receive(:[]).and_call_original
-              allow(ENV).to receive(:[]).with('PACT_INCLUDE_PENDING').and_return('true')
+              allow(ENV).to receive(:[]).with('PACT_BROKER_PACTS_FOR_VERIFICATION_ENABLED').and_return('true')
+              allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return(pact_uris)
             end
 
-            it "fetches the pending pacts" do
-              expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with(provider_name, pact_broker_base_url, http_client_options)
+            let(:metadata) { { some: 'metadata'} }
+            let(:pact_uris) { [double('PactURI', uri: "http://pact-1", metadata: metadata)] }
+
+            let(:consumer_version_selectors) do
+              [{ tag: "master", latest: true }, { tag: "prod", latest: true }]
+            end
+
+            it "fetches the pacts for verification" do
+              expect(pact_broker_api).to receive(:fetch_pacts_for_verification).with(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
               subject
             end
 
-            it "returns the pending urls first, with the non-pending pact URLs removed" do
-              expect(subject.first).to eq OpenStruct.new(uri: "http://pact-3", pending: true)
-            end
-
-            it "returns the non pending urls next" do
-              expect(subject[1]).to eq OpenStruct.new(uri: "http://pact-2")
-            end
-
-            it "returns the hardcoded urls last" do
+            it "returns a list of verification configs" do
               expect(subject.last).to eq OpenStruct.new(uri: "http://pact-1")
+            end
+
+            context "when there are no pacts returned" do
+              before do
+                allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return([])
+              end
+
+              it "fetches pacts the old way" do
+                expect(pact_broker_api).to receive(:fetch_pact_uris)
+                subject
+              end
             end
           end
         end

@@ -4,6 +4,7 @@ describe "pact-provider-verifier with pact broker config" do
   before do
     allow(pact_broker_api).to receive(:fetch_pact_uris).and_return(pact_uris)
     allow(pact_broker_api).to receive(:fetch_pending_pact_uris).and_return(pending_pact_uris)
+    allow(pact_broker_api).to receive(:build_pact_uri) { | url | OpenStruct.new(uri: url) }
     allow(Pact::Cli::RunPactVerification).to receive(:call)
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with('PACT_INCLUDE_PENDING').and_return('true')
@@ -27,18 +28,8 @@ describe "pact-provider-verifier with pact broker config" do
     subject
   end
 
-  it "fetches the pending pacts URIs from the broker" do
-    expect(pact_broker_api).to receive(:fetch_pending_pact_uris).with("Foo", "http://localhost:5738", { username: "username", password: "password", token: "token", verbose: nil })
-    subject
-  end
-
-  it "verifies the non-pending pact" do
-    expect(Pact::Cli::RunPactVerification).to receive(:call).with(hash_including(pact_uri: "http://non-pending-pact", ignore_failures: nil))
-    subject
-  end
-
-  it "verifies the pending pact" do
-    expect(Pact::Cli::RunPactVerification).to receive(:call).with(hash_including(pact_uri: "http://pending-pact", ignore_failures: true))
+  it "verifies the pact" do
+    expect(Pact::Cli::RunPactVerification).to receive(:call).with(hash_including(pact_uri: "http://non-pending-pact"))
     subject
   end
 end

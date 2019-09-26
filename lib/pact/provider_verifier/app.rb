@@ -17,11 +17,13 @@ module Pact
       include Pact::WaitUntilServerAvailable
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
+      attr_reader :pact_urls, :options, :consumer_version_tags, :provider_version_tags
 
       def initialize pact_urls, options = {}
         @pact_urls = pact_urls
         @options = options
         @consumer_version_tags = options[:consumer_version_tag] || []
+        @provider_version_tags = options[:provider_version_tag] || []
       end
 
       def self.call pact_urls, options
@@ -33,8 +35,8 @@ module Pact
 
         pact_urls = all_pact_urls
         wait_until_provider_available
-        exit_statuses = pact_urls.collect do |pact_url|
-          verify_pact pact_url
+        exit_statuses = pact_urls.collect do |pact_uri|
+          verify_pact pact_uri
         end
 
         exit_statuses.all?{ | status | status == 0 }
@@ -42,7 +44,6 @@ module Pact
 
       private
 
-      attr_reader :pact_urls, :options, :consumer_version_tags
 
       def setup
         print_deprecation_note
@@ -66,24 +67,22 @@ module Pact
         application = configure_custom_middleware(application)
         application = configure_custom_header_middleware(application)
 
-        provider_version_tag = options.provider_version_tag || [] # array
-        provider_application_version = options.provider_app_version
-        publish_results  = options.publish_verification_results
+        this = self
 
         Pact.service_provider "Running Provider Application" do
           app do
             application
           end
 
-          if provider_application_version
-            app_version provider_application_version
+          if this.options.provider_app_version
+            app_version this.options.provider_app_version
           end
 
-          if provider_version_tag.any?
-            app_version_tags provider_version_tag
+          if this.provider_version_tags.any?
+            app_version_tags this.provider_version_tags
           end
 
-          publish_verification_results publish_results
+          publish_verification_results this.options.publish_verification_results
         end
       end
 
@@ -139,18 +138,17 @@ module Pact
         end
       end
 
-      def verify_pact(config)
+      def verify_pact(pact_uri)
         begin
           verify_options = {
             pact_helper: PROXY_PACT_HELPER,
-            pact_uri: config.uri,
+            pact_uri: pact_uri,
             backtrace: ENV['BACKTRACE'] == 'true',
             pact_broker_username: options.broker_username,
             pact_broker_password: options.broker_password,
             pact_broker_token: options.broker_token,
             format: options.format,
             out: options.out,
-            ignore_failures: config.pending,
             request_customizer: ProviderStates::AddProviderStatesHeader
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
@@ -176,7 +174,7 @@ module Pact
 
       def all_pact_urls
         http_client_options = { username: options.broker_username, password: options.broker_password, token: options.broker_token, verbose: options.verbose }
-        AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, options.pact_broker_base_url, http_client_options)
+        AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, provider_version_tags, options.pact_broker_base_url, http_client_options)
       end
 
       def require_pact_project_pact_helper
