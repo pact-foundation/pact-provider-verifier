@@ -30,7 +30,7 @@ module Pact
           let(:pact_broker_base_url) { nil }
 
           it "does not make a call to a Pact Broker" do
-            expect(pact_broker_api).to_not receive(:fetch_pact_uris)
+            expect(pact_broker_api).to_not receive(:fetch_pacts_for_verification)
             subject
           end
 
@@ -41,48 +41,25 @@ module Pact
 
         context "with broker config" do
           before do
-            allow(pact_broker_api).to receive(:fetch_pact_uris).and_return(pact_uris)
-            allow(pact_broker_api).to receive(:fetch_pending_pact_uris).and_return(pending_pact_uris)
+            allow(ENV).to receive(:[]).and_call_original
+            allow(ENV).to receive(:[]).with('PACT_BROKER_PACTS_FOR_VERIFICATION_ENABLED').and_return('true')
+            allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return(pact_uris)
           end
 
-          it "fetches the pacts using the old Pact Broker API" do
-            expect(pact_broker_api).to receive(:fetch_pact_uris).with(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
+          let(:metadata) { { some: 'metadata'} }
+          let(:pact_uris) { [double('PactURI', uri: "http://pact-1", metadata: metadata)] }
+
+          let(:consumer_version_selectors) do
+            [{ tag: "master", latest: true }, { tag: "prod", latest: true }]
+          end
+
+          it "fetches the pacts for verification" do
+            expect(pact_broker_api).to receive(:fetch_pacts_for_verification).with(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
             subject
           end
 
-          context "when env var PACTS_FOR_VERIFICATION_ENABLED" do
-            before do
-              allow(ENV).to receive(:[]).and_call_original
-              allow(ENV).to receive(:[]).with('PACT_BROKER_PACTS_FOR_VERIFICATION_ENABLED').and_return('true')
-              allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return(pact_uris)
-            end
-
-            let(:metadata) { { some: 'metadata'} }
-            let(:pact_uris) { [double('PactURI', uri: "http://pact-1", metadata: metadata)] }
-
-            let(:consumer_version_selectors) do
-              [{ tag: "master", latest: true }, { tag: "prod", latest: true }]
-            end
-
-            it "fetches the pacts for verification" do
-              expect(pact_broker_api).to receive(:fetch_pacts_for_verification).with(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
-              subject
-            end
-
-            it "returns a list of verification configs" do
-              expect(subject.last).to eq OpenStruct.new(uri: "http://pact-1")
-            end
-
-            context "when there are no pacts returned" do
-              before do
-                allow(pact_broker_api).to receive(:fetch_pacts_for_verification).and_return([])
-              end
-
-              it "fetches pacts the old way" do
-                expect(pact_broker_api).to receive(:fetch_pact_uris)
-                subject
-              end
-            end
+          it "returns a list of verification configs" do
+            expect(subject.last).to eq OpenStruct.new(uri: "http://pact-1")
           end
         end
       end

@@ -20,11 +20,7 @@ module Pact
       end
 
       def call
-        if ENV['PACT_BROKER_PACTS_FOR_VERIFICATION_ENABLED'] == 'true' && pacts_for_verification_uris.any?
-          pacts_for_verification_uris + specified_pact_uris
-        else
-          pacts_urls_from_broker + specified_pact_uris
-        end
+        pacts_urls_from_broker + specified_pact_uris
       end
 
       private
@@ -37,17 +33,13 @@ module Pact
 
       def pacts_urls_from_broker
         if pact_broker_base_url && provider_name
-          old_pact_uris
+          pacts_for_verification
         else
           []
         end
       end
 
-      def old_pact_uris
-         @old_pact_uris ||= Pact::PactBroker.fetch_pact_uris(provider_name, consumer_version_tags, pact_broker_base_url, http_client_options)
-      end
-
-      def pacts_for_verification_uris
+      def pacts_for_verification
         @pacts_for_verification ||= Pact::PactBroker.fetch_pacts_for_verification(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
       end
 
