@@ -1,3 +1,14 @@
+<a name="v1.24.0-1"></a>
+### v1.24.0-1 (2019-09-26)
+
+
+#### Features
+
+* update pact version dependency to 1.42.0	 ([828deff](/../../commit/828deff))
+* use new 'pacts for verification' endpoint when PACT_BROKER_PACTS_FOR_VERIFICATION_ENABLED is set to 'true'	 ([6e6f45b](/../../commit/6e6f45b))
+* allow --provider-version-tag to be specified, which will be applied to the provider version when the verification results are published	 ([bf4bc93](/../../commit/bf4bc93))
+
+
 <a name="v1.23.1-1"></a>
 ### v1.23.1-1 (2019-05-22)
 
