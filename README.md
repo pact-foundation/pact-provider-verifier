@@ -17,7 +17,7 @@ binary-like CLI tool.
 
 ### Docker
 
-Take a look at https://github.com/DiUS/pact-provider-verifier-docker.
+Take a look at https://github.com/DiUS/pact-provider-verifier-docker or https://github.com/pact-foundation/pact-ruby-cli
 
 ### Native Installation
 
