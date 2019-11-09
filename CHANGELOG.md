@@ -1,3 +1,13 @@
+<a name="v1.25.0-1"></a>
+### v1.25.0-1 (2019-11-09)
+
+#### Features
+
+* **gems**
+  * update pact gem to 1.42.2	 ([a8452bd](/../../commit/a8452bd))
+  * update pact gem to 1.42.1	 ([44cdd4e](/../../commit/44cdd4e))
+
+
 <a name="v1.24.0-1"></a>
 ### v1.24.0-1 (2019-09-26)
 
