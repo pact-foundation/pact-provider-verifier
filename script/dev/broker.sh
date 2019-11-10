@@ -13,8 +13,7 @@ bundle exec bin/pact-provider-verifier  \
   -a 1.0.100 \
   --provider-base-url http://localhost:4567 \
   --provider-states-setup-url http://localhost:4567/provider-state \
-  --publish-verification-results \
-  --format progress
+  --publish-verification-results
 
 kill -2 $pid
 wait $pid
