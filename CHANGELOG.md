@@ -1,3 +1,13 @@
+<a name="v1.25.1-1"></a>
+### v1.25.1-1 (2019-11-10)
+
+
+#### Bug Fixes
+
+* **basic auth**
+  * add missing basic auth credentials for retriving pacts by URL	 ([e84f9b8](/../../commit/e84f9b8))
+
+
 <a name="v1.25.0-1"></a>
 ### v1.25.0-1 (2019-11-09)
 
