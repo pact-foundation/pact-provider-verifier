@@ -28,7 +28,7 @@ module Pact
       attr_reader :pact_urls, :provider_name, :consumer_version_tags, :provider_version_tags, :pact_broker_base_url, :http_client_options
 
       def specified_pact_uris
-        pact_urls.collect{ | url | Pact::PactBroker.build_pact_uri(url) }
+        pact_urls.collect{ | url | Pact::PactBroker.build_pact_uri(url, http_client_options) }
       end
 
       def pacts_urls_from_broker

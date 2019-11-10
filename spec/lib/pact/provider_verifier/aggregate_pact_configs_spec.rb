@@ -37,6 +37,11 @@ module Pact
           it "returns the hardcoded urls" do
             expect(subject).to eq [OpenStruct.new(uri: "http://pact-1")]
           end
+
+          it "uses the basic auth credentials to retrieve the pact" do
+            expect(pact_broker_api).to receive(:build_pact_uri).with(pact_urls.first, http_client_options)
+            subject
+          end
         end
 
         context "with broker config" do
