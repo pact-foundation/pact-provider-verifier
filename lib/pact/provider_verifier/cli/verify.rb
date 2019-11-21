@@ -11,6 +11,8 @@ module Pact
         class InvalidArgumentsError < ::Thor::Error; end
 
         desc 'PACT_URL ...', "Verify pact(s) against a provider. Supports local and networked (http-based) files."
+        long_desc "To verify a pact from a known URL, specify one or more PACT_URL arguments. If the pact is hosted in a Pact Broker that uses authentication, specify the relevant --broker-username/--broker-password or --broker-token fields. " +
+                  "To dynamically fetch pacts from a Pact Broker based on the provider name, specify the --pact-broker-base-url, --provider and relevant authentication fields."
         method_option :provider_base_url, aliases: "-h", desc: "Provider host URL", :required => true
         method_option :provider_states_setup_url, aliases: "-c", desc: "Base URL to setup the provider states at", :required => false
         method_option :pact_broker_base_url, desc: "Base URL of the Pact Broker from which to retrieve the pacts.", :required => false
