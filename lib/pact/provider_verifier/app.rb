@@ -17,13 +17,14 @@ module Pact
       include Pact::WaitUntilServerAvailable
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
-      attr_reader :pact_urls, :options, :consumer_version_tags, :provider_version_tags
+      attr_reader :pact_urls, :options, :consumer_version_tags, :provider_version_tags, :consumer_version_selectors
 
       def initialize pact_urls, options = {}
         @pact_urls = pact_urls
         @options = options
         @consumer_version_tags = options[:consumer_version_tag] || []
         @provider_version_tags = options[:provider_version_tag] || []
+        @consumer_version_selectors = parse_consumer_version_selectors(options[:consumer_version_selector] || [])
       end
 
       def self.call pact_urls, options
@@ -174,7 +175,7 @@ module Pact
 
       def all_pact_urls
         http_client_options = { username: options.broker_username, password: options.broker_password, token: options.broker_token, verbose: options.verbose }
-        AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, provider_version_tags, options.pact_broker_base_url, http_client_options)
+        AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, consumer_version_selectors, provider_version_tags, options.pact_broker_base_url, http_client_options)
       end
 
       def require_pact_project_pact_helper
@@ -198,6 +199,10 @@ module Pact
           header_name, header_value = custom_provider_header.split(":", 2).collect(&:strip)
           header_hash[header_name] = header_value
         end
+      end
+
+      def parse_consumer_version_selectors consumer_version_selectors
+        consumer_version_selectors.collect{ | string | JSON.parse(string) }
       end
 
       def print_deprecation_note

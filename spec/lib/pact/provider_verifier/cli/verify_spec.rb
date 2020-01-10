@@ -102,6 +102,44 @@ module Pact
             invoke_verify
           end
         end
+
+        context "with multiple --consumer-version-selector" do
+          let(:options) do
+            minimum_valid_options.merge(
+              pact_broker_base_url: "http://broker",
+              provider: "Foo",
+              consumer_version_selector: [ { tag: "master" }.to_json, { tag: "prod" }.to_json ]
+            )
+          end
+
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
+          it "parses the JSON strings to hashes" do
+            expect(Pact::ProviderVerifier::App).to receive(:call).with(
+              pact_urls, OpenStruct.new(options))
+            invoke_verify
+          end
+        end
+
+        context "with --consumer-version-selector that is invalid JSON" do
+          let(:options) do
+            minimum_valid_options.merge(
+              pact_broker_base_url: "http://broker",
+              provider: "Foo",
+              consumer_version_selector: [ "a" ]
+            )
+          end
+
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
+          it "raises an InvalidArgumentsError" do
+            expect { subject.verify }.to raise_error Verify::InvalidArgumentsError, /Invalid JSON string/
+          end
+        end
       end
     end
   end

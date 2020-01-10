@@ -3,6 +3,12 @@ require 'socket'
 require 'pact/provider_verifier/app'
 require 'pact/provider_verifier/cli/custom_thor'
 
+# verify --consumer-version-selector '{ all: true, tag: "feat-x", fallback: "master" }' --consumer-version-tag master
+
+#
+# tags "master", { all: true, tag: "feat-x", fallback: "master" }
+#
+
 module Pact
   module ProviderVerifier
     module CLI
@@ -21,6 +27,7 @@ module Pact
         method_option :broker_token, aliases: "-k", desc: "Pact Broker bearer token", :required => false
         method_option :provider, required: false
         method_option :consumer_version_tag, type: :array, banner: "TAG", desc: "Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.", :required => false
+        method_option :consumer_version_selector, type: :array, banner: "SELECTOR", desc: "JSON string specifying a selector that identifies which pacts to verify. May be specified multiple times.", :required => false
         method_option :provider_version_tag, type: :array, banner: "TAG", desc: "Tag to apply to the provider application version. May be specified multiple times.", :required => false
         method_option :provider_app_version, aliases: "-a", desc: "Provider application version, required when publishing verification results", :required => false
         method_option :publish_verification_results, aliases: "-r", desc: "Publish verification results to the broker", required: false, type: :boolean, default: false
@@ -65,6 +72,22 @@ module Pact
           def validate_verify
             if options.pact_broker_base_url && (options.provider.nil? || options.provider == "")
               raise InvalidArgumentsError, "No value provided for required option '--provider'"
+            end
+            validate_consumer_version_selectors
+          end
+
+          def validate_consumer_version_selectors
+            error_messages = (options.consumer_version_selector || []).collect do | string |
+              begin
+                JSON.parse(string)
+                nil
+              rescue
+                "Invalid JSON string provided for --consumer-version-selector: #{string}"
+              end
+            end.compact
+
+            if error_messages.any?
+              raise InvalidArgumentsError, error_messages.join("\n")
             end
           end
 

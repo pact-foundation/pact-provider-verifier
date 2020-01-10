@@ -8,6 +8,8 @@ module Pact
         let(:pact_urls) { ["http://pact-1"] }
         let(:provider_name) { "Foo" }
         let(:consumer_version_tags) { ["master", "prod"] }
+        let(:selector) { double('selector') }
+        let(:consumer_version_selectors) { [selector] }
         let(:provider_version_tags) { ["dev"] }
         let(:pact_broker_base_url) { "http://broker" }
         let(:http_client_options) { { "foo" => "bar"} }
@@ -24,7 +26,7 @@ module Pact
           allow(pact_broker_api).to receive(:build_pact_uri) { | url | OpenStruct.new(uri: url) }
         end
 
-        subject { AggregatePactConfigs.call(pact_urls, provider_name, consumer_version_tags, provider_version_tags, pact_broker_base_url, http_client_options) }
+        subject { AggregatePactConfigs.call(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options) }
 
         context "with no broker config" do
           let(:pact_broker_base_url) { nil }
@@ -54,12 +56,12 @@ module Pact
           let(:metadata) { { some: 'metadata'} }
           let(:pact_uris) { [double('PactURI', uri: "http://pact-1", metadata: metadata)] }
 
-          let(:consumer_version_selectors) do
-            [{ tag: "master", latest: true }, { tag: "prod", latest: true }]
+          let(:aggregated_consumer_version_selectors) do
+            [selector, { tag: "master", latest: true }, { tag: "prod", latest: true }]
           end
 
           it "fetches the pacts for verification" do
-            expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(provider_name, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
+            expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(provider_name, aggregated_consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
             subject
           end
 
