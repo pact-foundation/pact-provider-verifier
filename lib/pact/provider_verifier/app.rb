@@ -175,7 +175,16 @@ module Pact
 
       def all_pact_urls
         http_client_options = { username: options.broker_username, password: options.broker_password, token: options.broker_token, verbose: options.verbose }
-        AggregatePactConfigs.call(pact_urls, options.provider, consumer_version_tags, consumer_version_selectors, provider_version_tags, options.pact_broker_base_url, http_client_options)
+        AggregatePactConfigs.call(
+          pact_urls,
+          options.provider,
+          consumer_version_tags,
+          consumer_version_selectors,
+          provider_version_tags,
+          options.pact_broker_base_url,
+          http_client_options,
+          { enable_pending: options.enable_pending }
+          )
       end
 
       def require_pact_project_pact_helper

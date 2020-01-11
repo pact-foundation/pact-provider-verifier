@@ -13,6 +13,7 @@ module Pact
         let(:provider_version_tags) { ["dev"] }
         let(:pact_broker_base_url) { "http://broker" }
         let(:http_client_options) { { "foo" => "bar"} }
+        let(:options) { { enable_pending: true } }
 
         let(:pact_uris) { [double('PactURI', uri: "http://pact-2")] }
         let(:pending_pact_2) { double('PactURI', uri: "http://pact-2") }
@@ -26,7 +27,18 @@ module Pact
           allow(pact_broker_api).to receive(:build_pact_uri) { | url | OpenStruct.new(uri: url) }
         end
 
-        subject { AggregatePactConfigs.call(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options) }
+        subject do
+          AggregatePactConfigs.call(
+            pact_urls,
+            provider_name,
+            consumer_version_tags,
+            consumer_version_selectors,
+            provider_version_tags,
+            pact_broker_base_url,
+            http_client_options,
+            options
+          )
+        end
 
         context "with no broker config" do
           let(:pact_broker_base_url) { nil }
@@ -61,7 +73,14 @@ module Pact
           end
 
           it "fetches the pacts for verification" do
-            expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(provider_name, aggregated_consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
+            expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(
+              provider_name,
+              aggregated_consumer_version_selectors,
+              provider_version_tags,
+              pact_broker_base_url,
+              http_client_options,
+              { include_pending_status: true }
+            )
             subject
           end
 

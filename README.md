@@ -40,24 +40,56 @@ Usage:
   pact-provider-verifier PACT_URL ... -h, --provider-base-url=PROVIDER_BASE_URL
 
 Options:
-  -h, --provider-base-url=PROVIDER_BASE_URL                                  # Provider host URL
-  -c, [--provider-states-setup-url=PROVIDER_STATES_SETUP_URL]                # Base URL to setup the provider   states at
-      [--pact-broker-base-url=PACT_BROKER_BASE_URL]                          # Base URL of the Pact Broker from   which to retrieve the pacts.
-  -n, [--broker-username=BROKER_USERNAME]                                    # Pact Broker basic auth username
-  -p, [--broker-password=BROKER_PASSWORD]                                    # Pact Broker basic auth password
-  -k, [--broker-token=BROKER_TOKEN]                                          # Pact Broker bearer token
+  -h, --provider-base-url=PROVIDER_BASE_URL
+            # Provider host URL
+  -c, [--provider-states-setup-url=PROVIDER_STATES_SETUP_URL]
+            # Base URL to setup the provider states at
+      [--pact-broker-base-url=PACT_BROKER_BASE_URL]
+            # Base URL of the Pact Broker from which to retrieve the pacts.
+  -n, [--broker-username=BROKER_USERNAME]
+            # Pact Broker basic auth username
+  -p, [--broker-password=BROKER_PASSWORD]
+            # Pact Broker basic auth password
+  -k, [--broker-token=BROKER_TOKEN]
+            # Pact Broker bearer token
       [--provider=PROVIDER]
-      [--consumer-version-tag=TAG]                                           # Retrieve the latest pacts with   this consumer version tag. Used in conjunction with --provider. May be specified multiple times.
-      [--provider-version-tag=TAG]                                           # Tag to apply to the provider   application version. May be specified multiple times.
-  -a, [--provider-app-version=PROVIDER_APP_VERSION]                          # Provider application version,   required when publishing verification results
-  -r, [--publish-verification-results], [--no-publish-verification-results]  # Publish verification results to   the broker
-      [--custom-provider-header=CUSTOM_PROVIDER_HEADER]                      # Header to add to provider state   set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple   times.
-      [--custom-middleware=FILE]                                             # Ruby file containing a class   implementing Pact::ProviderVerifier::CustomMiddleware. This allows the response to be modified before   replaying. Use with caution!
-  -v, [--verbose=VERBOSE]                                                    # Verbose output
-  -f, [--format=FORMATTER]                                                   # RSpec formatter. Defaults to   custom Pact formatter. Other options are json and RspecJunitFormatter (which outputs xml).
-  -o, [--out=FILE]                                                           # Write output to a file instead   of $stdout.
-      [--wait=SECONDS]                                                       # The number of seconds to poll for the provider to become available before running the verification
-                                                                           # Default: 0
+      [--consumer-version-tag=TAG]
+            # Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.
+      [--consumer-version-selector=SELECTOR]
+            # JSON string specifying a selector that identifies which pacts to verify. May be specified multiple times. See below for further documentation.
+      [--provider-version-tag=TAG]
+            # Tag to apply to the provider application version. May be specified multiple times.
+  -a, [--provider-app-version=PROVIDER_APP_VERSION]
+            # Provider application version, required when publishing verification results
+  -r, [--publish-verification-results], [--no-publish-verification-results]
+            # Publish verification results to the broker
+      [--enable-pending], [--no-enable-pending]
+            # Allow pacts which are in pending state to be verified without causing the overall task to fail. For more information, see https://pact.io/pending
+      [--custom-provider-header=CUSTOM_PROVIDER_HEADER]
+            # Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.
+      [--custom-middleware=FILE]
+            # Ruby file containing a class implementing Pact::ProviderVerifier::CustomMiddleware. This allows the response to be modified before replaying. Use with caution!
+  -v, [--verbose=VERBOSE]
+            # Verbose output
+  -f, [--format=FORMATTER]
+            # RSpec formatter. Defaults to custom Pact formatter. Other options are json and RspecJunitFormatter (which outputs xml).
+  -o, [--out=FILE]
+            # Write output to a file instead of $stdout.
+      [--wait=SECONDS]
+            # The number of seconds to poll for the provider to become available before running the verification
+
+            # Default: 0
+
+Description:
+  To verify a pact from a known URL, specify one or more PACT_URL arguments. If the pact is
+  hosted in a Pact Broker that uses authentication, specify the relevant
+  --broker-username/--broker-password or --broker-token fields. To dynamically fetch pacts
+  from a Pact Broker based on the provider name, specify the --pact-broker-base-url,
+  --provider and relevant authentication fields.
+
+  Selectors: These are specified using JSON strings. The keys are 'tag' (the name of the consumer
+  version tag) and 'latest' (true|false). For example '{"tag": "master", "latest": true}'.
+  For a detailed explanation of selectors, see https://pact.io/selectors
 ```
 
 ## Examples

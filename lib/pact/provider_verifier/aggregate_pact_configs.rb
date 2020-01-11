@@ -6,11 +6,11 @@ module Pact
   module ProviderVerifier
     class AggregatePactConfigs
 
-      def self.call(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
-        new(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options).call
+      def self.call(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options, options)
+        new(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options, options).call
       end
 
-      def initialize(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
+      def initialize(pact_urls, provider_name, consumer_version_tags, consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options, options)
         @pact_urls = pact_urls
         @provider_name = provider_name
         @consumer_version_tags = consumer_version_tags
@@ -18,6 +18,7 @@ module Pact
         @provider_version_tags = provider_version_tags
         @pact_broker_base_url = pact_broker_base_url
         @http_client_options = http_client_options
+        @options = options
       end
 
       def call
@@ -26,7 +27,7 @@ module Pact
 
       private
 
-      attr_reader :pact_urls, :provider_name, :consumer_version_tags, :consumer_version_selectors, :provider_version_tags, :pact_broker_base_url, :http_client_options
+      attr_reader :pact_urls, :provider_name, :consumer_version_tags, :consumer_version_selectors, :provider_version_tags, :pact_broker_base_url, :http_client_options, :options
 
       def specified_pact_uris
         pact_urls.collect{ | url | Pact::PactBroker.build_pact_uri(url, http_client_options) }
@@ -41,11 +42,22 @@ module Pact
       end
 
       def pacts_for_verification
-        @pacts_for_verification ||= Pact::PactBroker.fetch_pact_uris_for_verification(provider_name, aggregated_consumer_version_selectors, provider_version_tags, pact_broker_base_url, http_client_options)
+        @pacts_for_verification ||= Pact::PactBroker.fetch_pact_uris_for_verification(
+          provider_name,
+          aggregated_consumer_version_selectors,
+          provider_version_tags,
+          pact_broker_base_url,
+          http_client_options,
+          pact_options
+        )
       end
 
       def aggregated_consumer_version_selectors
         consumer_version_selectors + consumer_version_tags.collect{ |tag| { tag: tag, latest: true } }
+      end
+
+      def pact_options
+        { include_pending_status: options[:enable_pending] }
       end
     end
   end

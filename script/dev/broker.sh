@@ -14,7 +14,8 @@ bundle exec bin/pact-provider-verifier  \
   --provider-base-url http://localhost:4567 \
   --provider-states-setup-url http://localhost:4567/provider-state \
   --publish-verification-results \
-  --verbose
+  --verbose \
+  --enable-pending
 
 kill -2 $pid
 wait $pid

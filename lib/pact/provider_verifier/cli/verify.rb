@@ -16,9 +16,13 @@ module Pact
 
         class InvalidArgumentsError < ::Thor::Error; end
 
+        SELECTOR_DOCS = "Selectors: These are specified using JSON strings. The keys are 'tag' (the name of the consumer version tag) and 'latest' (true|false). " +
+          "For example '{\"tag\": \"master\", \"latest\": true}'. For a detailed explanation of selectors, see https://pact.io/selectors"
+
         desc 'PACT_URL ...', "Verify pact(s) against a provider. Supports local and networked (http-based) files."
         long_desc "To verify a pact from a known URL, specify one or more PACT_URL arguments. If the pact is hosted in a Pact Broker that uses authentication, specify the relevant --broker-username/--broker-password or --broker-token fields. " +
-                  "To dynamically fetch pacts from a Pact Broker based on the provider name, specify the --pact-broker-base-url, --provider and relevant authentication fields."
+                  "To dynamically fetch pacts from a Pact Broker based on the provider name, specify the --pact-broker-base-url, --provider and relevant authentication fields." +
+                  + "\n\n" + SELECTOR_DOCS
         method_option :provider_base_url, aliases: "-h", desc: "Provider host URL", :required => true
         method_option :provider_states_setup_url, aliases: "-c", desc: "Base URL to setup the provider states at", :required => false
         method_option :pact_broker_base_url, desc: "Base URL of the Pact Broker from which to retrieve the pacts.", :required => false
@@ -27,10 +31,11 @@ module Pact
         method_option :broker_token, aliases: "-k", desc: "Pact Broker bearer token", :required => false
         method_option :provider, required: false
         method_option :consumer_version_tag, type: :array, banner: "TAG", desc: "Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.", :required => false
-        method_option :consumer_version_selector, type: :array, banner: "SELECTOR", desc: "JSON string specifying a selector that identifies which pacts to verify. May be specified multiple times.", :required => false
+        method_option :consumer_version_selector, type: :array, banner: "SELECTOR", desc: "JSON string specifying a selector that identifies which pacts to verify. May be specified multiple times. See below for further documentation.", :required => false
         method_option :provider_version_tag, type: :array, banner: "TAG", desc: "Tag to apply to the provider application version. May be specified multiple times.", :required => false
         method_option :provider_app_version, aliases: "-a", desc: "Provider application version, required when publishing verification results", :required => false
         method_option :publish_verification_results, aliases: "-r", desc: "Publish verification results to the broker", required: false, type: :boolean, default: false
+        method_option :enable_pending, desc: "Allow pacts which are in pending state to be verified without causing the overall task to fail. For more information, see https://pact.io/pending", required: false, type: :boolean, default: false
         method_option :custom_provider_header, type: :array, banner: 'CUSTOM_PROVIDER_HEADER', desc: "Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.", :required => false
         method_option :custom_middleware, type: :array, banner: 'FILE', desc: "Ruby file containing a class implementing Pact::ProviderVerifier::CustomMiddleware. This allows the response to be modified before replaying. Use with caution!", :required => false
         method_option :monkeypatch, hide: true, type: :array, :required => false
