@@ -62,7 +62,7 @@ Options:
   -a, [--provider-app-version=PROVIDER_APP_VERSION]
             # Provider application version, required when publishing verification results
   -r, [--publish-verification-results], [--no-publish-verification-results]
-            # Publish verification results to the broker
+            # Publish verification results to the broker. This can also be enabled by setting the environment variable PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true
       [--enable-pending], [--no-enable-pending]
             # Allow pacts which are in pending state to be verified without causing the overall task to fail. For more information, see https://pact.io/pending
       [--custom-provider-header=CUSTOM_PROVIDER_HEADER]
