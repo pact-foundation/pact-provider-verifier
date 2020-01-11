@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'faraday', '~> 0.9', '>= 0.9.0'
   gem.add_runtime_dependency 'faraday_middleware', '~> 0.10'
   gem.add_runtime_dependency 'json',  '>1.8'
-  gem.add_runtime_dependency 'rack', '~> 2.0'
+  gem.add_runtime_dependency 'rack', '~> 2.1'
   gem.add_runtime_dependency 'rake', '~> 10.4', '>= 10.4.2'
   gem.add_runtime_dependency 'rack-reverse-proxy'
   gem.add_runtime_dependency 'rspec_junit_formatter', '~> 0.3'
@@ -39,5 +39,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'pry-byebug', '~>3.4'
   gem.add_development_dependency 'find_a_port', '~>1.0'
   gem.add_development_dependency 'bump', '~> 0.5'
-
 end
