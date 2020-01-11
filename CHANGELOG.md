@@ -1,3 +1,16 @@
+<a name="v1.26.0-1"></a>
+### v1.26.0-1 (2020-01-11)
+
+
+#### Features
+
+* **cli**
+  * allow publishing of verification results to be enabled by setting the environment variable PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true	 ([14e37f0](/../../commit/14e37f0))
+  * add --enable-pending parameter to CLI	 ([0b32a1c](/../../commit/0b32a1c))
+  * add --consumer-version-selector parameter	 ([2526590](/../../commit/2526590))
+  * add long description	 ([905ab8d](/../../commit/905ab8d))
+
+
 <a name="v1.25.1-1"></a>
 ### v1.25.1-1 (2019-11-10)
 
