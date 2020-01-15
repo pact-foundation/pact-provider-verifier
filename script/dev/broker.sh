@@ -8,12 +8,12 @@ bundle exec bin/pact-provider-verifier  \
   --broker-password O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1 \
   --provider Bar \
   --provider-version-tag pdev \
+  --tag-with-git-branch \
   --consumer-version-selector '{"tag": "dev", "latest": true}' \
   --pact-broker-base-url https://test.pact.dius.com.au \
   -a 1.0.100 \
   --provider-base-url http://localhost:4567 \
   --provider-states-setup-url http://localhost:4567/provider-state \
-  --verbose \
   --enable-pending
 
 kill -2 $pid

@@ -7,6 +7,7 @@ require 'pact/provider/rspec'
 require 'pact/message'
 require 'pact/cli/run_pact_verification'
 require 'pact/provider_verifier/aggregate_pact_configs'
+require 'pact/provider_verifier/git'
 require 'rack/reverse_proxy'
 require 'faraday_middleware'
 require 'json'
@@ -17,14 +18,15 @@ module Pact
       include Pact::WaitUntilServerAvailable
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
+      EMPTY_ARRAY = [].freeze
       attr_reader :pact_urls, :options, :consumer_version_tags, :provider_version_tags, :consumer_version_selectors, :publish_verification_results
 
       def initialize pact_urls, options = {}
         @pact_urls = pact_urls
         @options = options
-        @consumer_version_tags = options[:consumer_version_tag] || []
-        @provider_version_tags = options[:provider_version_tag] || []
-        @consumer_version_selectors = parse_consumer_version_selectors(options[:consumer_version_selector] || [])
+        @consumer_version_tags = options.consumer_version_tag || EMPTY_ARRAY
+        @provider_version_tags = merge_provider_version_tags(options)
+        @consumer_version_selectors = parse_consumer_version_selectors(options.consumer_version_selector || EMPTY_ARRAY)
         @publish_verification_results = options.publish_verification_results || ENV['PACT_BROKER_PUBLISH_VERIFICATION_RESULTS'] == 'true'
       end
 
@@ -213,6 +215,10 @@ module Pact
 
       def parse_consumer_version_selectors consumer_version_selectors
         consumer_version_selectors.collect{ | string | JSON.parse(string) }
+      end
+
+      def merge_provider_version_tags(options)
+        (options.provider_version_tag || EMPTY_ARRAY) + (options.tag_with_git_branch ? [Git.branch] : EMPTY_ARRAY)
       end
 
       def print_deprecation_note
