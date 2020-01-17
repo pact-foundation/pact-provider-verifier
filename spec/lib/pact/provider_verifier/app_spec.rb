@@ -3,7 +3,12 @@ require 'pact/provider_verifier/app'
 module Pact
   module ProviderVerifier
     describe App do
-      describe "call" do
+      # I do not understand why, but if this spec runs in the same scope as the other tests, it causes this error:
+      #  got #<NoMethodError: undefined method `strip' for nil:NilClass> with backtrace:
+      #   /.gem/ruby/2.2.2/gems/faraday-0.17.3/lib/faraday/adapter/net_http.rb:67:in `new'
+      #   /.gem/ruby/2.2.2/gems/faraday-0.17.3/lib/faraday/adapter/net_http.rb:67:in `create_request'
+      # Don't have time to investigate now - just running it separately
+      describe "call", run_separately: true do
         before do
           allow(AggregatePactConfigs).to receive(:call).and_return([])
           allow(Cli::RunPactVerification).to receive(:call)
@@ -32,6 +37,7 @@ module Pact
           before do
             allow(Git).to receive(:branch).and_return("master")
           end
+
           it "merges the git branch with any specified provider tags" do
             # This is a shitty way to test the provider tags, but it's easier than checking
             # that the pact configuration DSL is called the right way!
