@@ -1,3 +1,12 @@
+<a name="v1.27.1-1"></a>
+### v1.27.1-1 (2020-01-16)
+
+
+#### Features
+
+* update git command use to determine branch name	 ([3dae935](/../../commit/3dae935))
+
+
 <a name="v1.27.0-1"></a>
 ### v1.27.0-1 (2020-01-16)
 
