@@ -5,7 +5,7 @@ require 'pact/provider_verifier/error'
 module Pact
   module ProviderVerifier
     module Git
-      COMMAND = 'git name-rev --name-only HEAD'.freeze
+      COMMAND = 'git rev-parse --abbrev-ref HEAD'.freeze
       BRANCH_ENV_VAR_NAMES = %w{BUILDKITE_BRANCH CIRCLE_BRANCH TRAVIS_BRANCH GIT_BRANCH GIT_LOCAL_BRANCH APPVEYOR_REPO_BRANCH CI_COMMIT_REF_NAME}.freeze
 
       def self.branch
