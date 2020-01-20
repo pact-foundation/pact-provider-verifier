@@ -5,6 +5,7 @@ env:
 rvm:
   - 2.2.2
 script:
+  - git rev-parse --abbrev-ref HEAD || true
   - bundle install
   - bundle exec rake spec
   - bundle exec rake package
