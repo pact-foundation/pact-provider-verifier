@@ -1,3 +1,14 @@
+<a name="v1.28.0-1"></a>
+### v1.28.0-1 (2020-01-22)
+
+
+#### Features
+
+* allow Pact Broker URL and credentials to be set via environment variables	 ([c257abf](/../../commit/c257abf))
+* ensure output stream is configured to point to the error stream before fetching the pacts so the JSON and XML parsing don't get corrupted	 ([d816980](/../../commit/d816980))
+* use `lib/pact/provider_verifier/git.rb` to get git sha	 ([2dd3591](/../../commit/2dd3591))
+
+
 <a name="v1.27.1-1"></a>
 ### v1.27.1-1 (2020-01-16)
 
