@@ -50,6 +50,7 @@ module Pact
 
 
       def setup
+        configure_output
         print_deprecation_note
         set_environment_variables
         require_rspec_monkeypatch_for_jsonl
@@ -87,6 +88,14 @@ module Pact
           end
 
           publish_verification_results this.publish_verification_results
+        end
+      end
+
+      def configure_output
+        if options[:format] && !options[:out]
+          # Don't want to mess up the JSON parsing with messages to stdout, so send it to stderr
+          require 'pact/configuration'
+          Pact.configuration.output_stream = Pact.configuration.error_stream
         end
       end
 
@@ -173,6 +182,7 @@ module Pact
         Pact.clear_configuration
         Pact.clear_consumer_world
         Pact.clear_provider_world
+        configure_output
         configure_service_provider
       end
 
