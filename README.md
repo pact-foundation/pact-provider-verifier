@@ -45,13 +45,13 @@ Options:
   -c, [--provider-states-setup-url=PROVIDER_STATES_SETUP_URL]
             # Base URL to setup the provider states at
       [--pact-broker-base-url=PACT_BROKER_BASE_URL]
-            # Base URL of the Pact Broker from which to retrieve the pacts.
+            # Base URL of the Pact Broker from which to retrieve the pacts. Can also be set using the environment variable PACT_BROKER_BASE_URL.
   -n, [--broker-username=BROKER_USERNAME]
-            # Pact Broker basic auth username
+            # Pact Broker basic auth username. Can also be set using the environment variable PACT_BROKER_USERNAME.
   -p, [--broker-password=BROKER_PASSWORD]
-            # Pact Broker basic auth password
+            # Pact Broker basic auth password. Can also be set using the environment variable PACT_BROKER_PASSWORD.
   -k, [--broker-token=BROKER_TOKEN]
-            # Pact Broker bearer token
+            # Pact Broker bearer token. Can also be set using the environment variable PACT_BROKER_TOKEN.
       [--provider=PROVIDER]
       [--consumer-version-tag=TAG]
             # Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.
@@ -81,15 +81,15 @@ Options:
             # Default: 0
 
 Description:
-  To verify a pact from a known URL, specify one or more PACT_URL arguments. If the pact is
-  hosted in a Pact Broker that uses authentication, specify the relevant
-  --broker-username/--broker-password or --broker-token fields. To dynamically fetch pacts
-  from a Pact Broker based on the provider name, specify the --pact-broker-base-url,
-  --provider and relevant authentication fields.
+  To verify a pact from a known URL, specify one or more PACT_URL arguments. If the pact
+  is hosted in a Pact Broker that uses authentication, specify the relevant
+  --broker-username/--broker-password or --broker-token fields. To dynamically fetch
+  pacts from a Pact Broker based on the provider name, specify the
+  --pact-broker-base-url, --provider and relevant authentication fields.
 
   Selectors: These are specified using JSON strings. The keys are 'tag' (the name of the consumer
-  version tag) and 'latest' (true|false). For example '{"tag": "master", "latest": true}'.
-  For a detailed explanation of selectors, see https://pact.io/selectors
+  version tag) and 'latest' (true|false). For example '{"tag": "master", "latest":
+  true}'. For a detailed explanation of selectors, see https://pact.io/selectors
 ```
 
 ## Examples

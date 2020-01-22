@@ -25,10 +25,10 @@ module Pact
                   "\n\n" + SELECTOR_DOCS
         method_option :provider_base_url, aliases: "-h", desc: "Provider host URL", :required => true
         method_option :provider_states_setup_url, aliases: "-c", desc: "Base URL to setup the provider states at", :required => false
-        method_option :pact_broker_base_url, desc: "Base URL of the Pact Broker from which to retrieve the pacts.", :required => false
-        method_option :broker_username, aliases: "-n", desc: "Pact Broker basic auth username", :required => false
-        method_option :broker_password, aliases: "-p", desc: "Pact Broker basic auth password", :required => false
-        method_option :broker_token, aliases: "-k", desc: "Pact Broker bearer token", :required => false
+        method_option :pact_broker_base_url, desc: "Base URL of the Pact Broker from which to retrieve the pacts. Can also be set using the environment variable PACT_BROKER_BASE_URL.", :required => false
+        method_option :broker_username, aliases: "-n", desc: "Pact Broker basic auth username. Can also be set using the environment variable PACT_BROKER_USERNAME.", :required => false
+        method_option :broker_password, aliases: "-p", desc: "Pact Broker basic auth password. Can also be set using the environment variable PACT_BROKER_PASSWORD.", :required => false
+        method_option :broker_token, aliases: "-k", desc: "Pact Broker bearer token. Can also be set using the environment variable PACT_BROKER_TOKEN.", :required => false
         method_option :provider, required: false
         method_option :consumer_version_tag, type: :array, banner: "TAG", desc: "Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.", :required => false
         method_option :consumer_version_selector, type: :array, banner: "SELECTOR", desc: "JSON string specifying a selector that identifies which pacts to verify. May be specified multiple times. See below for further documentation.", :required => false

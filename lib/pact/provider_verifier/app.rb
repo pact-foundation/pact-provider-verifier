@@ -187,14 +187,19 @@ module Pact
       end
 
       def all_pact_urls
-        http_client_options = { username: options.broker_username, password: options.broker_password, token: options.broker_token, verbose: options.verbose }
+        http_client_options = {
+          username: options.broker_username || ENV['PACT_BROKER_USERNAME'],
+          password: options.broker_password || ENV['PACT_BROKER_PASSWORD'],
+          token: options.broker_token || ENV['PACT_BROKER_TOKEN'],
+          verbose: options.verbose
+        }
         AggregatePactConfigs.call(
           pact_urls,
           options.provider,
           consumer_version_tags,
           consumer_version_selectors,
           provider_version_tags,
-          options.pact_broker_base_url,
+          options.pact_broker_base_url || ENV['PACT_BROKER_BASE_URL'],
           http_client_options,
           { enable_pending: options.enable_pending }
           )
