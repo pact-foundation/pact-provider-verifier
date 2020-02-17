@@ -15,6 +15,7 @@ module Pact
       class Verify < CustomThor
 
         class InvalidArgumentsError < ::Thor::Error; end
+        class AuthError < ::Thor::Error; end
 
         SELECTOR_DOCS = "Selectors: These are specified using JSON strings. The keys are 'tag' (the name of the consumer version tag) and 'latest' (true|false). " +
           "For example '{\"tag\": \"master\", \"latest\": true}'. For a detailed explanation of selectors, see https://pact.io/selectors"
@@ -49,6 +50,7 @@ module Pact
         method_option :wait, banner: "SECONDS", required: false, type: :numeric, desc: "The number of seconds to poll for the provider to become available before running the verification", default: 0
 
         def verify(*pact_urls)
+          validate_credentials
           validate_verify
           print_deprecation_warnings
           success = Pact::ProviderVerifier::App.call(merged_urls(pact_urls), options)
@@ -72,6 +74,12 @@ module Pact
           def print_deprecation_warnings
             if options.pact_urls
               $stderr.puts "WARN: The --pact-urls option is deprecated. Please pass in a space separated list of URLs as the first arguments to the pact-provider-verifier command."
+            end
+          end
+
+          def validate_credentials
+            if (options.broker_username || ENV['PACT_BROKER_USERNAME']) && (options.broker_token || ENV['PACT_BROKER_TOKEN'])
+              raise AuthError, "You cannot provide both a username/password and a bearer token. If your Pact Broker uses a bearer token, please remove the username and password configuration."
             end
           end
 

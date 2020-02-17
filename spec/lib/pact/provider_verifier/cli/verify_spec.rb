@@ -77,6 +77,23 @@ module Pact
           end
         end
 
+        context "when both basic auth credentials and bearer token are set" do
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
+          let(:options) do
+            minimum_valid_options.merge(
+              broker_username: "username",
+              broker_token: "token"
+            )
+          end
+
+          it "raises an error" do
+            expect { invoke_verify }.to raise_error Verify::AuthError, /both/
+          end
+        end
+
         context "when the deprecated pact-urls option is used" do
           before do
             allow($stderr).to receive(:puts)
