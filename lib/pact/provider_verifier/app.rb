@@ -157,9 +157,6 @@ module Pact
             pact_helper: PROXY_PACT_HELPER,
             pact_uri: pact_uri,
             backtrace: ENV['BACKTRACE'] == 'true',
-            pact_broker_username: options.broker_username,
-            pact_broker_password: options.broker_password,
-            pact_broker_token: options.broker_token,
             format: options.format,
             out: options.out,
             request_customizer: ProviderStates::AddProviderStatesHeader
