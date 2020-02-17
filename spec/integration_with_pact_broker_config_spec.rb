@@ -16,8 +16,6 @@ describe "pact-provider-verifier with pact broker config" do
       --consumer-version-tag prod
       --provider-version-tag pmaster
       --pact-broker-base-url http://localhost:5738
-      --broker-username username
-      --broker-password password
       --broker-token token
       --provider-base-url http://localhost:4567}
   end
@@ -38,7 +36,7 @@ describe "pact-provider-verifier with pact broker config" do
       [{ tag: "master", latest: true }, { tag: "prod", latest: true }],
       ["pmaster"],
       "http://localhost:5738",
-      { username: "username", password: "password", token: "token", verbose: nil },
+      { username: nil, password: nil, token: "token", verbose: nil },
       { include_pending_status: false }
     )
     subject
