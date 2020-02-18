@@ -1,3 +1,13 @@
+<a name="v1.29.0-1"></a>
+### v1.29.0-1 (2020-02-18)
+
+
+#### Features
+
+* **cli**
+  * raise an error when basic auth credentials and bearer token are set at the same time	 ([7f4507e](/../../commit/7f4507e))
+
+
 <a name="v1.28.0-1"></a>
 ### v1.28.0-1 (2020-01-22)
 
