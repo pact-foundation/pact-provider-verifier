@@ -1,3 +1,7 @@
+ENV['PACT_BROKER_USERNAME'] = nil
+ENV['PACT_BROKER_PASSWORD'] = nil
+ENV['PACT_BROKER_TOKEN'] = nil
+
 RSpec.configure do | config |
 
   if config.respond_to?(:example_status_persistence_file_path=)

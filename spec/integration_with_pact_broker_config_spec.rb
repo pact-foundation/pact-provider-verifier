@@ -37,7 +37,7 @@ describe "pact-provider-verifier with pact broker config" do
       ["pmaster"],
       "http://localhost:5738",
       { username: nil, password: nil, token: "token", verbose: nil },
-      { include_pending_status: false }
+      { include_pending_status: false, include_wip_pacts_since: nil }
     )
     subject
   end

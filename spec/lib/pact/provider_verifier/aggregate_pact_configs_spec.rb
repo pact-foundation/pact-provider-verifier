@@ -13,7 +13,7 @@ module Pact
         let(:provider_version_tags) { ["dev"] }
         let(:pact_broker_base_url) { "http://broker" }
         let(:http_client_options) { { "foo" => "bar"} }
-        let(:options) { { enable_pending: true } }
+        let(:options) { { enable_pending: true, include_wip_pacts_since: '2020-01-01' } }
 
         let(:pact_uris) { [double('PactURI', uri: "http://pact-2")] }
         let(:pending_pact_2) { double('PactURI', uri: "http://pact-2") }
@@ -79,7 +79,7 @@ module Pact
               provider_version_tags,
               pact_broker_base_url,
               http_client_options,
-              { include_pending_status: true }
+              { include_pending_status: true, include_wip_pacts_since: '2020-01-01' }
             )
             subject
           end
