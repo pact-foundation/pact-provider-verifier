@@ -1,3 +1,13 @@
+<a name="v1.30.0-1"></a>
+### v1.30.0-1 (2020-02-19)
+
+
+#### Features
+
+* **cli**
+  * add --include-wip-pacts-since (hidden until publicly released)	 ([3109ce2](/../../commit/3109ce2))
+
+
 <a name="v1.29.0-1"></a>
 ### v1.29.0-1 (2020-02-18)
 
