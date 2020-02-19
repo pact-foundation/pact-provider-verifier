@@ -38,6 +38,7 @@ module Pact
         method_option :provider_app_version, aliases: "-a", desc: "Provider application version, required when publishing verification results", :required => false
         method_option :publish_verification_results, aliases: "-r", desc: "Publish verification results to the broker. This can also be enabled by setting the environment variable PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true", required: false, type: :boolean, default: false
         method_option :enable_pending, desc: "Allow pacts which are in pending state to be verified without causing the overall task to fail. For more information, see https://pact.io/pending", required: false, type: :boolean, default: false
+        method_option :include_wip_pacts_since, desc: "", hide: true
         method_option :custom_provider_header, type: :array, banner: 'CUSTOM_PROVIDER_HEADER', desc: "Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.", :required => false
         method_option :custom_middleware, type: :array, banner: 'FILE', desc: "Ruby file containing a class implementing Pact::ProviderVerifier::CustomMiddleware. This allows the response to be modified before replaying. Use with caution!", :required => false
         method_option :monkeypatch, hide: true, type: :array, :required => false
@@ -50,7 +51,6 @@ module Pact
         method_option :wait, banner: "SECONDS", required: false, type: :numeric, desc: "The number of seconds to poll for the provider to become available before running the verification", default: 0
 
         def verify(*pact_urls)
-          validate_credentials
           validate_verify
           print_deprecation_warnings
           success = Pact::ProviderVerifier::App.call(merged_urls(pact_urls), options)
@@ -77,17 +77,31 @@ module Pact
             end
           end
 
+          def validate_verify
+            if options.pact_broker_base_url && (options.provider.nil? || options.provider == "")
+              raise InvalidArgumentsError, "No value provided for required option '--provider'"
+            end
+            validate_consumer_version_selectors
+            validate_wip_since_date
+            validate_credentials
+          end
+
           def validate_credentials
             if (options.broker_username || ENV['PACT_BROKER_USERNAME']) && (options.broker_token || ENV['PACT_BROKER_TOKEN'])
               raise AuthError, "You cannot provide both a username/password and a bearer token. If your Pact Broker uses a bearer token, please remove the username and password configuration."
             end
           end
 
-          def validate_verify
-            if options.pact_broker_base_url && (options.provider.nil? || options.provider == "")
-              raise InvalidArgumentsError, "No value provided for required option '--provider'"
+          def validate_wip_since_date
+            require 'date'
+
+            if options.include_wip_pacts_since
+              begin
+                DateTime.parse(options.include_wip_pacts_since)
+              rescue ArgumentError
+                raise InvalidArgumentsError, "The value provided for --include-wip-pacts-since could not be parsed to a DateTime. Please provide a value in the format %Y-%m-%d or %Y-%m-%dT%H:%M:%S.000%:z"
+              end
             end
-            validate_consumer_version_selectors
           end
 
           def validate_consumer_version_selectors

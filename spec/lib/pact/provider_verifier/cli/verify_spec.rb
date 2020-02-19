@@ -121,6 +121,10 @@ module Pact
         end
 
         context "with multiple --consumer-version-selector" do
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
           let(:options) do
             minimum_valid_options.merge(
               pact_broker_base_url: "http://broker",
@@ -129,9 +133,6 @@ module Pact
             )
           end
 
-          before do
-            subject.options = OpenStruct.new(options)
-          end
 
           it "parses the JSON strings to hashes" do
             expect(Pact::ProviderVerifier::App).to receive(:call).with(
@@ -140,17 +141,51 @@ module Pact
           end
         end
 
+        context "with --include-wip-pacts-since" do
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
+          context "with a valid date time" do
+            let(:options) do
+              minimum_valid_options.merge(
+                include_wip_pacts_since: "2020-02-19T19:31:18.000+11:00"
+              )
+            end
+
+            it "passes the argument to the app" do
+              expect(Pact::ProviderVerifier::App).to receive(:call).with(
+                pact_urls, OpenStruct.new(options))
+              invoke_verify
+            end
+          end
+
+          context "with an invalid date time" do
+            let(:options) do
+              minimum_valid_options.merge(
+                include_wip_pacts_since: "foo"
+              )
+            end
+
+            it "raises an error" do
+              expect { invoke_verify }.to raise_error Verify::InvalidArgumentsError, /DateTime/
+            end
+          end
+
+
+        end
+
         context "with --consumer-version-selector that is invalid JSON" do
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
           let(:options) do
             minimum_valid_options.merge(
               pact_broker_base_url: "http://broker",
               provider: "Foo",
               consumer_version_selector: [ "a" ]
             )
-          end
-
-          before do
-            subject.options = OpenStruct.new(options)
           end
 
           it "raises an InvalidArgumentsError" do

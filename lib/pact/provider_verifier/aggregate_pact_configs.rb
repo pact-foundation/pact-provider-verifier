@@ -57,7 +57,10 @@ module Pact
       end
 
       def pact_options
-        { include_pending_status: options[:enable_pending] }
+        {
+          include_pending_status: options[:enable_pending],
+          include_wip_pacts_since: options[:include_wip_pacts_since]
+        }
       end
     end
   end

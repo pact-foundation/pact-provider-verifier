@@ -15,11 +15,13 @@ export PACT_BROKER_USERNAME=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
 export PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
 bundle exec bin/pact-provider-verifier  \
   --provider "Bar" \
+  --provider-version-tag dev \
   --consumer-version-tag dev \
   --consumer-version-tag dev2 \
   --provider-app-version $(git rev-parse --short HEAD | xargs echo -n) \
   --provider-base-url http://localhost:4567 \
-  --enable-pending
+  --include-wip-pacts-since 2018-01-01 \
+  --enable-pending --verbose
 
 kill -2 $pid
 wait $pid

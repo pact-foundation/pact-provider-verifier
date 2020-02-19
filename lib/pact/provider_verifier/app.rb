@@ -190,6 +190,10 @@ module Pact
           token: options.broker_token || ENV['PACT_BROKER_TOKEN'],
           verbose: options.verbose
         }
+        opts = {
+          enable_pending: options.enable_pending,
+          include_wip_pacts_since: options.include_wip_pacts_since
+        }
         AggregatePactConfigs.call(
           pact_urls,
           options.provider,
@@ -198,8 +202,7 @@ module Pact
           provider_version_tags,
           options.pact_broker_base_url || ENV['PACT_BROKER_BASE_URL'],
           http_client_options,
-          { enable_pending: options.enable_pending }
-          )
+          opts)
       end
 
       def require_pact_project_pact_helper
