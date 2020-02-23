@@ -27,6 +27,11 @@ module Pact
         log_request
         response = post_to_provider_state
         check_for_error response
+        begin
+          JSON.parse(response.body)
+        rescue
+          {}
+        end
       end
 
       private
@@ -48,11 +53,11 @@ module Pact
           # https://github.com/pact-foundation/pact-go/issues/42
           # eg. https://ci.appveyor.com/project/mefellows/pact-go/build/25#L1202
 
+          
           faraday.request :retry, max: 2, interval: 0.05,
             interval_randomness: 0.5, backoff_factor: 2,
             methods:[:post],
             exceptions: [Faraday::ConnectionFailed]
-
           faraday.response :logger if verbose
           faraday.adapter Faraday.default_adapter
         end
