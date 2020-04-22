@@ -1,3 +1,13 @@
+<a name="v1.30.1-1"></a>
+### v1.30.1-1 (2020-04-22)
+
+
+#### Bug Fixes
+
+* use symbol names for consumer version selectors	 ([c2c986b](/../../commit/c2c986b))
+* correctly handle multiple parameters specified in the format --name=value	 ([c0852d0](/../../commit/c0852d0))
+
+
 <a name="v1.30.0-1"></a>
 ### v1.30.0-1 (2020-02-19)
 
