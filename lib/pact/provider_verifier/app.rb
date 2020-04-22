@@ -229,7 +229,7 @@ module Pact
       end
 
       def parse_consumer_version_selectors consumer_version_selectors
-        consumer_version_selectors.collect{ | string | JSON.parse(string) }
+        consumer_version_selectors.collect{ | string | JSON.parse(string, symbolize_names: true) }
       end
 
       def merge_provider_version_tags(options)
