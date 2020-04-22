@@ -1,5 +1,6 @@
 #!/bin/sh
 
+git pull origin master
 set -e
 bundle exec bump ${1:-minor} --no-commit
 bundle exec rake generate_changelog
