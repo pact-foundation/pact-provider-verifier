@@ -131,7 +131,7 @@ describe "pact-provider-verifier" do
     end
   end
 
-  context "running verification a log dir" do
+  context "setting a log dir" do
     before do
       FileUtils.rm_rf 'tmp/logs'
     end
@@ -140,7 +140,7 @@ describe "pact-provider-verifier" do
 
     it "the logs are written at the right level" do
       subject
-      sleep 2
+      Process.kill 'INT', @pipe.pid
       expect(File.exist?('tmp/logs/pact.log'))
       logs = File.read('tmp/logs/pact.log')
       expect(logs).to include ('INFO')
