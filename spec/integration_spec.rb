@@ -141,6 +141,7 @@ describe "pact-provider-verifier" do
     it "the logs are written at the right level" do
       subject
       Process.kill 'INT', @pipe.pid
+      sleep 5
       expect(File.exist?('tmp/logs/pact.log'))
       logs = File.read('tmp/logs/pact.log')
       expect(logs).to include ('INFO')
