@@ -98,7 +98,7 @@ module Pact
           Pact.configuration.output_stream = Pact.configuration.error_stream
         end
         Pact.configuration.log_dir = options.log_dir if options.log_dir
-        Pact.configuration.logger.level = options.log_level.downcase.to_sym if options.log_level
+        Pact.configuration.logger.level = Kernel.const_get('Logger').const_get(options.log_level.upcase) if options.log_level
       end
 
       def configure_reverse_proxy

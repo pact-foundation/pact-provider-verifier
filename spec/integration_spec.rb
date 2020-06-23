@@ -141,10 +141,9 @@ describe "pact-provider-verifier" do
     it "the logs are written at the right level" do
       subject
       expect(File.exist?('tmp/logs/pact.log'))
-      # can't get this to pass on CI. They're always empty apart from the "log created at" first line
-      #logs = File.read('tmp/logs/pact.log')
-      #expect(logs).to include ('INFO')
-      #expect(logs).to_not include ('DEBUG')
+      logs = File.read('tmp/logs/pact.log')
+      expect(logs).to include ('INFO')
+      expect(logs).to_not include ('DEBUG')
     end
   end
 
