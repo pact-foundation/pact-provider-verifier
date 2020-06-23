@@ -27,7 +27,7 @@ module Pact
             wait: 1,
             provider_states_url: nil,
             log_level: :info,
-            log_dir: '.'
+            log_dir: 'tmp'
             ).as_null_object
         end
 
