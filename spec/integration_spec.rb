@@ -131,6 +131,22 @@ describe "pact-provider-verifier" do
     end
   end
 
+  context "running verification a log dir" do
+    before do
+      FileUtils.rm_rf 'tmp/logs'
+    end
+
+    subject { `bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state --log-dir tmp/logs --log-level info` }
+
+    it "the logs are written at the right level" do
+      subject
+      expect(File.exist?('tmp/logs/pact.log'))
+      logs = File.read('tmp/logs/pact.log')
+      expect(logs).to include ('INFO')
+      expect(logs).to_not include ('DEBUG')
+    end
+  end
+
   after(:all) do
     Process.kill 'KILL', @pipe.pid
   end

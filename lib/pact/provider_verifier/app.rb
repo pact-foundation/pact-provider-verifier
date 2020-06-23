@@ -97,6 +97,8 @@ module Pact
           require 'pact/configuration'
           Pact.configuration.output_stream = Pact.configuration.error_stream
         end
+        Pact.configuration.log_dir = options.log_dir if options.log_dir
+        Pact.configuration.logger.level = options.log_level.downcase.to_sym if options.log_level
       end
 
       def configure_reverse_proxy
