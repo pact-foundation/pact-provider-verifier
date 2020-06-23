@@ -192,6 +192,22 @@ module Pact
             expect { subject.verify }.to raise_error Verify::InvalidArgumentsError, /Invalid JSON string/
           end
         end
+
+        context "with an invalid log level" do
+          before do
+            subject.options = OpenStruct.new(options)
+          end
+
+          let(:options) do
+            minimum_valid_options.merge(
+              log_level: "foo"
+            )
+          end
+
+          it "raises an InvalidArgumentsError" do
+            expect { subject.verify }.to raise_error Verify::InvalidArgumentsError, "Invalid log level 'foo'. Must be one of: debug, info, warn, error, fatal."
+          end
+        end
       end
     end
   end
