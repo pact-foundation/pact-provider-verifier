@@ -25,7 +25,9 @@ module Pact
             provider_base_url: "http://provider",
             provider_version_tag: ["foo"],
             wait: 1,
-            provider_states_url: nil
+            provider_states_url: nil,
+            log_level: :info,
+            log_dir: '.'
             ).as_null_object
         end
 
