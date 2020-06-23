@@ -1,12 +1,3 @@
-<a name="v1.31.0-1"></a>
-### v1.31.0-1 (2020-06-23)
-
-
-#### Features
-
-* add --log-dir and --log-level to CLI	 ([1cf71bb](/../../commit/1cf71bb))
-
-
 <a name="v1.30.1-1"></a>
 ### v1.30.1-1 (2020-04-22)
 
