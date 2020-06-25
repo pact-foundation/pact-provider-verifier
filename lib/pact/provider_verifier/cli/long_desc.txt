@@ -1,0 +1,19 @@
+The parameters used when fetching pacts dynamically from a Pact Broker are:
+
+--pact-broker-base-url (REQUIRED)
+--provider (REQUIRED)
+--broker-username/--broker-password or --broker-token
+--consumer-version-tag or --consumer-version-selector
+--enable-pending
+--include-wip-pacts-since
+
+To fetch a pact from a known URL (eg. when a verification is triggered by a 'contract content changed' webhook), pass in the pact URL(s) as the first argument(s) to the command.
+
+To publish verification results for either of the above scenarios, set:
+
+--publish-verification-results (REQUIRED)
+--provider-app-version (REQUIRED)
+--provider-version-tag or --tag-with-git-branch
+
+
+Selectors: These are specified using JSON strings. The keys are 'tag' (the name of the consumer version tag), 'latest' (true|false), 'consumer', and 'fallbackTag'. For example '{\"tag\": \"master\", \"latest\": true}'. For a detailed explanation of selectors, see https://pact.io/selectors#consumer-version-selectors

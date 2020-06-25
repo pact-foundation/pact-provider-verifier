@@ -41,53 +41,97 @@ Usage:
 
 Options:
   -h, --provider-base-url=PROVIDER_BASE_URL
-              # Provider host URL
+          # Provider host URL
   -c, [--provider-states-setup-url=PROVIDER_STATES_SETUP_URL]
-              # Base URL to setup the provider states at
+          # Base URL to setup the provider states at
       [--pact-broker-base-url=PACT_BROKER_BASE_URL]
-              # Base URL of the Pact Broker from which to retrieve the pacts. Can also be set using the environment variable PACT_BROKER_BASE_URL.
+        # Base URL of the Pact Broker from which to retrieve the
+          pacts. Can also be set using the environment variable
+          PACT_BROKER_BASE_URL.
   -n, [--broker-username=BROKER_USERNAME]
-              # Pact Broker basic auth username. Can also be set using the environment variable PACT_BROKER_USERNAME.
+        # Pact Broker basic auth username. Can also be set using
+          the environment variable PACT_BROKER_USERNAME.
   -p, [--broker-password=BROKER_PASSWORD]
-              # Pact Broker basic auth password. Can also be set using the environment variable PACT_BROKER_PASSWORD.
+        # Pact Broker basic auth password. Can also be set using
+          the environment variable PACT_BROKER_PASSWORD.
   -k, [--broker-token=BROKER_TOKEN]
-              # Pact Broker bearer token. Can also be set using the environment variable PACT_BROKER_TOKEN.
+        # Pact Broker bearer token. Can also be set using the
+          environment variable PACT_BROKER_TOKEN.
       [--provider=PROVIDER]
       [--consumer-version-tag=TAG]
-              # Retrieve the latest pacts with this consumer version tag. Used in conjunction with --provider. May be specified multiple times.
+        # Retrieve the latest pacts with this consumer version tag.
+          Used in conjunction with --provider. May be specified multiple times.
       [--provider-version-tag=TAG]
-              # Tag to apply to the provider application version. May be specified multiple times.
+        # Tag to apply to the provider application version. May be
+          specified multiple times.
   -g, [--tag-with-git-branch], [--no-tag-with-git-branch]
-              # Tag provider version with the name of the current git branch. Default: false
+        # Tag provider version with the name of the current git
+          branch. Default: false
   -a, [--provider-app-version=PROVIDER_APP_VERSION]
-              # Provider application version, required when publishing verification results
+        # Provider application version, required when publishing
+          verification results
   -r, [--publish-verification-results], [--no-publish-verification-results]
-              # Publish verification results to the broker. This can also be enabled by setting the environment variable PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true
+        # Publish verification results to the broker. This can also
+          be enabled by setting the environment variable
+          PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true
+      [--enable-pending], [--no-enable-pending]
+        # Allow pacts which are in pending state to be verified
+          without causing the overall task to fail. For more information, see
+          https://pact.io/pending
       [--custom-provider-header=CUSTOM_PROVIDER_HEADER]
-              # Header to add to provider state set up and pact verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be specified multiple times.
+        # Header to add to provider state set up and pact
+          verification requests. eg 'Authorization: Basic cGFjdDpwYWN0'. May be
+          specified multiple times.
       [--custom-middleware=FILE]
-              # Ruby file containing a class implementing Pact::ProviderVerifier::CustomMiddleware. This allows the response to be modified before replaying. Use with caution!
+        # Ruby file containing a class implementing
+          Pact::ProviderVerifier::CustomMiddleware. This allows the response to
+          be modified before replaying. Use with caution!
   -v, [--verbose=VERBOSE]
-              # Verbose output
+          # Verbose output
   -f, [--format=FORMATTER]
-              # RSpec formatter. Defaults to custom Pact formatter. Other options are json and RspecJunitFormatter (which outputs xml).
+        # RSpec formatter. Defaults to custom Pact formatter. Other
+          options are json and RspecJunitFormatter (which outputs xml).
   -o, [--out=FILE]
-              # Write output to a file instead of $stdout.
+          # Write output to a file instead of $stdout.
       [--wait=SECONDS]
-              # The number of seconds to poll for the provider to become available before running the verification
+        # The number of seconds to poll for the provider to become
+          available before running the verification
 
-              # Default: 0
+          # Default: 0
+      [--log-dir=LOG_DIR]
+          # The directory for the pact.log file
+      [--log-level=LOG_LEVEL]
+          # The log level
+
+          # Default: debug
 
 Description:
-  To verify a pact from a known URL, specify one or more PACT_URL arguments. If the
-  pact is hosted in a Pact Broker that uses authentication, specify the relevant
-  --broker-username/--broker-password or --broker-token fields. To dynamically fetch
-  pacts from a Pact Broker based on the provider name, specify the
-  --pact-broker-base-url, --provider and relevant authentication fields.
+  The parameters used when fetching pacts dynamically from a Pact Broker are:
 
-  Selectors: These are specified using JSON strings. The keys are 'tag' (the name of the
-  consumer version tag) and 'latest' (true|false). For example '{"tag": "master",
-  "latest": true}'. For a detailed explanation of selectors, see
+  --pact-broker-base-url (REQUIRED)
+  --provider (REQUIRED)
+  --broker-username/--broker-password or --broker-token
+  --consumer-version-tag or --consumer-version-selector
+  --enable-pending
+  --include-wip-pacts-since
+
+  To fetch a pact from a known URL (eg. when a
+  verification is triggered by a 'contract content changed' webhook), pass in
+the pact URL(s) as the first argument(s) to the command.
+
+  To publish verification results for either of the above scenarios, set:
+
+  --publish-verification-results (REQUIRED)
+  --provider-app-version (REQUIRED)
+  --provider-version-tag or --tag-with-git-branch
+
+
+  Selectors: These are specified using JSON strings. The keys are 'tag' (the
+name of the consumer
+  version tag), 'latest' (true|false), 'consumer', and 'fallbackTag'. For
+example '{\"tag\": \"master\", \"latest\": true}'. For
+  a detailed explanation of selectors, see
+https://pact.io/selectors#consumer-version-selectors
 ```
 
 ## Examples

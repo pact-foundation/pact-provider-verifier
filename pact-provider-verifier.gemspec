@@ -39,4 +39,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'pry-byebug', '~>3.4'
   gem.add_development_dependency 'find_a_port', '~>1.0'
   gem.add_development_dependency 'bump', '~> 0.5'
+  gem.add_development_dependency 'word_wrap'
 end
