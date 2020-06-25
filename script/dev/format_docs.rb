@@ -10,8 +10,8 @@ new_lines = []
 lines.each do | line |
   if line.start_with?("#{PADDING}#") && line.length > MAX_LINE_LENGTH
     split_lines = WordWrap.ww(line, MAX_LINE_LENGTH - PADDING.length).split("\n").collect{ |l| PADDING + l }
-    split_lines[0] = split_lines.first.gsub(/^#{PADDING}  /, '')
-    new_lines.concat(split_lines)
+    new_lines << split_lines.delete_at(0).gsub(/^#{PADDING}/, '')
+    new_lines.concat(split_lines.collect{ |l| "  #{l}"})
   else
     new_lines << line
   end
