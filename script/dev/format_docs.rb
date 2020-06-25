@@ -1,6 +1,6 @@
 require 'word_wrap'
 
-MAX_LINE_LENGTH = 80
+MAX_LINE_LENGTH = 100
 PADDING = ' ' * 10
 HASH_WITH_PADDING = "\n#{PADDING}# "
 lines = `bundle exec bin/pact-provider-verifier help`.gsub(' # ', HASH_WITH_PADDING).split("\n")
