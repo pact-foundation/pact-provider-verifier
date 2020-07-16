@@ -136,7 +136,7 @@ module Pact
 
       def require_custom_middlware
         options.custom_middleware.each do |file|
-          $stdout.puts "DEBUG: Requiring custom middleware file #{file}" if options.verbose
+          $stdout.puts "DEBUG: Requiring custom middleware file #{file}" if verbose?
           begin
             require file
           rescue LoadError => e
@@ -190,7 +190,7 @@ module Pact
           username: options.broker_username || ENV['PACT_BROKER_USERNAME'],
           password: options.broker_password || ENV['PACT_BROKER_PASSWORD'],
           token: options.broker_token || ENV['PACT_BROKER_TOKEN'],
-          verbose: options.verbose
+          verbose: verbose?
         }
         opts = {
           enable_pending: options.enable_pending,
@@ -261,6 +261,10 @@ module Pact
         if options.broker_token && !ENV['PACT_BROKER_TOKEN']
           ENV['PACT_BROKER_TOKEN'] = options.broker_token
         end
+      end
+
+      def verbose?
+        options.verbose || ENV['VERBOSE'] == 'true'
       end
     end
   end

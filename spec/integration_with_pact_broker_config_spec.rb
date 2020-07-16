@@ -36,7 +36,7 @@ describe "pact-provider-verifier with pact broker config" do
       [{ tag: "master", latest: true }, { tag: "prod", latest: true }],
       ["pmaster"],
       "http://localhost:5738",
-      { username: nil, password: nil, token: "token", verbose: nil },
+      { username: nil, password: nil, token: "token", verbose: false },
       { include_pending_status: false, include_wip_pacts_since: nil }
     )
     subject

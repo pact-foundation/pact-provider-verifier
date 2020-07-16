@@ -80,7 +80,7 @@ Options:
             Pact::ProviderVerifier::CustomMiddleware. This allows the response to be modified before
             replaying. Use with caution!
   -v, [--verbose=VERBOSE]
-          # Verbose output
+          # Verbose output. Can also be set by setting the environment variable VERBOSE=true.
   -f, [--format=FORMATTER]
           # RSpec formatter. Defaults to custom Pact formatter. Other options are json
             and RspecJunitFormatter (which outputs xml).
