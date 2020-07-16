@@ -1,3 +1,12 @@
+<a name="v1.32.0"></a>
+### v1.32.0 (2020-07-16)
+
+
+#### Features
+
+* allow verbose to be turned on by setting VERBOSE=true	 ([8a72b13](/../../commit/8a72b13))
+
+
 <a name="v1.31.0-1"></a>
 ### v1.31.0-1 (2020-06-23)
 
