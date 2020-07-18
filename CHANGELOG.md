@@ -1,3 +1,12 @@
+<a name="v1.32.1"></a>
+### v1.32.1 (2020-07-18)
+
+
+#### Bug Fixes
+
+* change rake to a development dependency	 ([6249a03](/../../commit/6249a03))
+
+
 <a name="v1.32.0"></a>
 ### v1.32.0 (2020-07-16)
 
