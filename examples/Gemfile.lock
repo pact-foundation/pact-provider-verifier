@@ -10,7 +10,7 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     filelock (1.1.1)
     find_a_port (1.0.1)
-    json (2.2.0)
+    json (2.3.1)
     multi_json (1.13.1)
     multipart-post (2.1.1)
     mustermann (1.0.3)
