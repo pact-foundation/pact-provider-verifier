@@ -1,6 +1,4 @@
 require 'thor'
-require 'socket'
-require 'pact/provider_verifier/app'
 require 'pact/provider_verifier/cli/custom_thor'
 
 module Pact
@@ -42,6 +40,8 @@ module Pact
         method_option :log_level, desc: "The log level", default: "debug"
 
         def verify(*pact_urls)
+          require 'pact/provider_verifier/app'
+          require 'socket'
           validate_verify
           print_deprecation_warnings
           success = Pact::ProviderVerifier::App.call(merged_urls(pact_urls), options)
