@@ -1,7 +1,7 @@
 require 'pact/wait_until_server_available'
 require 'pact/provider_verifier/add_header_middlware'
-require 'pact/provider_verifier/provider_states/add_provider_states_header'
-require 'pact/provider_verifier/provider_states/remove_provider_states_header_middleware'
+require 'pact/provider_verifier/add_interaction_attributes_header'
+require 'pact/provider_verifier/remove_interaction_attributes_header_middleware'
 require 'pact/provider_verifier/custom_middleware'
 require 'pact/provider/rspec'
 require 'pact/message'
@@ -68,7 +68,7 @@ module Pact
       def configure_service_provider
         # Have to declare these locally as the class scope gets lost within the block
         application = configure_reverse_proxy
-        application = configure_provider_states_header_removal_middleware(application)
+        application = configure_interaction_attributes_header_removal_middleware(application)
         application = configure_custom_middleware(application)
         application = configure_custom_header_middleware(application)
 
@@ -130,8 +130,8 @@ module Pact
         end
       end
 
-      def configure_provider_states_header_removal_middleware app
-        ProviderStates::RemoveProviderStatesHeaderMiddleware.new(app)
+      def configure_interaction_attributes_header_removal_middleware app
+        ProviderVerifier::RemoveInteractionAttributesHeaderMiddleware.new(app)
       end
 
       def require_custom_middlware
@@ -161,7 +161,7 @@ module Pact
             backtrace: ENV['BACKTRACE'] == 'true',
             format: options.format,
             out: options.out,
-            request_customizer: ProviderStates::AddProviderStatesHeader
+            request_customizer: ProviderVerifier::AddInteractionAttributesHeader
           }
           verify_options[:description] = ENV['PACT_DESCRIPTION'] if ENV['PACT_DESCRIPTION']
           verify_options[:provider_state] = ENV['PACT_PROVIDER_STATE'] if ENV['PACT_PROVIDER_STATE']
