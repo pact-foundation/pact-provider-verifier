@@ -159,6 +159,7 @@ module Pact
             pact_helper: PROXY_PACT_HELPER,
             pact_uri: pact_uri,
             backtrace: ENV['BACKTRACE'] == 'true',
+            verbose: verbose?,
             format: options.format,
             out: options.out,
             request_customizer: ProviderStates::AddProviderStatesHeader
