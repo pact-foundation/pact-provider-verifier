@@ -1,3 +1,10 @@
+<a name="v1.33.0"></a>
+### v1.33.0 (2021-01-27)
+
+#### Features
+
+* pass through verbose flag to verification	 ([a091705](/../../commit/a091705))
+
 <a name="v1.32.1"></a>
 ### v1.32.1 (2020-07-18)
 
