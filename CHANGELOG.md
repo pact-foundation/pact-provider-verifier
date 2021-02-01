@@ -1,3 +1,10 @@
+<a name="v1.34.0"></a>
+### v1.34.0 (2021-02-01)
+
+#### Features
+
+* Allow for newer versions of faraday	 ([c37f04f](/../../commit/c37f04f))
+
 <a name="v1.33.0"></a>
 ### v1.33.0 (2021-01-27)
 
