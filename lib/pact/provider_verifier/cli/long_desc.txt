@@ -7,7 +7,7 @@ The parameters used when fetching pacts dynamically from a Pact Broker are:
 --enable-pending
 --include-wip-pacts-since
 
-To fetch a pact from a known URL (eg. when a verification is triggered by a 'contract content changed' webhook), pass in the pact URL(s) as the first argument(s) to the command.
+To verify a pact at a known URL (eg. when a verification is triggered by a 'contract content changed' webhook), pass in the pact URL(s) as the first argument(s) to the command, and do NOT set any of the other parameters apart from the base URL and credentials.
 
 To publish verification results for either of the above scenarios, set:
 
