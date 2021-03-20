@@ -38,6 +38,7 @@ module Pact
         method_option :wait, banner: "SECONDS", required: false, type: :numeric, desc: "The number of seconds to poll for the provider to become available before running the verification", default: 0
         method_option :log_dir, desc: "The directory for the pact.log file"
         method_option :log_level, desc: "The log level", default: "debug"
+        method_option :fail_if_no_pacts_found, desc: "If specified, will fail when no pacts are found", required: false, type: :boolean, default: false
 
         def verify(*pact_urls)
           require 'pact/provider_verifier/app'
