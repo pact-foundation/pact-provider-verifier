@@ -94,6 +94,23 @@ module Pact
             it { is_expected.to be true }
           end
         end
+
+        context "multiple pacts need to be verified" do
+          before do
+            allow(AggregatePactConfigs).to receive(:call).and_return([{}, {}])
+          end
+
+          context "at least one pact fails verification" do
+            before do
+              allow(Cli::RunPactVerification).to receive(:call).and_return(1)
+            end
+
+            it "all pacts get verified" do
+              expect(Cli::RunPactVerification).to receive(:call).twice
+              subject
+            end
+          end
+        end
       end
     end
   end
