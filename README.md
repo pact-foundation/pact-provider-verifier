@@ -10,7 +10,7 @@ binary-like CLI tool.
 
 * Verify Pacts against Pacts published to an http endpoint, such as a [Pact Broker](https://github.com/pact-foundation/pact_broker)
 * Verify local `*.json` Pacts on the file system
-* Works with Pact [provider states](https://docs.pact.io/documentation/provider_states.html) should you need them
+* Works with Pact [provider states](https://docs.pact.io/getting_started/provider_states) should you need them
 * Publishes the verification results back to the pact broker if the pact was retrieved from a broker.
 
 ## Installation
@@ -161,7 +161,7 @@ Modification of the request headers is sometimes necessary, but be aware that an
 
 ### API with Provider States
 
-Read the [Provider States section on docs.pact.io](https://docs.pact.io/documentation/provider_states.html) for an introduction to provider states.
+Read the [Provider States section on docs.pact.io](https://docs.pact.io/getting_started/provider_states) for an introduction to provider states.
 
 To allow the correct data to be set up before each interaction is replayed, you will need to create a dev/test only HTTP endpoint that accepts a JSON document that looks like:
 
