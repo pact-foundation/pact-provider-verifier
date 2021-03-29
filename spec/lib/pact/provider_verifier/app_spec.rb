@@ -24,6 +24,7 @@ module Pact
           double('options',
             provider_base_url: "http://provider",
             provider_version_tag: ["foo"],
+            publish_verification_results: false,
             wait: 1,
             provider_states_url: nil,
             log_level: :info,
@@ -54,6 +55,60 @@ module Pact
               anything
             )
             subject
+          end
+        end
+
+        context "when fail_if_no_pacts_found is false" do
+          before do
+            allow(options).to receive(:fail_if_no_pacts_found).and_return(false)
+          end
+
+          context "when no pacts are found" do
+            before do
+              allow(AggregatePactConfigs).to receive(:call).and_return([])
+            end
+
+            it { is_expected.to be true }
+          end
+        end
+
+        context "when fail_if_no_pacts_found is true" do
+          before do
+            allow(options).to receive(:fail_if_no_pacts_found).and_return(true)
+          end
+
+          context "when no pacts are found" do
+            before do
+              allow(AggregatePactConfigs).to receive(:call).and_return([])
+            end
+
+            it { is_expected.to be false }
+          end
+
+          context "when pacts are found and successfully verified" do
+            before do
+              allow(AggregatePactConfigs).to receive(:call).and_return([{}])
+              allow(Cli::RunPactVerification).to receive(:call).and_return(0)
+            end
+
+            it { is_expected.to be true }
+          end
+        end
+
+        context "multiple pacts need to be verified" do
+          before do
+            allow(AggregatePactConfigs).to receive(:call).and_return([{}, {}])
+          end
+
+          context "at least one pact fails verification" do
+            before do
+              allow(Cli::RunPactVerification).to receive(:call).and_return(1)
+            end
+
+            it "all pacts get verified" do
+              expect(Cli::RunPactVerification).to receive(:call).twice
+              subject
+            end
           end
         end
       end

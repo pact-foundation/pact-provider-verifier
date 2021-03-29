@@ -97,6 +97,8 @@ Options:
           # The log level
 
           # Default: debug
+      [--fail-if-no-pacts-found]
+          # If specified, will fail when no pacts are found
 
 Description:
   The parameters used when fetching pacts dynamically from a Pact Broker are:

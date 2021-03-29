@@ -36,17 +36,22 @@ module Pact
 
       def call
         setup
-
-        pact_urls = all_pact_urls
+        warn_empty_pact_set
         wait_until_provider_available
-        exit_statuses = pact_urls.collect do |pact_uri|
+        pacts_pass_verification?
+      end
+
+      private
+
+      def pacts_pass_verification?
+        return false if all_pact_urls.empty? && options.fail_if_no_pacts_found
+
+        exit_statuses = all_pact_urls.collect do |pact_uri|
           verify_pact pact_uri
         end
 
         exit_statuses.all?{ | status | status == 0 }
       end
-
-      private
 
 
       def setup
@@ -187,25 +192,33 @@ module Pact
       end
 
       def all_pact_urls
-        http_client_options = {
-          username: options.broker_username || ENV['PACT_BROKER_USERNAME'],
-          password: options.broker_password || ENV['PACT_BROKER_PASSWORD'],
-          token: options.broker_token || ENV['PACT_BROKER_TOKEN'],
-          verbose: verbose?
-        }
-        opts = {
-          enable_pending: options.enable_pending,
-          include_wip_pacts_since: options.include_wip_pacts_since
-        }
-        AggregatePactConfigs.call(
-          pact_urls,
-          options.provider,
-          consumer_version_tags,
-          consumer_version_selectors,
-          provider_version_tags,
-          options.pact_broker_base_url || ENV['PACT_BROKER_BASE_URL'],
-          http_client_options,
-          opts)
+        @all_pact_urls ||= begin
+          http_client_options = {
+            username: options.broker_username || ENV['PACT_BROKER_USERNAME'],
+            password: options.broker_password || ENV['PACT_BROKER_PASSWORD'],
+            token: options.broker_token || ENV['PACT_BROKER_TOKEN'],
+            verbose: verbose?
+          }
+          opts = {
+            enable_pending: options.enable_pending,
+            include_wip_pacts_since: options.include_wip_pacts_since
+          }
+          AggregatePactConfigs.call(
+            pact_urls,
+            options.provider,
+            consumer_version_tags,
+            consumer_version_selectors,
+            provider_version_tags,
+            options.pact_broker_base_url || ENV['PACT_BROKER_BASE_URL'],
+            http_client_options,
+            opts)
+        end
+      end
+
+      def warn_empty_pact_set
+        if all_pact_urls.empty?
+          $stderr.puts "WARN: No pacts were found for the consumer versions selected"
+        end
       end
 
       def require_pact_project_pact_helper
