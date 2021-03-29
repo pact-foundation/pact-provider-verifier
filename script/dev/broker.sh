@@ -21,7 +21,10 @@ bundle exec bin/pact-provider-verifier  \
   --provider-app-version $(git rev-parse --short HEAD | xargs echo -n) \
   --provider-base-url http://localhost:4567 \
   --include-wip-pacts-since 2018-01-01 \
-  --enable-pending --verbose
+  --enable-pending --verbose \
+  --no-fail-if-no-pacts-found
+
+echo "exit code is $?"
 
 kill -2 $pid
 wait $pid

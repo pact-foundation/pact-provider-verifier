@@ -217,7 +217,8 @@ module Pact
 
       def warn_empty_pact_set
         if all_pact_urls.empty?
-          $stderr.puts "WARN: No pacts were found for the consumer versions selected"
+          level = options.fail_if_no_pacts_found ? "ERROR" : "WARN"
+          $stderr.puts  "#{level}: No pacts were found for the consumer versions selected"
         end
       end
 
