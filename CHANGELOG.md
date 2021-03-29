@@ -1,3 +1,10 @@
+<a name="v1.35.0"></a>
+### v1.35.0 (2021-03-20)
+
+#### Features
+
+* Optionally fail when no pacts are found	 ([772e8fb](/../../commit/772e8fb))
+
 <a name="v1.34.0"></a>
 ### v1.34.0 (2021-02-01)
 
