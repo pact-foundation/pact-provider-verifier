@@ -15,9 +15,9 @@ end
 
 if ENV['MONKEYPATCH']
   ENV['MONKEYPATCH'].split("\n").each do | file |
-    $stdout.puts "DEBUG: Requiring monkeypatch file #{file}" if ENV['VERBOSE_LOGGING']
+    $stdout.puts "DEBUG: Loading monkeypatch file #{file}" if ENV['VERBOSE_LOGGING']
     begin
-      require file
+      load(file)
     rescue LoadError => e
       $stderr.puts "ERROR: #{e.class} - #{e.message}. Ensure you have specified the absolute path."
     end
