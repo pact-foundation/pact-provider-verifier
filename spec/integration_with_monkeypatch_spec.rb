@@ -31,27 +31,11 @@ describe "pact-provider-verifier with monkeypatch" do
       expect($?).to eq 0
     end
 
-    it "loads the monkeypatch file once" do
-      expect(subject).to include("THIS IS A MONKEYPATCHING FILE!!!").once
-      expect(subject).to include("DEBUG: Requiring monkeypatch file").twice
-    end
-
-    context 'with force load' do
-      let(:env) { super() + ' LOAD_MONKEYPATCH=true ' }
-
-      it "exits with a 0 exit code" do
-        subject
-        puts subject
-        expect($?).to eq 0
-      end
-
-      it "loads the monkeypatch file twice" do
-        expect(subject).to include("THIS IS A MONKEYPATCHING FILE!!!").twice
-        expect(subject).to include("DEBUG: Loading monkeypatch file").twice
-      end
+    it "loads the monkeypatch file twice" do
+      expect(subject).to include("THIS IS A MONKEYPATCHING FILE!!!").twice
+      expect(subject).to include("DEBUG: Loading monkeypatch file").twice
     end
   end
-
 
   after(:all) do
     Process.kill 'KILL', @pipe.pid
