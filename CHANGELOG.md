@@ -1,3 +1,10 @@
+<a name="v1.35.1"></a>
+### v1.35.1 (2021-07-01)
+
+#### Bug Fixes
+
+* exit with correct exit code on failure	 ([a8a2144](/../../commit/a8a2144))
+
 <a name="v1.35.0"></a>
 ### v1.35.0 (2021-03-20)
 
