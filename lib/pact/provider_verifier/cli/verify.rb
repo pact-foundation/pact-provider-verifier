@@ -125,7 +125,7 @@ module Pact
             exit 1
           end
 
-          def exit_on_failure?
+          def self.exit_on_failure?
             true
           end
         end
