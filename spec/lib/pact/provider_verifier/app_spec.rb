@@ -49,6 +49,7 @@ module Pact
               anything,
               anything,
               anything,
+              anything,
               ["foo", "master"],
               anything,
               anything,

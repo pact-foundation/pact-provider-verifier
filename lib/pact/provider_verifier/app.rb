@@ -19,13 +19,14 @@ module Pact
 
       PROXY_PACT_HELPER = File.expand_path(File.join(File.dirname(__FILE__), "pact_helper.rb"))
       EMPTY_ARRAY = [].freeze
-      attr_reader :pact_urls, :options, :consumer_version_tags, :provider_version_tags, :consumer_version_selectors, :publish_verification_results
+      attr_reader :pact_urls, :options, :consumer_version_tags, :provider_version_branch, :provider_version_tags, :consumer_version_selectors, :publish_verification_results
 
       def initialize pact_urls, options = {}
         @pact_urls = pact_urls
         @options = options
         @consumer_version_tags = options.consumer_version_tag || EMPTY_ARRAY
         @provider_version_tags = merge_provider_version_tags(options)
+        @provider_version_branch = options.provider_version_branch
         @consumer_version_selectors = parse_consumer_version_selectors(options.consumer_version_selector || EMPTY_ARRAY)
         @publish_verification_results = options.publish_verification_results || ENV['PACT_BROKER_PUBLISH_VERIFICATION_RESULTS'] == 'true'
       end
@@ -208,6 +209,7 @@ module Pact
             options.provider,
             consumer_version_tags,
             consumer_version_selectors,
+            provider_version_branch,
             provider_version_tags,
             options.pact_broker_base_url || ENV['PACT_BROKER_BASE_URL'],
             http_client_options,

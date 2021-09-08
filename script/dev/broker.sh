@@ -9,20 +9,26 @@ sleep 3
   # --consumer-version-selector '{"tag": "dev", "latest": true}' \
   # --tag-with-git-branch \
   # --verbose
-export PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true
-export PACT_BROKER_BASE_URL=https://test.pact.dius.com.au
-export PACT_BROKER_USERNAME=dXfltyFMgNOFZAxr8io9wJ37iUpY42M
-export PACT_BROKER_PASSWORD=O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1
+# export PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=false
+# export PACT_BROKER_BASE_URL=https://bethtest.test.pactflow.io
+# export PACT_BROKER_TOKEN=J4lCBjh5Z9vVEofBdrZnXw
+export PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=false
+export PACT_BROKER_BASE_URL=http://localhost:9292
+# export PACT_BROKER_TOKEN=J4lCBjh5Z9vVEofBdrZnXw
+  # --provider "Bar" \
+  # --provider-version-tag dev \
+  # --consumer-version-tag dev \
+  # --consumer-version-tag dev2 \
 bundle exec bin/pact-provider-verifier  \
-  --provider "Bar" \
-  --provider-version-tag dev \
-  --consumer-version-tag dev \
-  --consumer-version-tag dev2 \
+  --provider "Example API" \
   --provider-app-version $(git rev-parse --short HEAD | xargs echo -n) \
+  --provider-version-branch "main" \
+  --provider-version-tag "foo" \
   --provider-base-url http://localhost:4567 \
   --include-wip-pacts-since 2018-01-01 \
-  --enable-pending --verbose \
-  --no-fail-if-no-pacts-found
+  --enable-pending  \
+  --no-fail-if-no-pacts-found \
+  --verbose
 
 echo "exit code is $?"
 

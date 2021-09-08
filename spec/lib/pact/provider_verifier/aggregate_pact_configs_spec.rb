@@ -10,6 +10,7 @@ module Pact
         let(:consumer_version_tags) { ["master", "prod"] }
         let(:selector) { double('selector') }
         let(:consumer_version_selectors) { [selector] }
+        let(:provider_version_branch) { "main" }
         let(:provider_version_tags) { ["dev"] }
         let(:pact_broker_base_url) { "http://broker" }
         let(:http_client_options) { { "foo" => "bar"} }
@@ -33,6 +34,7 @@ module Pact
             provider_name,
             consumer_version_tags,
             consumer_version_selectors,
+            provider_version_branch,
             provider_version_tags,
             pact_broker_base_url,
             http_client_options,
@@ -76,6 +78,7 @@ module Pact
             expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(
               provider_name,
               aggregated_consumer_version_selectors,
+              provider_version_branch,
               provider_version_tags,
               pact_broker_base_url,
               http_client_options,

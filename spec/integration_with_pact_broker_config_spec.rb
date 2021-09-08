@@ -1,4 +1,6 @@
 require 'pact/provider_verifier/cli/verify'
+require 'pact/pact_broker'
+require 'pact/cli/run_pact_verification'
 
 describe "pact-provider-verifier with pact broker config" do
   before do
@@ -14,6 +16,7 @@ describe "pact-provider-verifier with pact broker config" do
       --provider Foo
       --consumer-version-tag master
       --consumer-version-tag prod
+      --provider-version-branch main
       --provider-version-tag pmaster
       --pact-broker-base-url http://localhost:5738
       --broker-token token
@@ -34,6 +37,7 @@ describe "pact-provider-verifier with pact broker config" do
     expect(pact_broker_api).to receive(:fetch_pact_uris_for_verification).with(
       "Foo",
       [{ tag: "master", latest: true }, { tag: "prod", latest: true }],
+      "main",
       ["pmaster"],
       "http://localhost:5738",
       { username: nil, password: nil, token: "token", verbose: false },
