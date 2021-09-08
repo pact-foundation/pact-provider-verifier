@@ -1,3 +1,10 @@
+<a name="v1.36.0"></a>
+### v1.36.0 (2021-09-09)
+
+#### Features
+
+* add support for specifying the provider version branch	 ([7f53206](/../../commit/7f53206))
+
 <a name="v1.35.2"></a>
 ### v1.35.2 (2021-09-09)
 
