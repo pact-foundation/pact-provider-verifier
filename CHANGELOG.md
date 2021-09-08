@@ -1,3 +1,10 @@
+<a name="v1.35.2"></a>
+### v1.35.2 (2021-09-09)
+
+#### Bug Fixes
+
+* lock pact gem to compatible version	 ([b4db21e](/../../commit/b4db21e))
+
 <a name="v1.35.1"></a>
 ### v1.35.1 (2021-07-01)
 
