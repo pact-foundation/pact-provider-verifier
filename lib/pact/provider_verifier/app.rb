@@ -89,6 +89,10 @@ module Pact
             app_version this.options.provider_app_version
           end
 
+          if this.options.provider_version_branch
+            app_version_branch this.options.provider_version_branch
+          end
+
           if this.provider_version_tags.any?
             app_version_tags this.provider_version_tags
           end
