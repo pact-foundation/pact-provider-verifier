@@ -1,3 +1,10 @@
+<a name="v1.36.1"></a>
+### v1.36.1 (2021-10-27)
+
+#### Bug Fixes
+
+* set branch properly from --provider-version-branch	 ([ad2f233](/../../commit/ad2f233))
+
 <a name="v1.36.0"></a>
 ### v1.36.0 (2021-09-09)
 
