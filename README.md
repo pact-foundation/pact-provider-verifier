@@ -62,6 +62,8 @@ Options:
             with --provider. May be specified multiple times.
       [--provider-version-tag=TAG]
           # Tag to apply to the provider application version. May be specified multiple times.
+      [--provider-version-branch=BRANCH]
+          # The name of the branch the provider version belongs to.
   -g, [--tag-with-git-branch], [--no-tag-with-git-branch]
           # Tag provider version with the name of the current git branch. Default: false
   -a, [--provider-app-version=PROVIDER_APP_VERSION]
