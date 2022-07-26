@@ -31,8 +31,23 @@ module Pact
           stub_request(:post, provider_states_setup_url).to_return(status: 500, body: "Some error")
         end
 
-        it "raises an error" do
-          expect { subject }.to raise_error(SetUpProviderStateError, /500.*Some error/)
+        context "when enable_pending is not set" do
+          it "raises an error" do
+            expect { subject }.to raise_error(SetUpProviderStateError, /500.*Some error/)
+          end
+        end
+
+        context "when enable_pending is set" do
+          let(:options) do
+            {
+              params: params,
+              enable_pending: true,
+            }
+          end
+
+          it "does not raise an error" do
+            expect { subject }.not_to raise_error
+          end
         end
       end
 
