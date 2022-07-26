@@ -91,9 +91,13 @@ module Pact
       end
 
       def check_for_error response
-        if response.status >= 300
-          raise SetUpProviderStateError.new("Error setting up provider state '#{provider_state}' for consumer '#{consumer}' at #{provider_states_setup_url}. response status=#{response.status} response body=#{response.body}")
+        if response.status >= 300 && !(@options[:enable_pending] == true)
+          raise SetUpProviderStateError.new(set_up_provider_state_error_message(response))
         end
+      end
+
+      def set_up_provider_state_error_message(response)
+        "Error setting up provider state '#{provider_state}' for consumer '#{consumer}' at #{provider_states_setup_url}. response status=#{response.status} response body=#{response.body}"
       end
 
       def log_request
