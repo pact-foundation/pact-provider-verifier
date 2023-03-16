@@ -54,7 +54,7 @@ GEM
       rspec (>= 2.14)
       term-ansicolor (~> 1.0)
       thor
-    rack (2.2.3.1)
+    rack (2.2.6.4)
     rack-protection (2.0.8.1)
       rack
     rack-proxy (0.6.1)
