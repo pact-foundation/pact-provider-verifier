@@ -1,4 +1,4 @@
-describe "pact-provider-verifier with monkeypatch" do
+describe "pact-provider-verifier with monkeypatch", skip_windows: true do
   before(:all) do
     @pipe = IO.popen({}, %w{bundle exec rackup -p 4870 spec/support/config.ru})
     sleep 2

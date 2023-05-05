@@ -1,4 +1,4 @@
-describe "pact-provider-verifier with basic auth" do
+describe "pact-provider-verifier with basic auth", skip_windows: true do
   before(:all) do
     @pipe = IO.popen({'USE_BASIC_AUTH' => 'true'}, %w{bundle exec rackup -p 4570 spec/support/config.ru})
     sleep 2

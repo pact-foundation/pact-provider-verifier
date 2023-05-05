@@ -1,6 +1,6 @@
 require 'find_a_port'
 
-describe "pact-provider-verifier with an underscored header" do
+describe "pact-provider-verifier with an underscored header", skip_windows: true do
   before(:all) do
     @port = FindAPort.available_port
     @pipe = IO.popen({}, %W{ruby spec/support/provider_with_no_rack.rb #{@port}})
