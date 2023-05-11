@@ -30,5 +30,5 @@ cd pact-provider-verifier-<PACKAGE_VERSION>-linux-x86/bin
 
 Download package, unzip, cd to pact-provider-verifier-<PACKAGE_VERSION>-win32 and then run:
 ```
-.\bin\pact-mock-service.bat -p 1234
+.\bin\pact-provider-verifier.bat -p 1234
 ```
