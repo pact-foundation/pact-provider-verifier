@@ -1,4 +1,4 @@
-describe "pact-provider-verifier" do
+describe "pact-provider-verifier", skip_windows: true do
   before(:all) do
     @pipe = IO.popen("bundle exec rackup -p 4569 spec/support/provider-echo-host.ru")
     sleep 2

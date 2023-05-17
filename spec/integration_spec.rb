@@ -1,7 +1,7 @@
 require 'json'
 require 'fileutils'
 
-describe "pact-provider-verifier" do
+describe "pact-provider-verifier", skip_windows: true do
   before(:all) do
     @pipe = IO.popen("bundle exec rackup -p 4567 spec/support/config.ru")
     sleep 2

@@ -1,6 +1,6 @@
 require 'json'
 
-describe "pact-provider-verifier with a prefix path in the base URL" do
+describe "pact-provider-verifier with a prefix path in the base URL", skip_windows: true do
   before(:all) do
     @pipe = IO.popen("bundle exec rackup -p 5837 spec/support/config_with_prefix.ru")
     sleep 2

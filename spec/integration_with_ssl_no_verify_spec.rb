@@ -1,7 +1,7 @@
 require 'support/provider_with_self_signed_cert'
 require 'find_a_port'
 
-describe "verifying a provider that uses a self signed certificate" do
+describe "verifying a provider that uses a self signed certificate", skip_windows: true do
 
   it "passes because it has SSL verification turned off" do
     begin

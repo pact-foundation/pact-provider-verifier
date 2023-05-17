@@ -1,6 +1,6 @@
 require 'pact/provider_verifier/app'
 
-RSpec.describe "verifying a message pact" do
+RSpec.describe "verifying a message pact", skip_windows: true do
 
   before(:all) do
     @pipe = IO.popen("rackup -p 9393 spec/support/message_producer_verifier.ru")
