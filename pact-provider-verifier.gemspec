@@ -24,7 +24,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'pact', '~> 1.59'
   gem.add_runtime_dependency 'pact-message', '~>0.5'
   gem.add_runtime_dependency 'faraday', '~> 2.5'
-  gem.add_runtime_dependency 'faraday_middleware', '>= 0.10', '<= 2.0'
   gem.add_runtime_dependency 'json',  '>1.8'
   gem.add_runtime_dependency 'rack', '~> 2.1'
   gem.add_runtime_dependency 'rack-reverse-proxy'
