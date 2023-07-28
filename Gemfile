@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby ">= 2.6"
+
 gemspec
 
 if ENV['X_PACT_DEVELOPMENT']
