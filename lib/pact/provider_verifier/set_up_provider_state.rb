@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday/retry'
 
 module Pact
   module ProviderVerifier
