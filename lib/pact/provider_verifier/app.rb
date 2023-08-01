@@ -9,7 +9,6 @@ require 'pact/cli/run_pact_verification'
 require 'pact/provider_verifier/aggregate_pact_configs'
 require 'pact/provider_verifier/git'
 require 'rack/reverse_proxy'
-require 'faraday_middleware'
 require 'json'
 
 module Pact

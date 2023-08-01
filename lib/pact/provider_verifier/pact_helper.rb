@@ -1,5 +1,5 @@
 require 'net/https'
-require 'faraday_middleware'
+
 require 'json'
 require_relative './app'
 require_relative 'set_up_provider_state'
