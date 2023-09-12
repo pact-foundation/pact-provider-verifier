@@ -1,3 +1,20 @@
+<a name="v1.37.0-1"></a>
+### v1.37.0-1 (2023-08-02)
+
+
+#### Features
+
+* update Faraday to 2.5	 ([bd59317](/../../commit/bd59317))
+
+
+#### Bug Fixes
+
+* **deps**
+  * rack 2.2.6 + ruby 3 change to WEBrick.run for args	 ([9ac818f](/../../commit/9ac818f))
+
+* examples/Gemfile.lock to reduce vulnerabilities	 ([933f34b](/../../commit/933f34b))
+
+
 <a name="v1.36.1"></a>
 ### v1.36.1 (2021-10-27)
 
