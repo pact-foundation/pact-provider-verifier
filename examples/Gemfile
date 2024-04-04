@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'sinatra-contrib'
-gem 'pact-provider-verifier'
+gem 'sinatra', '>= 3.1.0'
+gem 'sinatra-contrib', '>= 3.1.0'
+gem 'pact-provider-verifier', '>= 1.38.0'
