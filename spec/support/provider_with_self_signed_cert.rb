@@ -3,7 +3,7 @@ require_relative 'provider'
 def run_provider_with_self_signed_cert port
   # trap 'INT' do @server.shutdown end
   require 'rack'
-  require 'rack/handler/webrick'
+  require_relative 'webbrick'
   require 'webrick/https'
 
   webrick_opts = {:Port => port, :SSLEnable => true, :SSLCertName => [%w[CN localhost]]}
