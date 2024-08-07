@@ -1,3 +1,11 @@
+<a name="v1.38.1"></a>
+### v1.38.1 (2024-04-04)
+
+#### Bug Fixes
+
+* examples/Gemfile & examples/Gemfile.lock to reduce vulnerabilities	 ([fdb8bcc](/../../commit/fdb8bcc))
+* Return non-error if enable-pending is set	 ([0b4bc7e](/../../commit/0b4bc7e))
+
 <a name="v1.38.0"></a>
 ### v1.38.0 (2023-09-12)
 
