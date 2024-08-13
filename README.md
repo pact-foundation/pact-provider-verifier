@@ -4,7 +4,7 @@ This setup simplifies Pact Provider [verification](https://docs.pact.io/document
 process in any language, wrapping the Ruby implementation into a cross-platform,
 binary-like CLI tool.
 
-[![Build Status](https://travis-ci.org/pact-foundation/pact-provider-verifier.svg?branch=master)](https://travis-ci.org/pact-foundation/pact-provider-verifier)
+[![Test](https://github.com/pact-foundation/pact-provider-verifier/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/pact-foundation/pact-provider-verifier/actions/workflows/test.yml)
 
 **Features**:
 
@@ -12,6 +12,7 @@ binary-like CLI tool.
 * Verify local `*.json` Pacts on the file system
 * Works with Pact [provider states](https://docs.pact.io/getting_started/provider_states) should you need them
 * Publishes the verification results back to the pact broker if the pact was retrieved from a broker.
+* ⚠️ - For Pact Specification V3/V4 support, see the new standalone [pact-verifier](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_verifier_cli#standalone-pact-verifier)
 
 ## Installation
 
@@ -198,6 +199,22 @@ The following flags are required to use basic authentication with a Pact Broker:
 * `--broker-password` - the Password for Pact Broker basic authentication.
 
 NOTE: the `http://user:password@host` format for basic HTTP auth is not supported.
+
+## Compatibility
+
+<details><summary>Specification Compatibility</summary>
+
+| Version  | Stable | [Spec] Compatibility | 
+| -------  | ------ | -------------------- |
+| 1.x.x    | Yes    | 2, 3\*               |
+
+_\*_ v3 support is limited to the subset of functionality required to enable language inter-operable [Message support].
+
+See V3 tracking [issue](https://github.com/pact-foundation/pact-ruby/issues/318) for more detail
+
+Want V3/V4 support now? See the new standalone [pact-verifier](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_verifier_cli#standalone-pact-verifier)
+
+[message support]: https://github.com/pact-foundation/pact-specification/tree/version-3#introduces-messages-for-services-that-communicate-via-event-streams-and-message-queues
 
 ## Contributing
 
