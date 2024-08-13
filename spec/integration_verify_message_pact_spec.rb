@@ -1,6 +1,6 @@
 require 'pact/provider_verifier/app'
 
-RSpec.describe "verifying a message pact", skip_windows: true do
+RSpec.describe "verifying a message pact" do
 
   before(:all) do
     @pipe = IO.popen("rackup -p 9393 spec/support/message_producer_verifier.ru")
@@ -26,6 +26,10 @@ RSpec.describe "verifying a message pact", skip_windows: true do
   end
 
   after(:all) do
-    Process.kill 'KILL', @pipe.pid
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      system("taskkill /im #{@pipe.pid}  /f /t >nul 2>&1")
+    else
+      Process.kill 'KILL', @pipe.pid
+    end
   end
 end

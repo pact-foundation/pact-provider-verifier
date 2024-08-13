@@ -1,4 +1,4 @@
-describe "pact-provider-verifier with basic auth", skip_windows: true do
+describe "pact-provider-verifier with basic auth" do
   before(:all) do
     @pipe = IO.popen({'USE_BASIC_AUTH' => 'true'}, %w{bundle exec rackup -p 4570 spec/support/config.ru})
     sleep 2
@@ -25,6 +25,10 @@ describe "pact-provider-verifier with basic auth", skip_windows: true do
   end
 
   after(:all) do
-    Process.kill 'KILL', @pipe.pid
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      system("taskkill /im #{@pipe.pid}  /f /t >nul 2>&1")
+    else
+      Process.kill 'KILL', @pipe.pid
+    end
   end
 end
