@@ -1,6 +1,6 @@
 require 'json'
 
-describe "pact-provider-verifier with a prefix path in the base URL", skip_windows: true do
+describe "pact-provider-verifier with a prefix path in the base URL" do
   before(:all) do
     @pipe = IO.popen("bundle exec rackup -p 5837 spec/support/config_with_prefix.ru")
     sleep 2
@@ -18,6 +18,10 @@ describe "pact-provider-verifier with a prefix path in the base URL", skip_windo
   end
 
   after(:all) do
-    Process.kill 'KILL', @pipe.pid
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      system("taskkill /im #{@pipe.pid}  /f /t >nul 2>&1")
+    else
+      Process.kill 'KILL', @pipe.pid
+    end
   end
 end

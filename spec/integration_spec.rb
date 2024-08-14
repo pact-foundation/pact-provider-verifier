@@ -1,7 +1,7 @@
 require 'json'
 require 'fileutils'
 
-describe "pact-provider-verifier", skip_windows: true do
+describe "pact-provider-verifier" do
   before(:all) do
     @pipe = IO.popen("bundle exec rackup -p 4567 spec/support/config.ru")
     sleep 2
@@ -77,15 +77,19 @@ describe "pact-provider-verifier", skip_windows: true do
   end
 
   context "running verification with filtered interactions" do
-
-    subject { `PACT_DESCRIPTION="Provider state success" PACT_PROVIDER_STATE="There is a greeting" bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state -v` }
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      env_vars = 'set PACT_DESCRIPTION="Provider state success" && set PACT_PROVIDER_STATE="There is a greeting" && '
+    else
+      env_vars = 'PACT_DESCRIPTION="Provider state success" PACT_PROVIDER_STATE="There is a greeting" '
+    end
+    subject { `#{env_vars}bundle exec bin/pact-provider-verifier ./test/me-they.json -a 1.0.100 --provider-base-url http://localhost:4567 --provider-states-setup-url http://localhost:4567/provider-state -v` }
 
     it "exits with a 0 exit code" do
       subject
       expect($?).to eq 0
     end
 
-    it "the output contains a message indicating that the interactions have been filtered" do
+    it "the output contains a message indicating that the interactions have been filtered", skip_windows: true do
       expect(subject).to match /Filtering interactions by.*Provider state success.*There is a greeting/
     end
   end
@@ -148,6 +152,10 @@ describe "pact-provider-verifier", skip_windows: true do
   end
 
   after(:all) do
-    Process.kill 'KILL', @pipe.pid
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      system("taskkill /im #{@pipe.pid}  /f /t >nul 2>&1")
+    else
+      Process.kill 'KILL', @pipe.pid
+    end
   end
 end

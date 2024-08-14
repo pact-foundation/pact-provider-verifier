@@ -1,6 +1,6 @@
 require 'find_a_port'
 
-describe "pact-provider-verifier with an underscored header", skip_windows: true do
+describe "pact-provider-verifier with an underscored header" do
   before(:all) do
     @port = FindAPort.available_port
     @pipe = IO.popen({}, %W{ruby spec/support/provider_with_no_rack.rb #{@port}})
@@ -16,6 +16,10 @@ describe "pact-provider-verifier with an underscored header", skip_windows: true
   end
 
   after(:all) do
-    Process.kill 'KILL', @pipe.pid
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      system("taskkill /im #{@pipe.pid}  /f /t >nul 2>&1")
+    else
+      Process.kill 'KILL', @pipe.pid
+    end
   end
 end

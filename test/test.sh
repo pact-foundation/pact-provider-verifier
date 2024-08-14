@@ -20,7 +20,11 @@ puts res
 code = $?
 
 puts "=> Shutting down API"
-Process.kill 'TERM', pipe.pid
+if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+  system("taskkill /im #{pipe.pid}  /f /t >nul 2>&1")
+else
+  Process.kill 'TERM', pipe.pid
+end
 
 puts
 puts
