@@ -220,10 +220,10 @@ Want V3/V4 support now? See the new standalone [pact-verifier](https://github.co
 
 See [CONTRIBUTING.md](/CONTRIBUTING.md)
 
-[pact]: https://github.com/realestate-com-au/pact
-[releases]: https://github.com/bethesque/pact-mock_service/releases
-[javascript]: https://github.com/DiUS/pact-consumer-js-dsl
-[pact-dev]: https://groups.google.com/forum/#!forum/pact-dev
+[pact]: https://github.com/pact-foundation/pact-ruby
+[releases]: https://github.com/pact-foundation/pact-mock_service/releases
+[javascript]: https://github.com/pact-foundation/pact-js
+[slack]: https://slack.pact.io
 [windows]: https://github.com/bethesque/pact-mock_service/wiki/Building-a-Windows-standalone-executable
-[install-windows]: https://github.com/bethesque/pact-mock_service/wiki/Installing-the-pact-mock_service-gem-on-Windows
-[why-generated]: https://github.com/realestate-com-au/pact/wiki/FAQ#why-are-the-pacts-generated-and-not-static
+[install-windows]: https://github.com/pact-foundation/pact-mock_service/wiki/Installing-the-pact-mock_service-gem-on-Windows
+[why-generated]: https://github.com/pact-foundation/pact-ruby/wiki/FAQ#why-are-the-pacts-generated-and-not-static
