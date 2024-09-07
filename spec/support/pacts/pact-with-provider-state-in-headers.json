@@ -1,0 +1,44 @@
+{
+  "provider": {
+    "name": "Foo"
+  },
+  "consumer": {
+    "name": "Bar"
+  },
+  "interactions": [
+    {
+      "description": "requires access token",
+      "request": {
+        "method": "GET",
+        "path": "/requires_auth",
+        "headers": {
+          "Authorization": "Bearer EXAMPLE_TOKEN"
+        },
+        "generators": {
+          "header": {
+            "$.Authorization": {
+              "expression": "Bearer ${accessToken}",
+              "type": "ProviderState"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200
+      },
+      "providerStates": [
+        {
+          "name": "returns access token"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.5"
+    }
+  }
+}
