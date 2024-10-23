@@ -1,3 +1,14 @@
+<a name="v1.38.2"></a>
+### v1.38.2 (2024-10-23)
+
+#### Bug Fixes
+
+* explicitly require ostruct as non stdlib in ruby 3.5.x	 ([4beb10f](/../../commit/4beb10f))
+* examples/Gemfile & examples/Gemfile.lock to reduce vulnerabilities	 ([de9df60](/../../commit/de9df60))
+
+* **win**
+  * add pact-provider-verifier cmd binstub	 ([d9a3c90](/../../commit/d9a3c90))
+
 <a name="v1.38.1"></a>
 ### v1.38.1 (2024-04-04)
 
