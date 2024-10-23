@@ -120,7 +120,7 @@ GEM
     tilt (2.1.0)
     tins (1.32.1)
       sync
-    webrick (1.8.1)
+    webrick (1.8.2)
 
 PLATFORMS
   ruby
