@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'rack', '~> 2.1'
   gem.add_runtime_dependency 'rack-reverse-proxy'
   gem.add_runtime_dependency 'rspec_junit_formatter', '~> 0.3'
+  gem.add_runtime_dependency 'ostruct'
 
   gem.add_development_dependency 'rake', '~> 13.0'
   gem.add_development_dependency 'sinatra'
