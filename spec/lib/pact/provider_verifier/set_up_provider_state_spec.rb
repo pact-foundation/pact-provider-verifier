@@ -15,13 +15,13 @@ module Pact
 
       before do
         ENV['PROVIDER_STATES_SETUP_URL'] = provider_states_setup_url
-        stub_request(:post, provider_states_setup_url)
+        stub_request(:post, provider_states_setup_url).to_return(status: 200, body: '{"id":2}')
         allow($stdout).to receive(:puts)
         allow($stderr).to receive(:puts)
       end
 
       it "makes a HTTP request to the configured URL with a JSON body containing the consumer and provider state names" do
-        subject
+        expect(subject).to eq({"id" => 2})
         expect(WebMock).to have_requested(:post, provider_states_setup_url).
           with(body: {consumer: consumer, state: provider_state, states: [provider_state], params: params}, headers: {'Content-Type' => "application/json"})
       end
