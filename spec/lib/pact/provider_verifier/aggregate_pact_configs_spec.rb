@@ -1,4 +1,5 @@
 require 'pact/provider_verifier/aggregate_pact_configs'
+require 'ostruct'
 
 module Pact
   module ProviderVerifier
