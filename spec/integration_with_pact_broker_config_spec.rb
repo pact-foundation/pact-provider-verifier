@@ -1,6 +1,7 @@
 require 'pact/provider_verifier/cli/verify'
 require 'pact/pact_broker'
 require 'pact/cli/run_pact_verification'
+require 'ostruct'
 
 describe "pact-provider-verifier with pact broker config" do
   before do

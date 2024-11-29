@@ -1,6 +1,7 @@
 # TODO provider states
 
 require 'json'
+require 'ostruct'
 
 class Provider
   def a_test_message
@@ -31,7 +32,7 @@ class HttpRequestHandler
     request_body = JSON.parse(env['rack.input'].read)
     message_descriptor = OpenStruct.new(request_body)
     response_body = @message_creator.create(message_descriptor)
-    [200, {'Content-Type' => 'application/json'}, [response_body.to_json]]
+    [200, {'content-type' => 'application/json'}, [response_body.to_json]]
   end
 
 end
