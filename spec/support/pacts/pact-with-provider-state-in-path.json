@@ -1,0 +1,42 @@
+{
+  "provider": {
+    "name": "Foo"
+  },
+  "consumer": {
+    "name": "Bar"
+  },
+  "interactions": [
+    {
+      "description": "returns book detail",
+      "request": {
+        "method": "GET",
+        "path": "/book/1",
+        "generators": {
+          "path": {
+            "type": "ProviderState",
+            "expression": "/book/${id}"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "name": "Injected Book"
+        }
+      },
+      "providerStates": [
+        {
+          "name": "returns book detail"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.5"
+    }
+  }
+}

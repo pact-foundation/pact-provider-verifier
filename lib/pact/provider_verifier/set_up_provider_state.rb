@@ -28,6 +28,11 @@ module Pact
         log_request
         response = post_to_provider_state
         check_for_error response
+        begin
+          JSON.parse(response.body)
+        rescue
+          {}
+        end
       end
 
       private
