@@ -1,3 +1,18 @@
+<a name="v1.39.0"></a>
+### v1.39.0 (2024-11-29)
+
+#### Features
+
+* rack 3 support with rack 2 backwards compat	 ([c534282](/../../commit/c534282))
+
+* **generators**
+  * More test cases	 ([78a42d7](/../../commit/78a42d7))
+  * Pass provider state results back so we can use ProviderState generator	 ([89fe1c4](/../../commit/89fe1c4))
+
+#### Bug Fixes
+
+* support rack 2 and 3	 ([b812dc0](/../../commit/b812dc0))
+
 <a name="v1.38.2"></a>
 ### v1.38.2 (2024-10-23)
 
