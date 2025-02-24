@@ -1,3 +1,12 @@
+<a name="v1.39.1"></a>
+### v1.39.1 (2025-02-24)
+
+#### Bug Fixes
+
+* use rack-reverse-proxy-pact fork	 ([7e830df](/../../commit/7e830df))
+* examples/Gemfile to reduce vulnerabilities	 ([0a3f31c](/../../commit/0a3f31c))
+* examples/Gemfile to reduce vulnerabilities	 ([c533e2f](/../../commit/c533e2f))
+
 <a name="v1.39.0"></a>
 ### v1.39.0 (2024-11-29)
 
