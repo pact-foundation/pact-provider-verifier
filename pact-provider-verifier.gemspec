@@ -28,12 +28,13 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'json',  '>1.8'
   if ENV['RACK_VERSION'] == '2'
     gem.add_runtime_dependency 'rack', '>= 2.0', '< 3.0'
+    gem.add_runtime_dependency 'rack-reverse-proxy'
   else
     gem.add_runtime_dependency 'rack', '>= 3.0', '< 4.0'
     gem.add_runtime_dependency 'rackup', '~> 2.0'
+    gem.add_runtime_dependency 'rack-reverse-proxy-pact'
   end
   
-  gem.add_runtime_dependency 'rack-reverse-proxy'
   gem.add_runtime_dependency 'rspec_junit_formatter', '~> 0.3'
   gem.add_runtime_dependency 'ostruct'
 
