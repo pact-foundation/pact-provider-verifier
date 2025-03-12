@@ -15,7 +15,7 @@ GEM
     faraday-retry (2.2.1)
       faraday (~> 2.0)
     find_a_port (1.0.1)
-    json (2.10.1)
+    json (2.10.2)
     jsonpath (1.1.5)
       multi_json
     logger (1.6.6)
