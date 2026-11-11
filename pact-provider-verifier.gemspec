@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
 
   gem.add_runtime_dependency 'rspec', '~> 3.5'
-  gem.add_runtime_dependency 'pact', '~> 1.59'
+  gem.add_runtime_dependency 'pact', '~> 2.0'
   gem.add_runtime_dependency 'pact-message', '~>0.5'
   gem.add_runtime_dependency 'faraday', '~> 2.5'
   gem.add_runtime_dependency 'faraday-retry', '~> 2.2'
