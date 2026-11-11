@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'faraday-retry', '~> 2.2'
   gem.add_runtime_dependency 'json',  '>1.8'
   if ENV['RACK_VERSION'] == '2'
-    gem.add_runtime_dependency 'rack', '>= 2.0', '< 3.0'
+    gem.add_runtime_dependency 'rack', '>= 2.0', '< 3.2.9'
     gem.add_runtime_dependency 'rack-reverse-proxy'
   else
     gem.add_runtime_dependency 'rack', '>= 3.0', '< 4.0'
