@@ -1,4 +1,4 @@
-FROM ruby:3.4.10-alpine
+FROM ruby:3.4.13-alpine@sha256:9010b7942739e483ab8e359eae1190ea10af21cf7476daa41ece6f896dc8e02a
 
 RUN apk update \
     && apk --no-cache add \
